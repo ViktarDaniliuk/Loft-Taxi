@@ -1,0 +1,52 @@
+.profile_popup {
+   width: 800px;
+   text-align: center;
+   background-color: #fff;
+   border-radius: 5px;
+   padding: 35px;
+}
+
+.profile_popup h1 {
+   margin-top: 0;
+}
+
+.profile_popup input[type="submit"] {
+   margin: 35px auto 0;
+}
+
+.profile_popup form > div {
+   display: flex;
+   justify-content: space-between;
+}
+
+.profile_popup form > div > div {
+   width: 320px;
+   height: 170px;
+   border-radius: 5px;
+   box-shadow: 0px 2px 7px -3px #000000;
+   padding: 30px;
+   text-align: left;
+}
+
+.profile_popup form > div > div input {
+   height: 40px;
+   font-size: 22px;
+   padding-left: 5px;
+}
+
+.profile_popup form > div label:nth-of-type(1) input {
+   width: auto;
+   margin-right: 0;
+}
+
+.profile_popup form > div > div label:nth-of-type(2) input {
+   width: 130px;
+}
+
+.profile_popup form > div label:nth-of-type(1) {
+   margin-top: 0;
+}
+
+.profile_popup form > div label:nth-of-type(2) {
+   margin-top: 30px;
+}

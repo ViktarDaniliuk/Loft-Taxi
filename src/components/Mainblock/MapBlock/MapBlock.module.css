@@ -1,0 +1,21 @@
+.map {
+   padding-top: 68px;
+   height: calc(100vh - 68px);
+}
+
+.map {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.map {
+   background-color: rgb(241, 241, 241);
+}
+
+.map > div:nth-of-type(2),
+.map > div > ymaps {
+   width: 100% !important;
+   height: 100% !important;
+   z-index: 0;
+}

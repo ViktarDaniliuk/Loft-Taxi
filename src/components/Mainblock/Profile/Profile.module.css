@@ -1,0 +1,14 @@
+.profile {
+   padding-top: 68px;
+   height: calc(100vh - 68px);
+}
+
+.profile {
+   background: url(../../../main-bg.png) center 50% no-repeat;
+}
+
+.profile {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}

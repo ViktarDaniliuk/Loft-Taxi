@@ -1,0 +1,23 @@
+.login {
+   display: flex;
+   align-items: center;
+   padding-top: 68px;
+   height: calc(100vh - 68px);
+   background: url(../../../main-bg.png) center 50% no-repeat;
+}
+
+.login > div {
+   width: 50%;
+}
+
+.logo {
+   text-align: right;
+}
+
+.popup > div {
+   width: 70%; /* если размер окна меньше 1100px, то уменьшаем размер высплывающего окна или меняем направление главной оси родительского блока flex-direction: column; */
+   max-width: 350px;
+   background-color: #fff;
+   padding: 45px;
+   border-radius: 5px;
+}

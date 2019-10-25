@@ -1,22 +1,75 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
+.app {
   min-height: 100vh;
+  background: #323232;
+}
+
+form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+form p {
+  font-size: 16px;
+}
+
+form > div {
+  display: flex;
+}
+
+form > div input {
+  width: 100%;
+}
+
+form label {
+  color: rgb(121, 120, 120);
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+form > div label:nth-of-type(1) input {
+  width: calc(90% - 15px);
+  margin-right: 10%;
+}
+
+form > div label:nth-of-type(2) input {
+  width: calc(100% - 15px);
+}
+
+form > label:nth-of-type(1) {
+  margin-top: 10px;
+}
+
+input {
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid #919191;
+  transition: all .3s;
+  font-size: 14px;
+}
+
+input:focus {
+  border-bottom: 1px solid #1473e6;
+  transition: all .3s;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding-left: 15px;
+}
+
+input[type="submit"] {
+  margin-top: 35px;
+  width: 250px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffc617;
+  margin-left: auto;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #9c7a10;
 }

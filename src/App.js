@@ -1,18 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Header from './components/Header/Header';
+import MainBlock from './components/Mainblock/Mainblock';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    currentTab: "login",
+    paymentData: false
+  };
+
+  handleChangeCurrentTab = (currTab) => {
+    this.setState({
+      currentTab: currTab
+    });
+  };
+
+  handleChangePaymentData = () => {
+    this.setState({
+      paymentData: true
+    })
+  }
+
+  render () {
+    // console.log('App state: ', this.state);
+    return (
+      <div className="app">
+        { this.state["currentTab"] !== "login" && <Header handleChangeCurrentTab={ this.handleChangeCurrentTab } /> }
+        <div className="main-block">
+          <MainBlock 
+            currnetTab={ this.state.currentTab }
+            paymentData={ this.state.paymentData }
+            handleChangeCurrentTab={ this.handleChangeCurrentTab }
+            handleChangePaymentData={ this.handleChangePaymentData } />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
