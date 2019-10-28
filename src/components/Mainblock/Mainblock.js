@@ -21,3 +21,5 @@ class MainBlock extends Component {
 }
 
 export default MainBlock;
+
+// собрать в один все вложенности header

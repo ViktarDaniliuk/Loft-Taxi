@@ -38,4 +38,8 @@ class App extends Component {
   }
 }
 
+// mainblock удалить и впихнуть все в App через объект с ключами
+// отдельно сделать компоненту входа и компоненту регистрации
+
+
 export default App;
