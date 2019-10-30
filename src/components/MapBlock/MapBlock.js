@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { YMaps, Map } from 'react-yandex-maps';
 import MapPopup from './MapPopup/MapPopup';
 import MapBlockMod from './MapBlock.module.css';
+import PropTypes from 'prop-types';
 
 class MapBlock extends Component {
+   static propTypes = {
+      handleChangeCurrentTab: PropTypes.func
+   };
+
    handleLoad() {
       window.ymaps.ready(() => {
-         console.log("handleLoad")
          this.localMap = new window.ymaps.Map('map', {center: this.state.center, zoom: 9}, {
             searchControlProvider: 'yandex#search'});
       });
-   }
+   };
 
    render () {
       return (

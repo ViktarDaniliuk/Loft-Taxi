@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ProfilePopupMod from './ProfilePopup.module.css';
+import PropTypes from 'prop-types';
 
 class ProfilePopup extends Component {
    state = {
@@ -7,6 +8,11 @@ class ProfilePopup extends Component {
       validity: "",
       userName: "",
       CVCcode: ""
+   };
+
+   static propTypes = {
+      handleChangeCurrentTab: PropTypes.func,
+      handleChangePaymentData: PropTypes.func
    }
 
    handleSubmit = e => {
