@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ProfileMod from './Profile.module.css';
 import ProfilePopup from './ProfilePopup/ProfilePopup';
 import PropTypes from 'prop-types';
+import { Context } from '../../context';
 
 const Profile = ({ handleChangeCurrentTab, handleChangePaymentData }) => {
    // console.log('Profile props: ', props);

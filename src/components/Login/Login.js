@@ -46,7 +46,7 @@ class Login extends Component {
                         Пароль*
                         <input type="password" value={this.state.password} onChange={this.handlePasswordChange} />
                      </label>
-                     <input type="submit" value="Войти" onClick={ () => this.props.handleChangeCurrentTab("mapblock") } />
+                     <input type="submit" value="Войти" onClick={ () => this.props.handleLogin(this.state.userName, this.state.password) } />
                   </form>
                </div>
             </div>
