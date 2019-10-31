@@ -27,8 +27,9 @@ class App extends Component {
 
   handleSignUp = () => {
     if (localStorage.user) return;
+    if (!this.state.email || !this.state.userName || !this.state.userSurname || !this.state.password) return;
 
-    localStorage.setItem('user', JSON.stringify({ userName: this.state.userName, password: this.state.password }));
+    localStorage.setItem('user', JSON.stringify({ email: this.state.email, userName: this.state.userName, userSurname: this.state.userSurname, password: this.state.password }));
     this.setState({
       currentTab: 'profile',
       userName: '',
@@ -42,6 +43,15 @@ class App extends Component {
     this.setState({
       currentTab: currTab
     });
+
+    if (this.state.currentTab === 'login' || this.state.currentTab === 'signup') {
+      this.setState({
+        userName: '',
+        userSurname: '',
+        email: '',
+        password: ''
+      })
+    }
   };
 
   handleChangePaymentData = () => {
@@ -58,6 +68,11 @@ class App extends Component {
         currentTab: 'profile'
       })
     }
+
+    this.setState({
+      userName: '',
+      password: ''
+    })
   };
 
   handleLogout = () => {
@@ -68,6 +83,11 @@ class App extends Component {
   };
 
   handleSignUpSubmit = e => {
+    e.preventDefault();
+          
+  };
+
+  handleLoginSubmit = e => {
     e.preventDefault();
           
   };
@@ -107,6 +127,8 @@ class App extends Component {
         handleLogin: this.handleLogin, 
         handleLogout: this.handleLogout, 
         handleSignUp: this.handleSignUp,
+        handleSignUpSubmit: this.handleSignUpSubmit,
+        handleLoginSubmit: this.handleLoginSubmit,
         handleChangeCurrentTab: this.handleChangeCurrentTab,
         handleEmailChange: this.handleEmailChange,
         handleUserNameChange: this.handleUserNameChange,
