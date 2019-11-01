@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import SignupMod from './Signup.module.css';
 import logo from './logo.svg';
-import PropTypes from 'prop-types';
 import { Context } from '../../context';
 
 const Login = () => {
@@ -43,10 +42,6 @@ const Login = () => {
          </div>
       </div>
    );
-}
-
-Login.propTypes = {
-   handleChangeCurrentTab: PropTypes.func
 }
 
 export default Login;

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { YMaps, Map } from 'react-yandex-maps';
 import MapPopup from './MapPopup/MapPopup';
 import MapBlockMod from './MapBlock.module.css';
 import PropTypes from 'prop-types';
 
 class MapBlock extends Component {
    static propTypes = {
-      handleChangeCurrentTab: PropTypes.func
+      handleChangeCurrentTab: PropTypes.func,
+      paymentData: PropTypes.bool
    };
 
    handleLoad() {
@@ -16,21 +16,26 @@ class MapBlock extends Component {
       });
    };
 
+   componentDidMount() {
+      let mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+
+      mapboxgl.accessToken = 'pk.eyJ1IjoidmlrYXRyIiwiYSI6ImNrMmZ3ajIxdzA0b3QzcG12ejRnM3I2MmIifQ.BTSCAyI0WPqr9LtTl5qpwQ';
+      let map = new mapboxgl.Map({
+         container: 'map',
+         center: [21.033, 52.225],
+         zoom: 12,
+         style: 'mapbox://styles/mapbox/streets-v11'
+      });
+   };
+
    render () {
       return (
-         <YMaps>
-            <div className={ MapBlockMod.map }>
-               <MapPopup handleChangeCurrentTab={ this.props.handleChangeCurrentTab }  paymentData={ this.props.paymentData } />
-               <Map 
-                  defaultState={{
-                     center: [52.237750, 21.018374], zoom: 12,
-                     controls: ['zoomControl', 'fullscreenControl']
-                  }} 
-                     modules={['control.ZoomControl', 'control.FullscreenControl']}
-               >
-               </Map>
+         <div className={ MapBlockMod.map }>
+            <MapPopup handleChangeCurrentTab={ this.props.handleChangeCurrentTab }  paymentData={ this.props.paymentData } />
+            <div id="map">
+
             </div>
-         </YMaps>
+         </div>
       );
    }
 }

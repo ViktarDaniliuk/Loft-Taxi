@@ -112,7 +112,7 @@ class App extends Component {
     // console.log('App state: ', this.state);
     const tabs = {
       signup: <Signup handleChangeCurrentTab={ this.handleChangeCurrentTab } />,
-      login: <Login handleLogin={ this.handleLogin } handleChangeCurrentTab={ this.handleChangeCurrentTab } />,
+      login: <Login />,
       profile: <Profile handleChangeCurrentTab={ this.handleChangeCurrentTab } handleChangePaymentData={ this.handleChangePaymentData } />,
       mapblock: <MapBlock handleChangeCurrentTab={ this.handleChangeCurrentTab }  paymentData={ this.state.paymentData } />
     };
