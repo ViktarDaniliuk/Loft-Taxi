@@ -18,8 +18,12 @@ class App extends Component {
     password: ''
   };
 
-  // при каждом запуске страницы signup запускаем функцию проверки наличия данных пользователя в localStorage
-  // вытянуть стейт и обработчики полей форм из login и signin в App и передать их обратно с помощью useContext
+  handleDefineStartPage = () => {
+    if (!localStorage.user) return;
+    this.setState({
+      currentTab: 'login'
+    })
+  };
 
   handleGetState = () => {
     return JSON.parse(localStorage.getItem('user'));
@@ -65,7 +69,8 @@ class App extends Component {
 
     if (userName === name && password === pass) {
       this.setState({
-        currentTab: 'profile'
+        currentTab: 'profile',
+        isLoggedIn: true
       })
     }
 
@@ -106,6 +111,10 @@ class App extends Component {
     
   handlePasswordChange = e => {
     this.setState({ password: e.target.value });
+  };
+
+  componentDidMount() {
+    this.handleDefineStartPage();
   };
 
   render () {

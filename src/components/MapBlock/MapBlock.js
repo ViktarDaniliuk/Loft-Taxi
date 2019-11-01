@@ -9,13 +9,6 @@ class MapBlock extends Component {
       paymentData: PropTypes.bool
    };
 
-   handleLoad() {
-      window.ymaps.ready(() => {
-         this.localMap = new window.ymaps.Map('map', {center: this.state.center, zoom: 9}, {
-            searchControlProvider: 'yandex#search'});
-      });
-   };
-
    componentDidMount() {
       let mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
@@ -26,6 +19,13 @@ class MapBlock extends Component {
          zoom: 12,
          style: 'mapbox://styles/mapbox/streets-v11'
       });
+
+      map.on('load', () => {
+         console.log('Map was load!');
+         // добавить в стейт поле loaded: false
+         // сделать компоненту с прелоадером, позиционировать абсолютно по центру экрана
+         // менять поле loaded на true 
+      })
    };
 
    render () {
