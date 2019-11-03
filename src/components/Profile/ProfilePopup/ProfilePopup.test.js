@@ -36,11 +36,13 @@ it('change state - CVCcode', () => {
    expect(profilePopup.state('CVCcode')).toBe("123");
 });
 
+
 // it('number of props', () => {
 //    const profilePopup = mount(<ProfilePopup />);
 //    console.log(profilePopup.find('[type="submit"]').props());
 //    expect(profilePopup.find('[type="submit"]').props()).;
 // });
+
 
 // it('-------------------------', () => {
 //    const app = mount(<App />);
@@ -51,6 +53,7 @@ it('change state - CVCcode', () => {
 //    console.log(app.state('currentTab'))
 //    expect(app.state('currentTab')).toBe('mapblock');
 // });
+
 
 it('ProfilePopup Snapshot', () => {
    const tree = renderer.create(<ProfilePopup />).toJSON;
