@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import MapPopupMod from './MapPopup.module.css';
+import PropTypes from 'prop-types';
 
 class MapPopup extends Component {
+   static propTypes = {
+      handleChangeCurrentTab: PropTypes.func,
+      paymentData: PropTypes.bool
+   };
+
    render () {
-      // console.log('MapPopup props: ', this.props);
       if (this.props.paymentData === true) {
          return (
             <div className={ MapPopupMod.payment_data } style={{display: "none"}}></div>

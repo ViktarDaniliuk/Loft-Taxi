@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import HeaderMod from './Header.module.css';
-import HeaderLogo from './HeaderLogo/HeaderLogo'
-import Menu from './Menu/Menu';
+import logo from './logo.svg';
+import PropTypes from 'prop-types';
+import { Context } from '../../context';
 
-const Header = (props) => {
+const Header = ({ handleChangeCurrentTab }) => {
+   const { handleLogout } = useContext(Context);
+
    return (
       <header className={ HeaderMod.app_header }>
-         <HeaderLogo />
-         <Menu handleChangeCurrentTab={ props.handleChangeCurrentTab }/>
+         <img src={logo} className={ HeaderMod.logo } alt="logo" />
+         <div className={ HeaderMod.menu }>
+            <ul>
+               <li onClick={ () => handleChangeCurrentTab("mapblock") }>Карта</li>
+               <li onClick={ () => handleChangeCurrentTab("profile") }>Профиль</li>
+               <li onClick={ () => handleLogout() }>Выйти</li>
+            </ul>
+         </div>
       </header>
    )
+}
+
+Header.propTypes = {
+   handleChangeCurrentTab: PropTypes.func
 }
 
 export default Header;
