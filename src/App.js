@@ -7,6 +7,8 @@ import Profile from './components/Profile/Profile';
 import Signup from './components/SignUp/Signup';
 import { Context } from './context';
 
+// добавить подсветку кнопки соответствующей активной странице
+
 class App extends Component {
   state = {
     currentTab: "signup",

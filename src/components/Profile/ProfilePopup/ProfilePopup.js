@@ -13,7 +13,7 @@ class ProfilePopup extends Component {
    static propTypes = {
       handleChangeCurrentTab: PropTypes.func,
       handleChangePaymentData: PropTypes.func
-   }
+   };
 
    handleSubmit = e => {
       e.preventDefault();
