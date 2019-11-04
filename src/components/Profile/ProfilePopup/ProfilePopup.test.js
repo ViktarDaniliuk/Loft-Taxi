@@ -1,8 +1,75 @@
-import React from 'react';
-import { shallow, mount, render } from 'enzyme';
-import App from '../../../App';
-import ProfilePopup from './ProfilePopup';
-import renderer from 'react-test-renderer';
+import React from "react";
+import { shallow, mount, render } from "enzyme";
+import App from "../../../App";
+import ProfilePopup from "./ProfilePopup";
+import renderer from "react-test-renderer";
+
+it("ProfilePopup Snapshot", () => {
+  const tree = renderer.create(<ProfilePopup />).toJSON();
+  expect(tree).toMatchSnapshot(`
+    <div
+      className="profile_popup"
+    >
+      <h1>
+        Профиль
+      </h1>
+      <p>
+        Способ оплаты
+      </p>
+      <form
+        onSubmit={[Function]}
+      >
+        <div>
+          <div>
+            <label>
+              Номер карты:
+              <input
+                onChange={[Function]}
+                placeholder="1234 5678 1234 5678"
+                type="text"
+                value=""
+              />
+            </label>
+            <label>
+              Срок действия:
+              <input
+                onChange={[Function]}
+                placeholder="00/00"
+                type="text"
+                value=""
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Имя владельца:
+              <input
+                onChange={[Function]}
+                placeholder="USER NAME"
+                type="text"
+                value=""
+              />
+            </label>
+            <label>
+              CVC:
+              <input
+                onChange={[Function]}
+                placeholder="***"
+                type="password"
+                value=""
+              />
+            </label>
+          </div>
+        </div>
+        <input
+          onClick={[Function]}
+          type="submit"
+          value="Сохранить"
+        />
+      </form>
+    </div>
+  `);
+});
 
 it('change state - cardNumber', () => {
    const profilePopup = shallow(<ProfilePopup />);
@@ -36,14 +103,6 @@ it('change state - CVCcode', () => {
    expect(profilePopup.state('CVCcode')).toBe("123");
 });
 
-
-// it('number of props', () => {
-//    const profilePopup = mount(<ProfilePopup />);
-//    console.log(profilePopup.find('[type="submit"]').props());
-//    expect(profilePopup.find('[type="submit"]').props()).;
-// });
-
-
 // it('-------------------------', () => {
 //    const app = mount(<App />);
 //    const profilePopup = mount(<ProfilePopup />);
@@ -54,8 +113,4 @@ it('change state - CVCcode', () => {
 //    expect(app.state('currentTab')).toBe('mapblock');
 // });
 
-
-it('ProfilePopup Snapshot', () => {
-   const tree = renderer.create(<ProfilePopup />).toJSON;
-   expect(tree).toMatchShapshot();
-})
+// проверить функции (как?)

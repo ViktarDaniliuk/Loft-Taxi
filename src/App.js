@@ -20,13 +20,6 @@ class App extends Component {
     password: ''
   };
 
-  handleDefineStartPage = () => {
-    if (!localStorage.user) return;
-    this.setState({
-      currentTab: 'login'
-    })
-  };
-
   handleGetState = () => {
     return JSON.parse(localStorage.getItem('user'));
   };
@@ -92,7 +85,10 @@ class App extends Component {
   handleSignUpSubmit = e => {
     e.preventDefault();
           
-  };
+  }; 
+  // убрать обработчик события с кнопки и пользоваться только ним для всех нужд
+
+  // поправить ситуацию с формами регистрации и входа, чистить стейт только при выходе из приложения
 
   handleLoginSubmit = e => {
     e.preventDefault();
@@ -116,7 +112,10 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.handleDefineStartPage();
+    if (!localStorage.user) return;
+    this.setState({
+      currentTab: 'login'
+    })
   };
 
   render () {
