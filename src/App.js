@@ -6,6 +6,7 @@ import MapBlock from './components/MapBlock/MapBlock';
 import Profile from './components/Profile/Profile';
 import Signup from './components/SignUp/Signup';
 import { Context } from './context';
+import { Route, Switch } from 'react-router-dom';
 
 // добавить подсветку кнопки соответствующей активной странице
 
@@ -25,6 +26,7 @@ class App extends Component {
   };
 
   handleSignUp = () => {
+    console.log('handleSignUp');
     if (localStorage.user) return;
     if (!this.state.email || !this.state.userName || !this.state.userSurname || !this.state.password) return;
 
@@ -36,21 +38,6 @@ class App extends Component {
       email: '',
       password: ''
     })
-  };
-
-  handleChangeCurrentTab = (currTab) => {
-    this.setState({
-      currentTab: currTab
-    });
-
-    if (this.state.currentTab === 'login' || this.state.currentTab === 'signup') {
-      this.setState({
-        userName: '',
-        userSurname: '',
-        email: '',
-        password: ''
-      })
-    }
   };
 
   handleChangePaymentData = () => {
@@ -78,7 +65,7 @@ class App extends Component {
   handleLogout = () => {
     this.setState({
       isLoggedIn: false,
-      currentTab: 'login'
+      // currentTab: 'login'
     })
   };
 
@@ -120,12 +107,6 @@ class App extends Component {
 
   render () {
     // console.log('App state: ', this.state);
-    const tabs = {
-      signup: <Signup handleChangeCurrentTab={ this.handleChangeCurrentTab } />,
-      login: <Login />,
-      profile: <Profile handleChangeCurrentTab={ this.handleChangeCurrentTab } handleChangePaymentData={ this.handleChangePaymentData } />,
-      mapblock: <MapBlock handleChangeCurrentTab={ this.handleChangeCurrentTab }  paymentData={ this.state.paymentData } />
-    };
 
     return (
       <Context.Provider value={{
@@ -139,7 +120,6 @@ class App extends Component {
         handleSignUp: this.handleSignUp,
         handleSignUpSubmit: this.handleSignUpSubmit,
         handleLoginSubmit: this.handleLoginSubmit,
-        handleChangeCurrentTab: this.handleChangeCurrentTab,
         handleEmailChange: this.handleEmailChange,
         handleUserNameChange: this.handleUserNameChange,
         handleUserSurnameChange: this.handleUserSurnameChange,
@@ -147,9 +127,14 @@ class App extends Component {
         handleGetState: this.handleGetState
       }}>
       <div className="app">
-        { this.state["currentTab"] !== "login" && this.state["currentTab"] !== "signup" && <Header handleChangeCurrentTab={ this.handleChangeCurrentTab } /> }
+        { this.state["currentTab"] !== "login" && this.state["currentTab"] !== "signup" && <Header /> }
         <div className="main-block">
-          {tabs[this.state["currentTab"]]}
+          <Switch>
+            <Route path="/signup" component={ Signup }></Route>
+            <Route path="/login" component={ Login }></Route>
+            <Route path="/map" render={ () => <MapBlock paymentData={ this.state.paymentData } /> }></Route>
+            { this.state.isLoggedIn && <Route path="/profile" render={ () => <Profile handleChangePaymentData={ this.handleChangePaymentData } /> }></Route> }
+          </Switch>
         </div>
       </div>
       </Context.Provider>

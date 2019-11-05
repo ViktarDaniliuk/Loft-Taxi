@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import LoginMod from './Login.module.css';
 import logo from './logo.svg';
 import { Context } from '../../context';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
    const {
-      userName, password, handleChangeCurrentTab, handleLoginSubmit, handleUserNameChange, handlePasswordChange, handleLogin
+      userName, password, handleLoginSubmit, handleUserNameChange, handlePasswordChange, handleLogin
    } = useContext(Context);
 
    return (
@@ -16,7 +17,7 @@ const Login = () => {
          <div className={ LoginMod.popup }>
             <div className={ LoginMod.log_in }>
                <h2>Войти</h2>
-               <p>Новый пользователь? <span onClick={ () => handleChangeCurrentTab("signup") }>Зарегистрироваться</span></p>
+               <p>Новый пользователь? <span><Link to="/signup">Зарегистрироваться</Link></span></p>
                <form onSubmit={handleLoginSubmit}>
                   <label>
                      Имя пользователя*
@@ -26,7 +27,9 @@ const Login = () => {
                      Пароль*
                      <input type="password" value={ password } onChange={ handlePasswordChange } />
                   </label>
-                  <input type="submit" value="Войти" onClick={ () => handleLogin(userName, password) } />
+                  <Link to="/profile">
+                     <input type="submit" value="Войти" onClick={ () => handleLogin(userName, password) } />
+                  </Link>
                </form>
             </div>
          </div>

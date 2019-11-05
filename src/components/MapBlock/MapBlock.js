@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 class MapBlock extends Component {
    static propTypes = {
-      handleChangeCurrentTab: PropTypes.func,
       paymentData: PropTypes.bool
    };
 
@@ -29,9 +28,10 @@ class MapBlock extends Component {
    };
 
    render () {
+      // console.log('MapBlock props: ', this.props);
       return (
          <div className={ MapBlockMod.map }>
-            <MapPopup handleChangeCurrentTab={ this.props.handleChangeCurrentTab }  paymentData={ this.props.paymentData } />
+            <MapPopup paymentData={ this.props.paymentData } />
             <div id="map">
 
             </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ProfilePopupMod from './ProfilePopup.module.css';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class ProfilePopup extends Component {
    state = {
@@ -11,7 +12,6 @@ class ProfilePopup extends Component {
    };
 
    static propTypes = {
-      handleChangeCurrentTab: PropTypes.func,
       handleChangePaymentData: PropTypes.func
    };
 
@@ -66,10 +66,10 @@ class ProfilePopup extends Component {
                      </label>
                   </div>
                </div>
-               <input type="submit" value="Сохранить" onClick={ () => { 
-                  this.props.handleChangeCurrentTab("mapblock");
-                  this.props.handleChangePaymentData();
-               }} />
+               <Link to="/map">
+                  <input type="submit" value="Сохранить" onClick={ () => { this.props.handleChangePaymentData();
+                  }} />
+               </Link>
             </form>
          </div>
       );

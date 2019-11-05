@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import SignupMod from './Signup.module.css';
 import logo from './logo.svg';
 import { Context } from '../../context';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
    const {
@@ -16,7 +17,7 @@ const Login = () => {
          <div className={ SignupMod.popup }>
             <div className={ SignupMod.sign_in }>
                <h2>Регистрация</h2>
-               <p>Уже зарегистрирован? <span onClick={ () => handleChangeCurrentTab("login") }>Войти</span></p>
+               <p>Уже зарегистрирован? <span><Link to="/login">Войти</Link></span></p>
                <form onSubmit={ handleSignUpSubmit }>
                   <label>
                      Адрес электронной почты
@@ -36,7 +37,9 @@ const Login = () => {
                      Пароль
                      <input type="password" value={ password } onChange={ handlePasswordChange } />
                   </label>
-                  <input type="submit" value="Зарегистрироваться" onClick={ () => handleSignUp() } />
+                  <Link to="/profile">
+                     <input type="submit" value="Зарегистрироваться" onClick={ () => handleSignUp() } />
+                  </Link>
                </form>
             </div>
          </div>

@@ -3,19 +3,18 @@ import ProfileMod from './Profile.module.css';
 import ProfilePopup from './ProfilePopup/ProfilePopup';
 import PropTypes from 'prop-types';
 
-const Profile = ({ handleChangeCurrentTab, handleChangePaymentData }) => {
+const Profile = ({ handleChangePaymentData }) => {
    // console.log('Profile props: ', props);
    return (
       <div className={ ProfileMod.profile }>
          <div>
-            <ProfilePopup handleChangeCurrentTab={ handleChangeCurrentTab } handleChangePaymentData={ handleChangePaymentData } />
+            <ProfilePopup handleChangePaymentData={ handleChangePaymentData } />
          </div>
       </div>
    );
 };
 
 Profile.propTypes = {
-   handleChangeCurrentTab: PropTypes.func,
    handleChangePaymentData: PropTypes.func
 };
 
