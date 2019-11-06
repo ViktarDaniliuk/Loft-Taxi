@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
    const {
-      userName, userSurname, email, password, handleChangeCurrentTab, handleSignUpSubmit, handleEmailChange, handleUserNameChange, handleUserSurnameChange, handlePasswordChange, handleSignUp
+      userName, userSurname, email, password, handleSignUpSubmit, handleEmailChange, handleUserNameChange, handleUserSurnameChange, handlePasswordChange, handleSignUp
    } = useContext(Context);
 
    return (

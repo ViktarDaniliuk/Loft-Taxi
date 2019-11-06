@@ -1,32 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
-import Login from './components/Login/Login';
+import { WrappedLogin } from './components/Login/Login';
 import MapBlock from './components/MapBlock/MapBlock';
 import Profile from './components/Profile/Profile';
 import Signup from './components/SignUp/Signup';
 import { Context } from './context';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-// добавить подсветку кнопки соответствующей активной странице
+// добавить подсветку кнопки соответствующей активной странице с помощью NavLink activeClassName
 
 class App extends Component {
   state = {
-    currentTab: "signup",
     paymentData: false,
-    isLoggedIn: false,
     userName: '',
     userSurname: '',
     email: '',
     password: ''
   };
 
-  handleGetState = () => {
-    return JSON.parse(localStorage.getItem('user'));
-  };
-
   handleSignUp = () => {
-    console.log('handleSignUp');
     if (localStorage.user) return;
     if (!this.state.email || !this.state.userName || !this.state.userSurname || !this.state.password) return;
 
@@ -46,41 +40,16 @@ class App extends Component {
     })
   };
 
-  handleLogin = (name, pass) => {
-    const { userName, password } = this.handleGetState();
-
-    if (userName === name && password === pass) {
-      this.setState({
-        currentTab: 'profile',
-        isLoggedIn: true
-      })
-    }
-
-    this.setState({
-      userName: '',
-      password: ''
-    })
-  };
-
   handleLogout = () => {
     this.setState({
       isLoggedIn: false,
-      // currentTab: 'login'
+      currentTab: 'login'
     })
   };
 
-  handleSignUpSubmit = e => {
-    e.preventDefault();
-          
-  }; 
   // убрать обработчик события с кнопки и пользоваться только ним для всех нужд
 
   // поправить ситуацию с формами регистрации и входа, чистить стейт только при выходе из приложения
-
-  handleLoginSubmit = e => {
-    e.preventDefault();
-          
-  };
     
   handleEmailChange = e => {
     this.setState({ email: e.target.value });
@@ -106,7 +75,6 @@ class App extends Component {
   };
 
   render () {
-    // console.log('App state: ', this.state);
 
     return (
       <Context.Provider value={{
@@ -115,7 +83,7 @@ class App extends Component {
         email: this.state.email,
         password: this.state.password,
         isLoggedIn: this.isLoggedIn,
-        handleLogin: this.handleLogin, 
+        // handleLogin: this.handleLogin, 
         handleLogout: this.handleLogout, 
         handleSignUp: this.handleSignUp,
         handleSignUpSubmit: this.handleSignUpSubmit,
@@ -127,13 +95,14 @@ class App extends Component {
         handleGetState: this.handleGetState
       }}>
       <div className="app">
-        { this.state["currentTab"] !== "login" && this.state["currentTab"] !== "signup" && <Header /> }
+        { this.props["currentTab"] !== "login" && this.props["currentTab"] !== "signup" && <Header /> }
         <div className="main-block">
           <Switch>
             <Route path="/signup" component={ Signup }></Route>
-            <Route path="/login" component={ Login }></Route>
-            <Route path="/map" render={ () => <MapBlock paymentData={ this.state.paymentData } /> }></Route>
-            { this.state.isLoggedIn && <Route path="/profile" render={ () => <Profile handleChangePaymentData={ this.handleChangePaymentData } /> }></Route> }
+            <Route path="/login" render={ () => <WrappedLogin /> }></Route>
+            { this.props.isLoggedIn && <Route path="/map" render={ () => <MapBlock paymentData={ this.state.paymentData } /> }></Route> }
+            { this.props.isLoggedIn && <Route path="/profile" render={ () => <Profile handleChangePaymentData={ this.handleChangePaymentData } /> }></Route> }
+            <Redirect to="/signup" />
           </Switch>
         </div>
       </div>
@@ -142,4 +111,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.isLoggedIn,
+    currentTab: state.currentTab
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+  };
+};
+
+export const WrappedApp = connect(mapStateToProps, mapDispatchToProps)(App);

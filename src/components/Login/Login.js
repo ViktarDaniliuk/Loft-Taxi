@@ -1,40 +1,74 @@
-import React, { useContext } from 'react';
+import React, { Component } from 'react';
 import LoginMod from './Login.module.css';
 import logo from './logo.svg';
-import { Context } from '../../context';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { sendDataLogin } from '../../redux/store';
 
-const Login = () => {
-   const {
-      userName, password, handleLoginSubmit, handleUserNameChange, handlePasswordChange, handleLogin
-   } = useContext(Context);
+class Login extends Component {
+   state = {
+      userName: '', 
+      password: ''
+   };
 
-   return (
-      <div className={ LoginMod.login }>
-         <div className={ LoginMod.logo_block }>
-            <img src={ logo } className={ LoginMod.logo } alt="logo" />
-         </div>
-         <div className={ LoginMod.popup }>
-            <div className={ LoginMod.log_in }>
-               <h2>Войти</h2>
-               <p>Новый пользователь? <span><Link to="/signup">Зарегистрироваться</Link></span></p>
-               <form onSubmit={handleLoginSubmit}>
-                  <label>
-                     Имя пользователя*
-                     <input type="text" value={ userName } onChange={ handleUserNameChange } />
-                  </label>
-                  <label>
-                     Пароль*
-                     <input type="password" value={ password } onChange={ handlePasswordChange } />
-                  </label>
-                  <Link to="/profile">
-                     <input type="submit" value="Войти" onClick={ () => handleLogin(userName, password) } />
-                  </Link>
-               </form>
+   onHandleLogin = () => {
+      const { sendDataLogin } = this.props;
+      const { userName, password } = this.state;
+
+      sendDataLogin(userName, password);
+      this.setState({ userName: '', password: '' });
+   };
+
+   handleUserNameChange = e => {
+      this.setState({ userName: e.target.value });
+   };
+      
+   handlePasswordChange = e => {
+      this.setState({ password: e.target.value });
+   };
+
+   render() {
+      return (
+         <div className={ LoginMod.login }>
+            <div className={ LoginMod.logo_block }>
+               <img src={ logo } className={ LoginMod.logo } alt="logo" />
+            </div>
+            <div className={ LoginMod.popup }>
+               <div className={ LoginMod.log_in }>
+                  <h2>Войти</h2>
+                  <p>Новый пользователь? <span><Link to="/signup">Зарегистрироваться</Link></span></p>
+                  <form>
+                     <label>
+                        Имя пользователя*
+                        <input type="text" value={ this.state.userName } onChange={ this.handleUserNameChange } />
+                     </label>
+                     <label>
+                        Пароль*
+                        <input type="password" value={ this.state.password } onChange={ this.handlePasswordChange } />
+                     </label>
+                     <Link to="/profile">
+                        <input type="submit" value="Войти" onClick={ this.onHandleLogin } />
+                     </Link>
+                  </form>
+               </div>
             </div>
          </div>
-      </div>
-   );
+      );
+   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+   return {
+      
+   };
+};
+
+const mapDispatchToProps = dispatch => {
+   return {
+      sendDataLogin: (userName, password) => {
+         dispatch(sendDataLogin(userName, password));
+      }
+   };
+};
+
+export const WrappedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
