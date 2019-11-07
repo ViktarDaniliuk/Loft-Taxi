@@ -11,7 +11,8 @@ const INITIAL_STATE = {
 };
 
 const SEND_DATA_LOGIN = 'SEND_DATA_LOGIN';
-// const SEND_DATA_SIGNUP = 'SEND_DATA_SIGNUP';
+const ON_LOGOUT = 'ON_LOGOUT';
+const SEND_DATA_SIGNUP = 'SEND_DATA_SIGNUP';
 // const UPDATE_EMAIL = 'UPDATE_EMAIL';
 // const UPDATE_USER_NAME_SIGNUP = 'UPDATE_USER_NAME_SIGNUP';
 // const UPDATE_USER_SURNAME = 'UPDATE_USER_SURNAME';
@@ -25,22 +26,21 @@ const SEND_DATA_LOGIN = 'SEND_DATA_LOGIN';
 // const REDIRECT_TO_PROFILE = 'REDIRECT_TO_PROFILE';
 // const REDIRECT_TO_LOGIN = 'REDIRECT_TO_LOGIN';
 
-const handleGetState = () => {
-   return JSON.parse(localStorage.getItem('user'));
-};
+export const sendDataSignup = (newEmail, newUserName, newUserSurName, newPassword) => {
 
-export const handleLogin = (name, pass) => {
-   const { userName, password } = handleGetState();
-
-   if (userName === name && password === pass) {
-      this.setState({
-         currentTab: 'profile',
-         isLoggedIn: true
-      })
-   }
-};
+   return {
+      type: SEND_DATA_SIGNUP,
+      payload: {
+         userEmail: newEmail,
+         userName: newUserName,
+         userSurname: newUserSurName,
+         password: newPassword
+      }
+   };
+}
 
 export const sendDataLogin = (newUserName, newPassword) => {
+
    return {
       type: SEND_DATA_LOGIN,
       payload: {
@@ -50,21 +50,44 @@ export const sendDataLogin = (newUserName, newPassword) => {
    };
 }
 
-export const login = (state = INITIAL_STATE, action) => {
+export const onLogout = () => {
+   return {
+      type: ON_LOGOUT,
+      payload: {
+
+      }
+   };
+}
+
+const login = (state = INITIAL_STATE, action) => {
    switch (action.type) {
+      case ON_LOGOUT: {
+         const stateCopy = {...state};
+         stateCopy.currentTab = 'login';
+         stateCopy.isLoggedIn = false;
+         return stateCopy;
+      }
       case SEND_DATA_LOGIN: {
-         let stateCopy = {...state};
-         const { userName, password } = JSON.parse(localStorage.getItem('user'));
+         const stateCopy = {...state};
 
-         if (userName === action.payload.userName && password === action.payload.password) {
-            stateCopy.userName = action.payload.userName;
-            stateCopy.password = action.payload.password;
-            stateCopy.currentTab = 'profile';
-            stateCopy.isLoggedIn = true;
+         stateCopy.userName = action.payload.userName;
+         stateCopy.password = action.payload.password;
+         stateCopy.currentTab = 'profile';
+         stateCopy.isLoggedIn = true;
 
-            return stateCopy;
-         }
-         return state;
+         return stateCopy;
+      }
+      case SEND_DATA_SIGNUP: {
+         const stateCopy = {...state};
+         
+         stateCopy.email = action.payload.newEmail;
+         stateCopy.userName = action.payload.userName;
+         stateCopy.userSurName = action.payload.userSurName;
+         stateCopy.password = action.payload.password;
+         stateCopy.currentTab = 'profile';
+         stateCopy.isLoggedIn = true;
+
+         return stateCopy;
       }
       default:
          return state;

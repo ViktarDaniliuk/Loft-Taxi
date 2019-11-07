@@ -11,12 +11,20 @@ class Login extends Component {
       password: ''
    };
 
+   handleGetDateFromLocalStorage = () => {
+      return JSON.parse(localStorage.getItem('user'));
+   };
+
    onHandleLogin = () => {
       const { sendDataLogin } = this.props;
       const { userName, password } = this.state;
+      const { userName: userNameFromLocalStorage, password: passwordFromLocalStorage } = this.handleGetDateFromLocalStorage('user');
 
-      sendDataLogin(userName, password);
-      this.setState({ userName: '', password: '' });
+      if (userName === userNameFromLocalStorage && password === passwordFromLocalStorage) {
+         sendDataLogin(userName, password);
+         this.setState({ userName: '', password: '' });
+      } 
+      return;
    };
 
    handleUserNameChange = e => {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import Header from './components/Header/Header';
+import { WrappedHeader } from './components/Header/Header';
 import { WrappedLogin } from './components/Login/Login';
 import MapBlock from './components/MapBlock/MapBlock';
 import Profile from './components/Profile/Profile';
-import Signup from './components/SignUp/Signup';
+import { WrappedSignup } from './components/SignUp/Signup';
 import { Context } from './context';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -20,52 +20,15 @@ class App extends Component {
     password: ''
   };
 
-  handleSignUp = () => {
-    if (localStorage.user) return;
-    if (!this.state.email || !this.state.userName || !this.state.userSurname || !this.state.password) return;
-
-    localStorage.setItem('user', JSON.stringify({ email: this.state.email, userName: this.state.userName, userSurname: this.state.userSurname, password: this.state.password }));
-    this.setState({
-      currentTab: 'profile',
-      userName: '',
-      userSurname: '',
-      email: '',
-      password: ''
-    })
-  };
-
   handleChangePaymentData = () => {
     this.setState({
       paymentData: true
     })
-  };
-
-  handleLogout = () => {
-    this.setState({
-      isLoggedIn: false,
-      currentTab: 'login'
-    })
-  };
+  };;
 
   // убрать обработчик события с кнопки и пользоваться только ним для всех нужд
 
   // поправить ситуацию с формами регистрации и входа, чистить стейт только при выходе из приложения
-    
-  handleEmailChange = e => {
-    this.setState({ email: e.target.value });
-  };
-    
-  handleUserNameChange = e => {
-    this.setState({ userName: e.target.value });
-  };
-    
-  handleUserSurnameChange = e => {
-    this.setState({ userSurname: e.target.value });
-  };
-    
-  handlePasswordChange = e => {
-    this.setState({ password: e.target.value });
-  };
 
   componentDidMount() {
     if (!localStorage.user) return;
@@ -95,10 +58,10 @@ class App extends Component {
         handleGetState: this.handleGetState
       }}>
       <div className="app">
-        { this.props["currentTab"] !== "login" && this.props["currentTab"] !== "signup" && <Header /> }
+        { this.props["currentTab"] !== "login" && this.props["currentTab"] !== "signup" && <WrappedHeader /> }
         <div className="main-block">
           <Switch>
-            <Route path="/signup" component={ Signup }></Route>
+            <Route path="/signup" component={ WrappedSignup }></Route>
             <Route path="/login" render={ () => <WrappedLogin /> }></Route>
             { this.props.isLoggedIn && <Route path="/map" render={ () => <MapBlock paymentData={ this.state.paymentData } /> }></Route> }
             { this.props.isLoggedIn && <Route path="/profile" render={ () => <Profile handleChangePaymentData={ this.handleChangePaymentData } /> }></Route> }
