@@ -2,17 +2,34 @@ import React, { Component } from 'react';
 import ProfilePopupMod from './ProfilePopup.module.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { handleChangePaymentData } from '../../../redux/actions';
 
 class ProfilePopup extends Component {
    state = {
       cardNumber: "",
       validity: "",
-      userName: "",
+      userFullName: "",
       CVCcode: ""
    };
 
    static propTypes = {
       handleChangePaymentData: PropTypes.func
+   };
+
+   onChangePaymentData = () => {
+      const { handleChangePaymentData } = this.props;
+      const { cardNumber, validity, userFullName, CVCcode } = this.state;
+
+      if (!this.state.cardNumber || !this.state.validity || !this.state.userFullName || !this.state.CVCcode) return;
+
+      handleChangePaymentData(cardNumber, validity, userFullName, CVCcode);
+      this.setState({
+         cardNumber: '',
+         validity: '',
+         userFullName: '',
+         CVCcode: ''
+      })
    };
 
    handleSubmit = e => {
@@ -29,8 +46,8 @@ class ProfilePopup extends Component {
       this.setState({ validity: e.target.value });
    };
 
-   handleUserNameChange = e => {
-      this.setState({ userName: e.target.value });
+   handleUserFullNameChange = e => {
+      this.setState({ userFullName: e.target.value });
    };
 
    handleCVCcodeChange = e => {
@@ -58,7 +75,7 @@ class ProfilePopup extends Component {
                   <div>
                      <label>
                         Имя владельца:
-                        <input type="text" value={this.state.userName} onChange={this.handleUserNameChange} placeholder="USER NAME" />
+                        <input type="text" value={this.state.userName} onChange={this.handleUserFullNameChange} placeholder="USER NAME" />
                      </label>
                      <label>
                         CVC:
@@ -67,8 +84,7 @@ class ProfilePopup extends Component {
                   </div>
                </div>
                <Link to="/map">
-                  <input type="submit" value="Сохранить" onClick={ () => { this.props.handleChangePaymentData();
-                  }} />
+                  <input type="submit" value="Сохранить" onClick={ this.onChangePaymentData } />
                </Link>
             </form>
          </div>
@@ -76,4 +92,18 @@ class ProfilePopup extends Component {
    }
 }
 
-export default ProfilePopup;
+const mapStateToProps = state => {
+   return {
+
+   };
+};
+
+const mapDispatchToProps = dispatch => {
+   return {
+      handleChangePaymentData: (cardNumber, validity, userFullName, CVCcode) => {
+         dispatch(handleChangePaymentData(cardNumber, validity, userFullName, CVCcode));
+      }
+   };
+};
+
+export const WrappedProfilePopup = connect(mapStateToProps, mapDispatchToProps)(ProfilePopup);

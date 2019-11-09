@@ -3,15 +3,17 @@ import HeaderMod from './Header.module.css';
 import logo from './logo.svg';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { onLogout } from '../../redux/store';
+import { onLogout } from '../../redux/actions';
 
 class Header extends Component {
    onHandleLogout = () => {
-      console.log('onLogout from HEADER');
+      const { onLogout } = this.props;
+      
       onLogout();
    };
 
    render() {
+
       return (
          <header className={ HeaderMod.app_header }>
             <img src={logo} className={ HeaderMod.logo } alt="logo" />
@@ -24,7 +26,7 @@ class Header extends Component {
                      <Link to="/profile">Профиль</Link>
                   </li>
                   <li onClick={ this.onHandleLogout }>
-                     <Link to="/login">Выйти</Link>
+                     <Link to="/">Выйти</Link>
                   </li>
                </ul>
             </div>
@@ -48,5 +50,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export const WrappedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);
-
-// export default Header;

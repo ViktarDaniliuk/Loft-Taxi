@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapPopupMod from './MapPopup.module.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class MapPopup extends Component {
    static propTypes = {
@@ -27,4 +28,16 @@ class MapPopup extends Component {
    }
 }
 
-export default MapPopup;
+const mapStateToProps = state => {
+   return {
+      paymentData: state.paymentData
+   };
+};
+
+const mapDsipatchToProps = dispatch => {
+   return {
+
+   }
+}
+
+export const WrappedMapPopup = connect(mapStateToProps, mapDsipatchToProps)(MapPopup);

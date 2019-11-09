@@ -3,7 +3,7 @@ import SignupMod from './Signup.module.css';
 import logo from './logo.svg';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { sendDataSignup } from '../../redux/store';
+import { sendDataSignup } from '../../redux/actions';
 
 class Signup extends Component {
    state = {
@@ -22,7 +22,12 @@ class Signup extends Component {
 
       localStorage.setItem('user', JSON.stringify({ email: this.state.email, userName: this.state.userName, userSurname: this.state.userSurname, password: this.state.password }));
       sendDataSignup(email, userName, userSurname, password);
-      this.setState({ email, userName: '', userSurname: '', password: '' });
+      this.setState({ 
+         email: '', 
+         userName: '', 
+         userSurname: '', 
+         password: '' 
+      });
    };
 
    handleEmailChange = e => {
@@ -42,7 +47,6 @@ class Signup extends Component {
    };
 
    render() {
-      
       return (
          <div className={ SignupMod.login }>
             <div className={ SignupMod.logo_block }>
@@ -51,7 +55,7 @@ class Signup extends Component {
             <div className={ SignupMod.popup }>
                <div className={ SignupMod.sign_in }>
                   <h2>Регистрация</h2>
-                  <p>Уже зарегистрирован? <span><Link to="/login">Войти</Link></span></p>
+                  <p>Уже зарегистрирован? <span><Link to="/">Войти</Link></span></p>
                   <form>
                      <label>
                         Адрес электронной почты

@@ -1,4 +1,10 @@
 import { createStore } from 'redux';
+import {
+   SEND_DATA_LOGIN,
+   ON_LOGOUT,
+   SEND_DATA_SIGNUP,
+   SEND_DATA_PROFILE
+} from './actions';
 
 const INITIAL_STATE = {
    currentTab: "signup",
@@ -7,64 +13,32 @@ const INITIAL_STATE = {
    userName: '',
    userSurname: '',
    email: '',
-   password: ''
+   password: '',
+   cardNumber: "",
+   validity: "",
+   userFullName: "",
+   CVCcode: ""
 };
 
-const SEND_DATA_LOGIN = 'SEND_DATA_LOGIN';
-const ON_LOGOUT = 'ON_LOGOUT';
-const SEND_DATA_SIGNUP = 'SEND_DATA_SIGNUP';
-// const UPDATE_EMAIL = 'UPDATE_EMAIL';
-// const UPDATE_USER_NAME_SIGNUP = 'UPDATE_USER_NAME_SIGNUP';
-// const UPDATE_USER_SURNAME = 'UPDATE_USER_SURNAME';
-// const UPDATE_PASSWORD_SIGNPU = 'UPDATE_PASSWORD_SIGNPU'
-// const SEND_DATA_PROFILE = 'SEND_DATA_PROFILE';
-// const UPDATE_CARD_NUMBER = 'UPDATE_CARD_NUMBER';
-// const UPDATE_VALIDITY = 'UPDATE_VALIDITY';
-// const UPDATE_USER_NAME_PROFILE = 'UPDATE_USER_NAME_PROFILE';
-// const UPDATE_CVC_CODE = 'UPDATE_CVC_CODE';
-// const REDIRECT_TO_MAP = 'REDIRECT_TO_MAP';
-// const REDIRECT_TO_PROFILE = 'REDIRECT_TO_PROFILE';
-// const REDIRECT_TO_LOGIN = 'REDIRECT_TO_LOGIN';
+const checkLocalStorage = () => {
+   if (!localStorage.user) return;
 
-export const sendDataSignup = (newEmail, newUserName, newUserSurName, newPassword) => {
+   INITIAL_STATE.currentTab = 'login';
+   
+   return INITIAL_STATE;
+};
 
-   return {
-      type: SEND_DATA_SIGNUP,
-      payload: {
-         userEmail: newEmail,
-         userName: newUserName,
-         userSurname: newUserSurName,
-         password: newPassword
-      }
-   };
-}
-
-export const sendDataLogin = (newUserName, newPassword) => {
-
-   return {
-      type: SEND_DATA_LOGIN,
-      payload: {
-         userName: newUserName,
-         password: newPassword
-      }
-   };
-}
-
-export const onLogout = () => {
-   return {
-      type: ON_LOGOUT,
-      payload: {
-
-      }
-   };
-}
+checkLocalStorage();
 
 const login = (state = INITIAL_STATE, action) => {
+   console.log('action type from store: ', action.type);
    switch (action.type) {
       case ON_LOGOUT: {
          const stateCopy = {...state};
+
          stateCopy.currentTab = 'login';
          stateCopy.isLoggedIn = false;
+
          return stateCopy;
       }
       case SEND_DATA_LOGIN: {
@@ -89,6 +63,17 @@ const login = (state = INITIAL_STATE, action) => {
 
          return stateCopy;
       }
+      case SEND_DATA_PROFILE: {
+         const stateCopy = {...state};
+
+         stateCopy.paymentData = true;
+         stateCopy.cardNumber = action.payload.cardNumber;
+         stateCopy.validity = action.payload.validity;
+         stateCopy.userFullName = action.payload.userFullName;
+         stateCopy.CVCcode = action.payload.CVCcode;
+
+         return stateCopy;
+      }
       default:
          return state;
    }
@@ -98,5 +83,5 @@ export const store = createStore(login, INITIAL_STATE);
 
 store.subscribe(() => {
    // console.log('subsciber');
-   // console.log(store.getState());
+   console.log(store.getState());
 });

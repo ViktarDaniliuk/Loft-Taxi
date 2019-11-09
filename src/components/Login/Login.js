@@ -3,7 +3,7 @@ import LoginMod from './Login.module.css';
 import logo from './logo.svg';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { sendDataLogin } from '../../redux/store';
+import { sendDataLogin } from '../../redux/actions';
 
 class Login extends Component {
    state = {
