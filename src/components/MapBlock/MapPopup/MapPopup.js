@@ -11,6 +11,7 @@ class MapPopup extends Component {
 
    render () {
       // console.log('MapPopup props: ', this.props);
+      console.log('rendered MapPopup');
       if (this.props.paymentData === true) {
          return (
             <div className={ MapPopupMod.payment_data } style={{display: "none"}}></div>

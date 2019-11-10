@@ -36,6 +36,7 @@ class Login extends Component {
    };
 
    render() {
+      console.log('rendered Login');
       return (
          <div className={ LoginMod.login }>
             <div className={ LoginMod.logo_block }>

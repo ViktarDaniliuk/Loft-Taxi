@@ -30,6 +30,7 @@ class MapBlock extends Component {
 
    render () {
       // console.log('MapBlock props: ', this.props);
+      console.log('rendered MapBlock');
       return (
          <div className={ MapBlockMod.map }>
             <WrappedMapPopup paymentData={ this.props.paymentData } />

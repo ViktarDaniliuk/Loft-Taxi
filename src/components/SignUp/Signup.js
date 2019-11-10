@@ -46,7 +46,20 @@ class Signup extends Component {
       this.setState({ password: e.target.value });
    };
 
+   // componentDidMount() { // не здесь, а в функции обрабочике клика кнопки "Зарегистрироваться"
+   //    const { sendDataSignupRequest } = this.props;
+
+   //    // sendDataSignupRequest();
+   // };
+
    render() {
+      // console.log(this.props);
+      console.log('rendered Signup');
+      const { isLoading, error } = this.props;
+
+      if (isLoading) return <p>Ожидание ответа сервера...</p>
+      if (error) return <p>Произошла сетевая ошибка</p>
+
       return (
          <div className={ SignupMod.login }>
             <div className={ SignupMod.logo_block }>
@@ -88,7 +101,7 @@ class Signup extends Component {
 
 const mapStateToProps = state => {
    return {
-      
+      state
    };
 };
 
@@ -96,7 +109,10 @@ const mapDispatchToProps = dispatch => {
    return {
       sendDataSignup: (email, userName, userSurname, password) => {
          dispatch(sendDataSignup(email, userName, userSurname, password));
-      }
+      },
+      // sendDataSignupRequest: () => {
+      //    dispatch(sendDataSignupRequest());
+      // }
    };
 };
 

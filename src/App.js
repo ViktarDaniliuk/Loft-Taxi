@@ -12,18 +12,14 @@ import { connect } from 'react-redux';
 
 class App extends Component {
 
-  // handleChangePaymentData = () => {
-  //   this.setState({
-  //     paymentData: true
-  //   })
-  // };
+  // при клике на Вход/Зарегистрироваться - соответствующим образом менть в стейте currentTab
 
   // убрать обработчик события с кнопки и пользоваться только ним для всех нужд
 
   // поправить ситуацию с формами регистрации и входа, чистить стейт только при выходе из приложения
 
   render () {
-
+    console.log('rendered App');
     return (
       <div className="app">
         { this.props["currentTab"] !== "login" && this.props["currentTab"] !== "signup" && <WrappedHeader /> }

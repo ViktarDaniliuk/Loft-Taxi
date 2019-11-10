@@ -56,6 +56,7 @@ class ProfilePopup extends Component {
 
    render () {
       // console.log('ProfilePopup props: ', this.props);
+      console.log('rendered ProfilePopup');
       return (
          <div className={ ProfilePopupMod.profile_popup }>
             <h1>Профиль</h1>
