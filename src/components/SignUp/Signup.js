@@ -39,8 +39,6 @@ class Signup extends Component {
    };
 
    render() {
-      // console.log(this.props);
-      console.log('rendered Signup');
       //-----------------------------------------------------
       //-----------------------------------------------------
       // в зависимость от ответа сервера менять врутренности компонента
@@ -65,23 +63,47 @@ class Signup extends Component {
                   <form>
                      <label>
                         Адрес электронной почты
-                        <input type="email" name="email" value={ this.state.email } onChange={ this.handleInputChange } />
+                        <input 
+                           type="email" 
+                           name="email" 
+                           value={ this.state.email } 
+                           onChange={ this.handleInputChange } 
+                        />
                      </label>
                      <div>
                         <label>
                            Имя
-                           <input type="text" name="userName" value={ this.state.userName } onChange={ this.handleInputChange } />
+                           <input 
+                              type="text" 
+                              name="userName" 
+                              value={ this.state.userName } 
+                              onChange={ this.handleInputChange } 
+                           />
                         </label>
                         <label>
                            Фамилия
-                           <input type="text" name="userSurname" value={ this.state.userSurname } onChange={ this.handleInputChange } />
+                           <input 
+                              type="text" 
+                              name="userSurname" 
+                              value={ this.state.userSurname } 
+                              onChange={ this.handleInputChange } 
+                           />
                         </label>
                      </div>
                      <label>
                         Пароль
-                        <input type="password" name="password" value={ this.state.password } onChange={ this.handleInputChange } />
+                        <input 
+                           type="password" 
+                           name="password" 
+                           value={ this.state.password } 
+                           onChange={ this.handleInputChange } 
+                        />
                      </label>
-                     <input type="submit" value="Зарегистрироваться" onClick={ this.onHandleSignup } />
+                     <input 
+                        type="submit" 
+                        value="Зарегистрироваться" 
+                        onClick={ this.onHandleSignup } 
+                     />
                   </form>
                </div>
             </div>

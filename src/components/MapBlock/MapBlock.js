@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { WrappedMapPopup } from './MapPopup/MapPopup';
 import MapBlockMod from './MapBlock.module.css';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
 
 class MapBlock extends Component {
    static propTypes = {
@@ -29,11 +28,10 @@ class MapBlock extends Component {
    };
 
    render () {
-      // console.log('MapBlock props: ', this.props);
-      console.log('rendered MapBlock');
+      
       return (
          <div className={ MapBlockMod.map }>
-            <WrappedMapPopup paymentData={ this.props.paymentData } />
+            <WrappedMapPopup />
             <div id="map">
 
             </div>

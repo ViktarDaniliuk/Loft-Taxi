@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import ProfilePopupMod from './ProfilePopup.module.css';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { handleChangePaymentData } from '../../../redux/actions';
+import { sendPaymentDataRequest } from '../../../redux/actions';
+import MaskedInput from 'react-text-mask';
 
 class ProfilePopup extends Component {
    state = {
@@ -14,16 +14,18 @@ class ProfilePopup extends Component {
    };
 
    static propTypes = {
-      handleChangePaymentData: PropTypes.func
+      sendPaymentDataRequest: PropTypes.func
    };
 
-   onChangePaymentData = () => {
-      const { handleChangePaymentData } = this.props;
+   onChangePaymentData = (e) => {
+      const { sendPaymentDataRequest } = this.props;
       const { cardNumber, validity, userFullName, CVCcode } = this.state;
+
+      e.preventDefault();
 
       if (!this.state.cardNumber || !this.state.validity || !this.state.userFullName || !this.state.CVCcode) return;
 
-      handleChangePaymentData(cardNumber, validity, userFullName, CVCcode);
+      sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode);
       this.setState({
          cardNumber: '',
          validity: '',
@@ -40,8 +42,7 @@ class ProfilePopup extends Component {
    };
 
    render () {
-      // console.log('ProfilePopup props: ', this.props);
-      console.log('rendered ProfilePopup');
+      
       return (
          <div className={ ProfilePopupMod.profile_popup }>
             <h1>Профиль</h1>
@@ -51,27 +52,56 @@ class ProfilePopup extends Component {
                   <div>
                      <label>
                         Номер карты:
-                        <input type="text" name="cardNumber" value={ this.state.cardNumber } onChange={ this.handleInputChange } placeholder="1234 5678 1234 5678" />
+                        <MaskedInput 
+                           type="text" 
+                           name="cardNumber" 
+                           value={ this.state.cardNumber } 
+                           onChange={ this.handleInputChange } 
+                           placeholder="1234 5678 1234 5678"
+                           mask={[/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/]}
+                        />
                      </label>
                      <label>
                         Срок действия:
-                        <input type="text" name="validity" value={ this.state.validity } onChange={ this.handleInputChange } placeholder="00/00" />
+                        <MaskedInput 
+                           type="text" 
+                           name="validity" 
+                           value={ this.state.validity } 
+                           onChange={ this.handleInputChange } 
+                           placeholder="00/00" 
+                           mask={[/\d/, /\d/, '/', /\d/, /\d/]}
+                        />
                      </label>
                   </div>
                   <div>
                      <label>
                         Имя владельца:
-                        <input type="text" name="userFullName" value={ this.state.userFullName } onChange={ this.handleInputChange } placeholder="FULL USER NAME" />
+                        <input 
+                           type="text" 
+                           name="userFullName" 
+                           value={ this.state.userFullName } 
+                           onChange={ this.handleInputChange } 
+                           placeholder="FULL USER NAME" 
+                        />
                      </label>
                      <label>
                         CVC:
-                        <input type="password" name="CVCcode" value={ this.state.CVCcode } onChange={ this.handleInputChange } placeholder="***" />
+                        <MaskedInput 
+                           type="password" 
+                           name="CVCcode" 
+                           value={ this.state.CVCcode } 
+                           onChange={ this.handleInputChange } 
+                           placeholder="***" 
+                           mask={[/\d/, /\d/, /\d/]}
+                        />
                      </label>
                   </div>
                </div>
-               <Link to="/map">
-                  <input type="submit" value="Сохранить" onClick={ this.onChangePaymentData } />
-               </Link>
+               <input 
+                  type="submit" 
+                  value="Сохранить" 
+                  onClick={ this.onChangePaymentData } 
+               />
             </form>
          </div>
       );
@@ -86,8 +116,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
    return {
-      handleChangePaymentData: (cardNumber, validity, userFullName, CVCcode) => {
-         dispatch(handleChangePaymentData(cardNumber, validity, userFullName, CVCcode));
+      sendPaymentDataRequest: (cardNumber, validity, userFullName, CVCcode) => {
+         dispatch(sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode));
       }
    };
 };

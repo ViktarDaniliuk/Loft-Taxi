@@ -1,33 +1,41 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import {
-   SEND_DATA_LOGIN,
    ON_LOGOUT,
-   SEND_DATA_PROFILE,
    SEND_DATA_SIGNUP_SUCCESS,
    SEND_DATA_SIGNUP_FAILURE,
-   SEND_DATA_LOGIN_SUCCESS
+   SEND_DATA_LOGIN_SUCCESS,
+   SEND_DATA_LOGIN_FAILURE,
+   SEND_DATA_PROFILE_FAILURE,
+   SEND_DATA_PROFILE_SUCCESS
 } from './actions';
 import { 
    sendSignupDataMiddleware, 
-   sendLoginDataMiddleware
+   sendLoginDataMiddleware,
+   sendPaymentDataMiddleware
 } from '../middlewares';
 
 const INITIAL_STATE = {
    currentTab: "signup",
-   isPaymentData: false,
-   isLoggedIn: false,
    isLoading: false,
-   success: false,
-   token: null,
-   error: null,
-   userName: '',
-   userSurname: '',
-   email: '',
-   password: '',
-   cardNumber: "",
-   validity: "",
-   userFullName: "",
-   CVCcode: ""
+   userData: {
+      isLoggedIn: false,
+      userName: '',
+      userSurname: '',
+      email: '',
+      password: '',
+      success: false,
+      token: null,
+      error: null
+   },
+   cardData: {
+      isPaymentData: false,
+      cardNumber: "",
+      validity: "",
+      userFullName: "",
+      CVCcode: "",
+      success: false,
+      error: null
+   }
    // не нужно хранить в стейте данные пользователя, оствить только token, currentTab, error и состояния (true/false)
    // error - возможно нужно будет поделить на ошибки от разных запросов
    // при перезагрузке поле ошибок обнулять - error: null
@@ -45,60 +53,76 @@ const checkLocalStorage = () => {
 checkLocalStorage();
 
 const rootReducer = (state = INITIAL_STATE, action) => {
-   console.log('action type from store: ', action.type);
-   console.log('action type from store: ', action);
+   // console.log('action type from store: ', action.type);
+   // console.log('action type from store: ', action);
    switch (action.type) {
       case ON_LOGOUT: {
          const stateCopy = {...state};
 
          stateCopy.currentTab = 'login';
-         stateCopy.isLoggedIn = false;
-         stateCopy.success = false;
-         stateCopy.token = null;
+         stateCopy.userData.isLoggedIn = false;
+         stateCopy.userData.success = false;
+         stateCopy.userData.token = null;
 
          return stateCopy;
       }
       case SEND_DATA_LOGIN_SUCCESS: {
          const stateCopy = {...state};
 
-         // stateCopy.email = action.payload.email;
-         // stateCopy.password = action.payload.password;
          stateCopy.currentTab = 'map';
-         stateCopy.isLoggedIn = true;
-         stateCopy.success = action.payload.success;
-         stateCopy.token = action.payload.token;
+         stateCopy.userData.isLoggedIn = true;
+         stateCopy.userData.success = action.payload.success;
+         stateCopy.userData.token = action.payload.token;
+
+         return stateCopy;
+      }
+      case SEND_DATA_LOGIN_FAILURE: {
+         const stateCopy = {...state};
+
+         stateCopy.userData.error = action.payload.error;
+         stateCopy.userData.success = action.payload.success;
 
          return stateCopy;
       }
       case SEND_DATA_SIGNUP_SUCCESS: {
          const stateCopy = {...state};
          
-         stateCopy.email = action.payload.newEmail;
-         stateCopy.userName = action.payload.userName;
-         stateCopy.userSurName = action.payload.userSurName;
-         stateCopy.password = action.payload.password;
+         stateCopy.userData.email = action.payload.email;
+         stateCopy.userData.userName = action.payload.name;
+         stateCopy.userData.userSurname = action.payload.surname;
+         stateCopy.userData.password = action.payload.password;
          stateCopy.currentTab = 'map';
-         stateCopy.isLoggedIn = true;
-         stateCopy.success = true;
-         stateCopy.token = action.payload.token;
+         stateCopy.userData.isLoggedIn = true;
+         stateCopy.userData.success = action.payload.success;
+         stateCopy.userData.token = action.payload.token;
 
          return stateCopy;
       }
       case SEND_DATA_SIGNUP_FAILURE: {
          const stateCopy = {...state};
-         
+
          stateCopy.error = action.payload.error;
+         stateCopy.success = action.payload.success;
 
          return stateCopy;
       }
-      case SEND_DATA_PROFILE: {
+      case SEND_DATA_PROFILE_SUCCESS: {
          const stateCopy = {...state};
 
-         stateCopy.isPaymentData = true;
-         stateCopy.cardNumber = action.payload.cardNumber;
-         stateCopy.validity = action.payload.validity;
-         stateCopy.userFullName = action.payload.userFullName;
-         stateCopy.CVCcode = action.payload.CVCcode;
+         stateCopy.cardData.isPaymentData = true;
+         stateCopy.cardData.cardNumber = action.payload.cardNumber;
+         stateCopy.cardData.validity = action.payload.expiryDate;
+         stateCopy.cardData.userFullName = action.payload.cardName;
+         stateCopy.cardData.CVCcode = action.payload.cvc;
+         stateCopy.cardData.success = action.payload.success;
+
+         return stateCopy;
+      }
+      case SEND_DATA_PROFILE_FAILURE: {
+         const stateCopy = {...state};
+
+         stateCopy.cardData.success = action.payload.success;
+         stateCopy.cardData.error = action.payload.error;
 
          return stateCopy;
       }
@@ -114,6 +138,7 @@ const createAppStore = () => {
       compose(
          applyMiddleware(sendSignupDataMiddleware),
          applyMiddleware(sendLoginDataMiddleware),
+         applyMiddleware(sendPaymentDataMiddleware),
          window.__REDUX_DEVTOOLS_EXTENSION__
          ? window.__REDUX_DEVTOOLS_EXTENSION__()
          : noop => noop,

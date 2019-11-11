@@ -23,7 +23,6 @@ class Login extends Component {
       const { email: userEmailFromLocalStorage, password: passwordFromLocalStorage } = this.handleGetDateFromLocalStorage('user');
 
       if (email === userEmailFromLocalStorage && password === passwordFromLocalStorage) {
-         console.log('Login: ', email, ' ', password);
          sendDataLoginRequest(email, password);
          this.setState({ 
             email: '', 
@@ -41,7 +40,7 @@ class Login extends Component {
    };
 
    render() {
-      console.log('rendered Login');
+      
       return (
          <div className={ LoginMod.login }>
             <div className={ LoginMod.logo_block }>
@@ -54,13 +53,27 @@ class Login extends Component {
                   <form>
                      <label>
                         Адрес электронной почты*
-                        <input type="text" name="email" value={ this.state.userName } onChange={ this.handleInputChange } />
+                        <input 
+                           type="email" 
+                           name="email" 
+                           value={ this.state.userName } 
+                           onChange={ this.handleInputChange }
+                        />
                      </label>
                      <label>
                         Пароль*
-                        <input type="password" name="password" value={ this.state.password } onChange={ this.handleInputChange } />
+                        <input 
+                           type="password" 
+                           name="password" 
+                           value={ this.state.password } 
+                           onChange={ this.handleInputChange } 
+                        />
                      </label>
-                     <input type="submit" value="Войти" onClick={ this.onHandleLogin } />
+                     <input 
+                        type="submit" 
+                        value="Войти" 
+                        onClick={ this.onHandleLogin } 
+                     />
                   </form>
                </div>
             </div>

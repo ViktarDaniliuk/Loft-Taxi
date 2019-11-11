@@ -19,7 +19,7 @@ class App extends Component {
   // поправить ситуацию с формами регистрации и входа, чистить стейт только при выходе из приложения
 
   render () {
-    console.log('rendered App');
+    
     return (
       <div className="app">
         { this.props["currentTab"] !== "login" && this.props["currentTab"] !== "signup" && <WrappedHeader /> }
@@ -39,7 +39,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: state.isLoggedIn,
+    isLoggedIn: state.userData.isLoggedIn,
     currentTab: state.currentTab
   };
 };
