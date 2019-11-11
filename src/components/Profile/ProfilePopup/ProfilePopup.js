@@ -32,26 +32,11 @@ class ProfilePopup extends Component {
       })
    };
 
-   handleSubmit = e => {
-      e.preventDefault();
+   handleInputChange = e => {
+      const name = e.target.name;
+      const value = e.target.value;
 
-
-   };
-
-   handleCardNumberChange = e => {
-      this.setState({ cardNumber: e.target.value });
-   };
-
-   handleValidityChange = e => {
-      this.setState({ validity: e.target.value });
-   };
-
-   handleUserFullNameChange = e => {
-      this.setState({ userFullName: e.target.value });
-   };
-
-   handleCVCcodeChange = e => {
-      this.setState({ CVCcode: e.target.value });
+      this.setState({ [name]: value });
    };
 
    render () {
@@ -61,26 +46,26 @@ class ProfilePopup extends Component {
          <div className={ ProfilePopupMod.profile_popup }>
             <h1>Профиль</h1>
             <p>Способ оплаты</p>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={ this.handleSubmit }>
                <div>
                   <div>
                      <label>
                         Номер карты:
-                        <input type="text" value={this.state.cardNumber} onChange={this.handleCardNumberChange} placeholder="1234 5678 1234 5678" />
+                        <input type="text" name="cardNumber" value={ this.state.cardNumber } onChange={ this.handleInputChange } placeholder="1234 5678 1234 5678" />
                      </label>
                      <label>
                         Срок действия:
-                        <input type="text" value={this.state.validity} onChange={this.handleValidityChange} placeholder="00/00" />
+                        <input type="text" name="validity" value={ this.state.validity } onChange={ this.handleInputChange } placeholder="00/00" />
                      </label>
                   </div>
                   <div>
                      <label>
                         Имя владельца:
-                        <input type="text" value={this.state.userName} onChange={this.handleUserFullNameChange} placeholder="USER NAME" />
+                        <input type="text" name="userFullName" value={ this.state.userFullName } onChange={ this.handleInputChange } placeholder="FULL USER NAME" />
                      </label>
                      <label>
                         CVC:
-                        <input type="password" value={this.state.CVCcode} onChange={this.handleCVCcodeChange} placeholder="***" />
+                        <input type="password" name="CVCcode" value={ this.state.CVCcode } onChange={ this.handleInputChange } placeholder="***" />
                      </label>
                   </div>
                </div>

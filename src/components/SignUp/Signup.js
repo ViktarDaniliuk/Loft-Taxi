@@ -3,7 +3,7 @@ import SignupMod from './Signup.module.css';
 import logo from './logo.svg';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { sendDataSignup } from '../../redux/actions';
+import { sendDataSignupRequest } from '../../redux/actions';
 
 class Signup extends Component {
    state = {
@@ -13,15 +13,16 @@ class Signup extends Component {
       password: ''
    };
 
-   onHandleSignup = () => {
-      const { sendDataSignup } = this.props;
+   onHandleSignup = (e) => {
+      e.preventDefault();
+
+      const { sendDataSignupRequest } = this.props;
       const { email, userName, userSurname, password } = this.state;
 
       if (localStorage.user) return;
       if (!this.state.email || !this.state.userName || !this.state.userSurname || !this.state.password) return;
 
-      localStorage.setItem('user', JSON.stringify({ email: this.state.email, userName: this.state.userName, userSurname: this.state.userSurname, password: this.state.password }));
-      sendDataSignup(email, userName, userSurname, password);
+      sendDataSignupRequest(email, userName, userSurname, password);
       this.setState({ 
          email: '', 
          userName: '', 
@@ -30,35 +31,27 @@ class Signup extends Component {
       });
    };
 
-   handleEmailChange = e => {
-      this.setState({ email: e.target.value });
-   };
-      
-   handleUserNameChange = e => {
-      this.setState({ userName: e.target.value });
-   };
-      
-   handleUserSurnameChange = e => {
-      this.setState({ userSurname: e.target.value });
-   };
-      
-   handlePasswordChange = e => {
-      this.setState({ password: e.target.value });
-   };
+   handleInputChange = e => {
+      const name = e.target.name;
+      const value = e.target.value;
 
-   // componentDidMount() { // не здесь, а в функции обрабочике клика кнопки "Зарегистрироваться"
-   //    const { sendDataSignupRequest } = this.props;
-
-   //    // sendDataSignupRequest();
-   // };
+      this.setState({ [name]: value });
+   };
 
    render() {
       // console.log(this.props);
       console.log('rendered Signup');
+      //-----------------------------------------------------
+      //-----------------------------------------------------
+      // в зависимость от ответа сервера менять врутренности компонента
+
       const { isLoading, error } = this.props;
 
       if (isLoading) return <p>Ожидание ответа сервера...</p>
       if (error) return <p>Произошла сетевая ошибка</p>
+
+      //-----------------------------------------------------
+      //-----------------------------------------------------
 
       return (
          <div className={ SignupMod.login }>
@@ -72,25 +65,23 @@ class Signup extends Component {
                   <form>
                      <label>
                         Адрес электронной почты
-                        <input type="email" value={ this.state.email } onChange={ this.handleEmailChange } />
+                        <input type="email" name="email" value={ this.state.email } onChange={ this.handleInputChange } />
                      </label>
                      <div>
                         <label>
                            Имя
-                           <input type="text" value={ this.state.userName } onChange={ this.handleUserNameChange } />
+                           <input type="text" name="userName" value={ this.state.userName } onChange={ this.handleInputChange } />
                         </label>
                         <label>
                            Фамилия
-                           <input type="text" value={ this.state.userSurname } onChange={ this.handleUserSurnameChange } />
+                           <input type="text" name="userSurname" value={ this.state.userSurname } onChange={ this.handleInputChange } />
                         </label>
                      </div>
                      <label>
                         Пароль
-                        <input type="password" value={ this.state.password } onChange={ this.handlePasswordChange } />
+                        <input type="password" name="password" value={ this.state.password } onChange={ this.handleInputChange } />
                      </label>
-                     <Link to="/profile">
-                        <input type="submit" value="Зарегистрироваться" onClick={ this.onHandleSignup } />
-                     </Link>
+                     <input type="submit" value="Зарегистрироваться" onClick={ this.onHandleSignup } />
                   </form>
                </div>
             </div>
@@ -107,12 +98,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
    return {
-      sendDataSignup: (email, userName, userSurname, password) => {
-         dispatch(sendDataSignup(email, userName, userSurname, password));
-      },
-      // sendDataSignupRequest: () => {
-      //    dispatch(sendDataSignupRequest());
-      // }
+      sendDataSignupRequest: (email, userName, userSurname, password) => {
+         dispatch(sendDataSignupRequest(email, userName, userSurname, password));
+      }
    };
 };
 

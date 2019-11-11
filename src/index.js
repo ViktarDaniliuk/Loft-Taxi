@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { WrappedApp } from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import createAppStore from './redux/store';
+import { history } from './history';
 
 const store = createAppStore();
 
 ReactDOM.render(
    <Provider store={ store }>
       <BrowserRouter>
-         <WrappedApp />
+         <Router history={ history }>
+            <WrappedApp />
+         </Router>
       </BrowserRouter>
    </Provider>, document.getElementById('root'));
 
