@@ -1,10 +1,15 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './reducer';
 import { 
-   sendSignupDataMiddleware, 
-   sendLoginDataMiddleware,
+   // sendSignupDataMiddleware, 
+   // sendLoginDataMiddleware,
    sendPaymentDataMiddleware
 } from '../middlewares';
+import {
+   sagaSendSignupDataMiddleware,
+   sagaSendLoginDataMiddleware
+} from './sagaMiddlewares';
+import { handleSignUp, handleLogin } from './sagas';
 
 export const INITIAL_STATE = {
    currentTab: "signup",
@@ -44,19 +49,26 @@ const checkLocalStorage = () => {
 
 checkLocalStorage();
 
+console.log(INITIAL_STATE);
+
 const createAppStore = () => {
    const store = createStore(
       rootReducer,
       INITIAL_STATE,
       compose(
-         applyMiddleware(sendSignupDataMiddleware),
-         applyMiddleware(sendLoginDataMiddleware),
+         // applyMiddleware(sendSignupDataMiddleware),
+         // applyMiddleware(sendLoginDataMiddleware),
          applyMiddleware(sendPaymentDataMiddleware),
+         applyMiddleware(sagaSendSignupDataMiddleware),
+         applyMiddleware(sagaSendLoginDataMiddleware),
          window.__REDUX_DEVTOOLS_EXTENSION__
          ? window.__REDUX_DEVTOOLS_EXTENSION__()
          : noop => noop,
       )
    );
+
+   sagaSendSignupDataMiddleware.run(handleSignUp);
+   sagaSendLoginDataMiddleware.run(handleLogin);
 
    return store;
 };

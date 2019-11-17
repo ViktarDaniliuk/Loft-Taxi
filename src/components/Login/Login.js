@@ -24,10 +24,10 @@ class Login extends Component {
 
       if (email === userEmailFromLocalStorage && password === passwordFromLocalStorage) {
          sendDataLoginRequest(email, password);
-         this.setState({ 
-            email: '', 
-            password: '' 
-         });
+         // this.setState({ 
+         //    email: '', 
+         //    password: '' 
+         // });
       } 
       return;
    };
