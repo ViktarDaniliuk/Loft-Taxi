@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import MapPopup from './MapPopup/MapPopup';
+import { WrappedMapPopup } from './MapPopup/MapPopup';
 import MapBlockMod from './MapBlock.module.css';
 import PropTypes from 'prop-types';
 
 class MapBlock extends Component {
    static propTypes = {
-      handleChangeCurrentTab: PropTypes.func,
       paymentData: PropTypes.bool
    };
 
@@ -29,9 +28,10 @@ class MapBlock extends Component {
    };
 
    render () {
+      
       return (
          <div className={ MapBlockMod.map }>
-            <MapPopup handleChangeCurrentTab={ this.props.handleChangeCurrentTab }  paymentData={ this.props.paymentData } />
+            <WrappedMapPopup />
             <div id="map">
 
             </div>

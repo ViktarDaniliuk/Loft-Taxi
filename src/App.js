@@ -1,161 +1,53 @@
 import React, { Component } from 'react';
 import './App.css';
-import Header from './components/Header/Header';
-import Login from './components/Login/Login';
+import { WrappedHeader } from './components/Header/Header';
+import { WrappedLogin } from './components/Login/Login';
 import MapBlock from './components/MapBlock/MapBlock';
 import Profile from './components/Profile/Profile';
-import Signup from './components/SignUp/Signup';
-import { Context } from './context';
+import { WrappedSignup } from './components/SignUp/Signup';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-// добавить подсветку кнопки соответствующей активной странице
+// добавить подсветку кнопки соответствующей активной странице с помощью NavLink activeClassName
 
 class App extends Component {
-  state = {
-    currentTab: "signup",
-    paymentData: false,
-    isLoggedIn: false,
-    userName: '',
-    userSurname: '',
-    email: '',
-    password: ''
-  };
 
-  handleDefineStartPage = () => {
-    if (!localStorage.user) return;
-    this.setState({
-      currentTab: 'login'
-    })
-  };
+  // при клике на Вход/Зарегистрироваться - соответствующим образом менть в стейте currentTab
 
-  handleGetState = () => {
-    return JSON.parse(localStorage.getItem('user'));
-  };
+  // убрать обработчик события с кнопки и пользоваться только ним для всех нужд
 
-  handleSignUp = () => {
-    if (localStorage.user) return;
-    if (!this.state.email || !this.state.userName || !this.state.userSurname || !this.state.password) return;
-
-    localStorage.setItem('user', JSON.stringify({ email: this.state.email, userName: this.state.userName, userSurname: this.state.userSurname, password: this.state.password }));
-    this.setState({
-      currentTab: 'profile',
-      userName: '',
-      userSurname: '',
-      email: '',
-      password: ''
-    })
-  };
-
-  handleChangeCurrentTab = (currTab) => {
-    this.setState({
-      currentTab: currTab
-    });
-
-    if (this.state.currentTab === 'login' || this.state.currentTab === 'signup') {
-      this.setState({
-        userName: '',
-        userSurname: '',
-        email: '',
-        password: ''
-      })
-    }
-  };
-
-  handleChangePaymentData = () => {
-    this.setState({
-      paymentData: true
-    })
-  };
-
-  handleLogin = (name, pass) => {
-    const { userName, password } = this.handleGetState();
-
-    if (userName === name && password === pass) {
-      this.setState({
-        currentTab: 'profile',
-        isLoggedIn: true
-      })
-    }
-
-    this.setState({
-      userName: '',
-      password: ''
-    })
-  };
-
-  handleLogout = () => {
-    this.setState({
-      isLoggedIn: false,
-      currentTab: 'login'
-    })
-  };
-
-  handleSignUpSubmit = e => {
-    e.preventDefault();
-          
-  };
-
-  handleLoginSubmit = e => {
-    e.preventDefault();
-          
-  };
-    
-  handleEmailChange = e => {
-    this.setState({ email: e.target.value });
-  };
-    
-  handleUserNameChange = e => {
-    this.setState({ userName: e.target.value });
-  };
-    
-  handleUserSurnameChange = e => {
-    this.setState({ userSurname: e.target.value });
-  };
-    
-  handlePasswordChange = e => {
-    this.setState({ password: e.target.value });
-  };
-
-  componentDidMount() {
-    this.handleDefineStartPage();
-  };
+  // поправить ситуацию с формами регистрации и входа, чистить стейт только при выходе из приложения
 
   render () {
-    // console.log('App state: ', this.state);
-    const tabs = {
-      signup: <Signup handleChangeCurrentTab={ this.handleChangeCurrentTab } />,
-      login: <Login />,
-      profile: <Profile handleChangeCurrentTab={ this.handleChangeCurrentTab } handleChangePaymentData={ this.handleChangePaymentData } />,
-      mapblock: <MapBlock handleChangeCurrentTab={ this.handleChangeCurrentTab }  paymentData={ this.state.paymentData } />
-    };
-
+    
     return (
-      <Context.Provider value={{
-        userName: this.state.userName,
-        userSurname: this.state.userSurname,
-        email: this.state.email,
-        password: this.state.password,
-        isLoggedIn: this.isLoggedIn,
-        handleLogin: this.handleLogin, 
-        handleLogout: this.handleLogout, 
-        handleSignUp: this.handleSignUp,
-        handleSignUpSubmit: this.handleSignUpSubmit,
-        handleLoginSubmit: this.handleLoginSubmit,
-        handleChangeCurrentTab: this.handleChangeCurrentTab,
-        handleEmailChange: this.handleEmailChange,
-        handleUserNameChange: this.handleUserNameChange,
-        handleUserSurnameChange: this.handleUserSurnameChange,
-        handlePasswordChange: this.handlePasswordChange,
-        handleGetState: this.handleGetState
-      }}>
       <div className="app">
-        { this.state["currentTab"] !== "login" && this.state["currentTab"] !== "signup" && <Header handleChangeCurrentTab={ this.handleChangeCurrentTab } /> }
+        { this.props["currentTab"] !== "login" && this.props["currentTab"] !== "signup" && <WrappedHeader /> }
         <div className="main-block">
-          {tabs[this.state["currentTab"]]}
+          <Switch>
+            <Route path="/" exact render={ () => <WrappedLogin /> }></Route>
+            <Route path="/signup" component={ WrappedSignup }></Route>
+            { this.props.isLoggedIn && <Route path="/map" render={ () => <MapBlock/> }></Route> }
+            { this.props.isLoggedIn && <Route path="/profile" render={ () => <Profile handleChangePaymentData={ this.handleChangePaymentData } /> }></Route> }
+            <Redirect to="/signup" />
+          </Switch>
         </div>
       </div>
-      </Context.Provider>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.userData.isLoggedIn,
+    currentTab: state.currentTab
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    
+  };
+};
+
+export const WrappedApp = connect(mapStateToProps, mapDispatchToProps)(App);

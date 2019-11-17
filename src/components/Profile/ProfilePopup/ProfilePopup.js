@@ -1,79 +1,125 @@
 import React, { Component } from 'react';
 import ProfilePopupMod from './ProfilePopup.module.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { sendPaymentDataRequest } from '../../../redux/actions';
+import MaskedInput from 'react-text-mask';
 
 class ProfilePopup extends Component {
    state = {
       cardNumber: "",
       validity: "",
-      userName: "",
+      userFullName: "",
       CVCcode: ""
    };
 
    static propTypes = {
-      handleChangeCurrentTab: PropTypes.func,
-      handleChangePaymentData: PropTypes.func
+      sendPaymentDataRequest: PropTypes.func
    };
 
-   handleSubmit = e => {
+   onChangePaymentData = (e) => {
+      const { sendPaymentDataRequest } = this.props;
+      const { cardNumber, validity, userFullName, CVCcode } = this.state;
+
       e.preventDefault();
 
+      if (!this.state.cardNumber || !this.state.validity || !this.state.userFullName || !this.state.CVCcode) return;
 
+      sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode);
+      this.setState({
+         cardNumber: '',
+         validity: '',
+         userFullName: '',
+         CVCcode: ''
+      })
    };
 
-   handleCardNumberChange = e => {
-      this.setState({ cardNumber: e.target.value });
-   };
+   handleInputChange = e => {
+      const name = e.target.name;
+      const value = e.target.value;
 
-   handleValidityChange = e => {
-      this.setState({ validity: e.target.value });
-   };
-
-   handleUserNameChange = e => {
-      this.setState({ userName: e.target.value });
-   };
-
-   handleCVCcodeChange = e => {
-      this.setState({ CVCcode: e.target.value });
+      this.setState({ [name]: value });
    };
 
    render () {
-      // console.log('ProfilePopup props: ', this.props);
+      
       return (
          <div className={ ProfilePopupMod.profile_popup }>
             <h1>Профиль</h1>
             <p>Способ оплаты</p>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={ this.handleSubmit }>
                <div>
                   <div>
                      <label>
                         Номер карты:
-                        <input type="text" value={this.state.cardNumber} onChange={this.handleCardNumberChange} placeholder="1234 5678 1234 5678" />
+                        <MaskedInput 
+                           type="text" 
+                           name="cardNumber" 
+                           value={ this.state.cardNumber } 
+                           onChange={ this.handleInputChange } 
+                           placeholder="1234 5678 1234 5678"
+                           mask={[/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/]}
+                        />
                      </label>
                      <label>
                         Срок действия:
-                        <input type="text" value={this.state.validity} onChange={this.handleValidityChange} placeholder="00/00" />
+                        <MaskedInput 
+                           type="text" 
+                           name="validity" 
+                           value={ this.state.validity } 
+                           onChange={ this.handleInputChange } 
+                           placeholder="00/00" 
+                           mask={[/\d/, /\d/, '/', /\d/, /\d/]}
+                        />
                      </label>
                   </div>
                   <div>
                      <label>
                         Имя владельца:
-                        <input type="text" value={this.state.userName} onChange={this.handleUserNameChange} placeholder="USER NAME" />
+                        <input 
+                           type="text" 
+                           name="userFullName" 
+                           value={ this.state.userFullName } 
+                           onChange={ this.handleInputChange } 
+                           placeholder="FULL USER NAME" 
+                        />
                      </label>
                      <label>
                         CVC:
-                        <input type="password" value={this.state.CVCcode} onChange={this.handleCVCcodeChange} placeholder="***" />
+                        <MaskedInput 
+                           type="password" 
+                           name="CVCcode" 
+                           value={ this.state.CVCcode } 
+                           onChange={ this.handleInputChange } 
+                           placeholder="***" 
+                           mask={[/\d/, /\d/, /\d/]}
+                        />
                      </label>
                   </div>
                </div>
-               <input type="submit" value="Сохранить" onClick={ () => { 
-                  this.props.handleChangeCurrentTab("mapblock");
-                  this.props.handleChangePaymentData();
-               }} />
+               <input 
+                  type="submit" 
+                  value="Сохранить" 
+                  onClick={ this.onChangePaymentData } 
+               />
             </form>
          </div>
       );
    }
 }
 
-export default ProfilePopup;
+const mapStateToProps = state => {
+   return {
+
+   };
+};
+
+const mapDispatchToProps = dispatch => {
+   return {
+      sendPaymentDataRequest: (cardNumber, validity, userFullName, CVCcode) => {
+         dispatch(sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode));
+      }
+   };
+};
+
+export const WrappedProfilePopup = connect(mapStateToProps, mapDispatchToProps)(ProfilePopup);

@@ -1,28 +1,52 @@
-import React, { useContext } from 'react';
+import React, { Component } from 'react';
 import HeaderMod from './Header.module.css';
 import logo from './logo.svg';
-import PropTypes from 'prop-types';
-import { Context } from '../../context';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { onLogout } from '../../redux/actions';
 
-const Header = ({ handleChangeCurrentTab }) => {
-   const { handleLogout } = useContext(Context);
+class Header extends Component {
+   onHandleLogout = () => {
+      const { onLogout } = this.props;
+      
+      onLogout();
+   };
 
-   return (
-      <header className={ HeaderMod.app_header }>
-         <img src={logo} className={ HeaderMod.logo } alt="logo" />
-         <div className={ HeaderMod.menu }>
-            <ul>
-               <li onClick={ () => handleChangeCurrentTab("mapblock") }>Карта</li>
-               <li onClick={ () => handleChangeCurrentTab("profile") }>Профиль</li>
-               <li onClick={ () => handleLogout() }>Выйти</li>
-            </ul>
-         </div>
-      </header>
-   )
+   render() {
+
+      return (
+         <header className={ HeaderMod.app_header }>
+            <img src={logo} className={ HeaderMod.logo } alt="logo" />
+            <div className={ HeaderMod.menu }>
+               <ul>
+                  <li>
+                     <Link to="/map">Карта</Link>
+                  </li>
+                  <li>
+                     <Link to="/profile">Профиль</Link>
+                  </li>
+                  <li onClick={ this.onHandleLogout }>
+                     <Link to="/">Выйти</Link>
+                  </li>
+               </ul>
+            </div>
+         </header>
+      )
+   }
 }
 
-Header.propTypes = {
-   handleChangeCurrentTab: PropTypes.func
-}
+const mapStateToProps = state => {
+   return {
+      
+   };
+};
 
-export default Header;
+const mapDispatchToProps = dispatch => {
+   return {
+      onLogout: () => {
+         dispatch(onLogout());
+      }
+   };
+};
+
+export const WrappedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);

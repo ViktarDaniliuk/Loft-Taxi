@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import MapPopupMod from './MapPopup.module.css';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class MapPopup extends Component {
    static propTypes = {
-      handleChangeCurrentTab: PropTypes.func,
       paymentData: PropTypes.bool
    };
 
    render () {
+      
       if (this.props.paymentData === true) {
          return (
             <div className={ MapPopupMod.payment_data } style={{display: "none"}}></div>
@@ -18,10 +20,24 @@ class MapPopup extends Component {
          <div className={ MapPopupMod.payment_data }>
             <h1>Заполните платежные данные</h1>
             <p>Укажите информацию о банковской карте, чтобы сделать заказ.</p>
-            <input type="submit" value="Перейти в профиль" onClick={ () => this.props.handleChangeCurrentTab("profile") } />
+            <Link to="/profile">
+               <input type="submit" value="Перейти в профиль" />
+            </Link>
          </div>
       );
    }
 }
 
-export default MapPopup;
+const mapStateToProps = state => {
+   return {
+      paymentData: state.cardData.isPaymentData
+   };
+};
+
+const mapDsipatchToProps = dispatch => {
+   return {
+
+   }
+}
+
+export const WrappedMapPopup = connect(mapStateToProps, mapDsipatchToProps)(MapPopup);
