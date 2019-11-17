@@ -1,9 +1,9 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import {
-   sendDataSignupRequest,
+   SEND_DATA_SIGNUP_REQUEST,
    sendDataSignupSuccess,
    sendDataSignupFailure,
-   sendDataLoginRequest,
+   SEND_DATA_LOGIN_REQUEST,
    sendDataLoginSuccess,
    sendDataLoginFailure,
    // SEND_DATA_PROFILE_REQUEST,
@@ -28,14 +28,13 @@ const getToken = (user, path) => {
 export function* handleSignUp() {
    let path = 'register'
 
-   yield takeEvery(sendDataSignupRequest().type, function* () {
+   yield takeEvery(SEND_DATA_SIGNUP_REQUEST, function* (action) {
       try {
-         let payload = sendDataSignupRequest().payload;
          let user = {
-            email: payload.userEmail,
-            password: payload.password,
-            name: payload.userName,
-            surname: payload.userSurname
+            email: action.payload.userEmail,
+            password: action.payload.password,
+            name: action.payload.userName,
+            surname: action.payload.userSurname
          };
          const result = yield call(getToken, user, path);
          const data = { ...result, ...user };
@@ -58,14 +57,12 @@ export function* handleSignUp() {
 export function* handleLogin() {
    let path = 'auth'
 
-   yield takeEvery(sendDataLoginRequest().type, function* () {
+   yield takeEvery(SEND_DATA_LOGIN_REQUEST, function* (action) {
       try {
-         console.log(sendDataLoginRequest());
-         let payload = sendDataLoginRequest().payload;
-         console.log('Payload: ', payload);
+         console.log('Action: ', action);
          let user = {
-            email: payload.userEmail,
-            password: payload.password
+            email: action.payload.userEmail,
+            password: action.payload.password
          };
          const result = yield call(getToken, user, path);
          const data = { ...result, ...user };

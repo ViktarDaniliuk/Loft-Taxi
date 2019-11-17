@@ -59,7 +59,7 @@ export const sendDataLoginRequest = (newEmail, newPassword) => {
 };
 
 export const sendDataLoginSuccess = (data) => {
-
+   console.log('sendDataLoginSuccess data: ', data);
    return {
       type: SEND_DATA_LOGIN_SUCCESS,
       payload: { ...data }
