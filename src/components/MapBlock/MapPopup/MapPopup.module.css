@@ -17,3 +17,27 @@
 .payment_data input {
    width: 100%;
 }
+
+.payment_data > div {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+
+.payment_data select {
+   height: 50px;
+   border: none;
+   border-bottom: 1px solid #919191;
+   transition: all .3s;
+   font-size: 14px;
+   padding-left: 15px;
+}
+
+.payment_data select:nth-of-type(1) {
+   margin-bottom: 30px;
+}
+
+.payment_data select:focus {
+   border-bottom: 1px solid #1473e6;
+   transition: all .3s;
+}

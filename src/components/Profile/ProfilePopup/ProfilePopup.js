@@ -10,7 +10,8 @@ class ProfilePopup extends Component {
       cardNumber: "",
       validity: "",
       userFullName: "",
-      CVCcode: ""
+      CVCcode: "",
+      disabled: "disabled"
    };
 
    static propTypes = {
@@ -18,20 +19,14 @@ class ProfilePopup extends Component {
    };
 
    onChangePaymentData = (e) => {
-      const { sendPaymentDataRequest } = this.props;
-      const { cardNumber, validity, userFullName, CVCcode } = this.state;
+      const { sendPaymentDataRequest, cardNumber, validity, userFullName, CVCcode } = this.props;
+      // const { cardNumber, validity, userFullName, CVCcode } = this.state;
 
       e.preventDefault();
 
-      if (!this.state.cardNumber || !this.state.validity || !this.state.userFullName || !this.state.CVCcode) return;
+      if (!this.state.cardNumber || !this.state.validity || !this.state.userFullName || !this.state.CVCcode) return; // вместо return сделать добавление класса disabled кнопке (чтобы нельзя было ее нажать)
 
       sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode);
-      this.setState({
-         cardNumber: '',
-         validity: '',
-         userFullName: '',
-         CVCcode: ''
-      })
    };
 
    handleInputChange = e => {
@@ -39,7 +34,28 @@ class ProfilePopup extends Component {
       const value = e.target.value;
 
       this.setState({ [name]: value });
+
+      this.handleCheckInputStatus();
    };
+
+   handleCheckInputStatus = () => {
+      if (this.state.cardNumber && this.state.validity && this.state.userFullName && this.state.CVCcode) this.setState({ disabled: "" });
+   };
+
+   handleUpdateState = () => {
+      if (!this.state.cardNumber && !this.state.validity && !this.state.userFullName && !this.state.CVCcode) {
+         this.setState({ 
+            cardNumber: this.props.cardNumber,
+            validity: this.props.validity,
+            userFullName: this.props.userFullName,
+            CVCcode: this.props.CVCcode
+         })
+      }
+   };
+
+   componentDidMount() {
+      if (this.props.cardNumber) this.handleUpdateState();
+   }
 
    render () {
       
@@ -101,6 +117,7 @@ class ProfilePopup extends Component {
                   type="submit" 
                   value="Сохранить" 
                   onClick={ this.onChangePaymentData } 
+                  className={ this.state.disabled }
                />
             </form>
          </div>
@@ -110,7 +127,10 @@ class ProfilePopup extends Component {
 
 const mapStateToProps = state => {
    return {
-
+      cardNumber: state.cardData.cardNumber,
+      validity: state.cardData.validity,
+      userFullName: state.cardData.userFullName,
+      CVCcode: state.cardData.CVCcode
    };
 };
 

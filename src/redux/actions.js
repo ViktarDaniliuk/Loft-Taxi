@@ -9,6 +9,12 @@ export const SEND_DATA_PROFILE = 'SEND_DATA_PROFILE';
 export const SEND_DATA_PROFILE_REQUEST = 'SEND_DATA_PROFILE_REQUEST';
 export const SEND_DATA_PROFILE_SUCCESS = 'SEND_DATA_PROFILE_SUCCESS';
 export const SEND_DATA_PROFILE_FAILURE = 'SEND_DATA_PROFILE_FAILURE';
+export const GET_PAYMENT_DATA_REQUEST = 'GET_PAYMENT_DATA_REQUEST';
+export const GET_PAYMENT_DATA_SUCCESS = 'GET_PAYMENT_DATA_SUCCESS';
+export const GET_PAYMENT_DATA_FAILURE = 'GET_PAYMENT_DATA_FAILURE';
+export const GET_ADDRESS_LIST_REQUEST = 'GET_ADDRESS_LIST_REQUEST';
+export const GET_ADDRESS_LIST_SUCCESS = 'GET_ADDRESS_LIST_SUCCESS';
+export const GET_ADDRESS_LIST_FAILURE = 'GET_ADDRESS_LIST_FAILURE';
 
 export const onLogout = () => {
    
@@ -59,7 +65,7 @@ export const sendDataLoginRequest = (newEmail, newPassword) => {
 };
 
 export const sendDataLoginSuccess = (data) => {
-   console.log('sendDataLoginSuccess data: ', data);
+
    return {
       type: SEND_DATA_LOGIN_SUCCESS,
       payload: { ...data }
@@ -102,3 +108,51 @@ export const sendPaymentDataFailure = (error) => {
       payload: { ...error }
    };
 };
+
+export const getPaymentDataRequest = (token) => {
+
+   return {
+      type: GET_PAYMENT_DATA_REQUEST,
+      payload: {
+         token: token
+      }
+   };
+};
+
+export const getPaymentDataSuccess = (data) => {
+
+   return {
+      type: GET_PAYMENT_DATA_SUCCESS,
+      payload: { ...data }
+   };
+};
+
+export const getPaymentDataFailure = (error) => {
+
+   return {
+      type: GET_PAYMENT_DATA_FAILURE,
+      payload: { ...error }
+   };
+};
+
+export const getAddressListRequest = () => {
+
+      return {
+         type: GET_ADDRESS_LIST_REQUEST
+      };
+   };
+   
+   export const getAddressListSuccess = (data) => {
+      console.log(data);
+      return {
+         type: GET_ADDRESS_LIST_SUCCESS,
+         payload: { ...data }
+      };
+   };
+   
+   export const getAddressListFailure = () => {
+   
+      return {
+         type: GET_ADDRESS_LIST_FAILURE
+      };
+   };
