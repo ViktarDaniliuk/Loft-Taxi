@@ -90,12 +90,12 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       case GET_PAYMENT_DATA_SUCCESS: {
          const stateCopy = {...state};
 
-         stateCopy.cardData.isPaymentData = action.payload.success;
+         stateCopy.cardData.isPaymentData = true;
          stateCopy.cardData.cardNumber = action.payload.cardNumber;
          stateCopy.cardData.validity = action.payload.expiryDate;
          stateCopy.cardData.userFullName = action.payload.cardName;
          stateCopy.cardData.CVCcode = action.payload.cvc;
-         stateCopy.cardData.success = action.payload.success; // посмотреть, нужно ли это поле
+         stateCopy.cardData.id = action.payload.id; // посмотреть, нужно ли это поле
 
          return stateCopy;
       }

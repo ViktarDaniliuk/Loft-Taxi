@@ -19,8 +19,8 @@ class ProfilePopup extends Component {
    };
 
    onChangePaymentData = (e) => {
-      const { sendPaymentDataRequest, cardNumber, validity, userFullName, CVCcode } = this.props;
-      // const { cardNumber, validity, userFullName, CVCcode } = this.state;
+      const { sendPaymentDataRequest } = this.props;
+      const { cardNumber, validity, userFullName, CVCcode } = this.state;
 
       e.preventDefault();
 
@@ -54,7 +54,9 @@ class ProfilePopup extends Component {
    };
 
    componentDidMount() {
-      if (this.props.cardNumber) this.handleUpdateState();
+      if (this.props.cardNumber) {
+         this.handleUpdateState();
+      } 
    }
 
    render () {

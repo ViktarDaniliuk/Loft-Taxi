@@ -25,6 +25,7 @@ export const INITIAL_STATE = {
    },
    cardData: {
       isPaymentData: false,
+      id: "",
       cardNumber: "",
       validity: "",
       userFullName: "",

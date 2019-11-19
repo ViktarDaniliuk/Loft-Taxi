@@ -33,8 +33,8 @@ const sendData = (user, path) => {
 const getData = (path, args = {}) => {
    let searchLine = '';
 
-   for ( let key in args ) {
-      searchLine += key + '=' + args[key];
+   for ( let key in args ) { // доработать построение строки запроса ? key '=' value '&' .....
+      searchLine += key + '=' + args[key] + '&';
    }
 
    return fetch(`https://loft-taxi.glitch.me/${path}?${searchLine}`, {
@@ -141,15 +141,13 @@ export function* handleGetPaymentData() {
 
    yield takeEvery(GET_PAYMENT_DATA_REQUEST, function* (action) {
       try {
-         console.log(action);
          let args = {
             token: action.payload.token
          };
-         console.log(args);
          const result = yield call(getData, path, args);
 
          if (result.error) throw result;
-         console.log(result);
+
          yield put(getPaymentDataSuccess(result));
       } catch (error) {
          console.log(error);
