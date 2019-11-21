@@ -10,17 +10,14 @@ class MapPopup extends Component {
       paymentData: PropTypes.bool
    };
 
-   componentDidMount() {
-      if (this.props.paymentData === true) {
+   render () {
+      if (this.props.paymentData === true && !this.props.addresses.length) {
          const { getAddressListRequest } = this.props;
 
          getAddressListRequest();
       }
-   };
 
-   render () {
-      
-      if (this.props.paymentData === true) {
+      if (this.props.addresses.length) {
          const { addresses } = this.props;
 
          return (

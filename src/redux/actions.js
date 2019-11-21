@@ -143,7 +143,7 @@ export const getAddressListRequest = () => {
    };
    
    export const getAddressListSuccess = (data) => {
-      // console.log(data);
+
       return {
          type: GET_ADDRESS_LIST_SUCCESS,
          payload: { ...data }

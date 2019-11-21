@@ -94,11 +94,12 @@ export function* handleLogin() {
          yield put(sendDataLoginSuccess(data));
 
          if (data && data.success && data.success === true) {
+            let token = yield select(getStateToken);
+   
+            yield put(getPaymentDataRequest(token));
+
             history.push('/map');
          }
-         let token = yield select(getStateToken);
-
-         yield put(getPaymentDataRequest(token));
       } catch (error) {
          console.log(error);
          yield put(sendDataLoginFailure(error));

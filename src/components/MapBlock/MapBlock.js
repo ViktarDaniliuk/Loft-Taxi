@@ -10,6 +10,25 @@ class MapBlock extends Component {
 
    componentDidMount() {
       let mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+      let options = {
+         enableHighAccuracy: true,
+         timeout: 5000,
+         maximumAge: 0
+      };
+      let latitude;
+      let longitude;
+      const success = (pos) => {
+         var crd = pos.coords;
+
+         latitude = crd.latitude;
+         longitude = crd.longitude;
+      }
+
+      const error = (err) => {
+         console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
+      
+      navigator.geolocation.getCurrentPosition(success, error, options);
 
       mapboxgl.accessToken = 'pk.eyJ1IjoidmlrYXRyIiwiYSI6ImNrMmZ3ajIxdzA0b3QzcG12ejRnM3I2MmIifQ.BTSCAyI0WPqr9LtTl5qpwQ';
       let map = new mapboxgl.Map({
@@ -19,12 +38,28 @@ class MapBlock extends Component {
          style: 'mapbox://styles/mapbox/streets-v11'
       });
 
+      let nav = new mapboxgl.NavigationControl();
+
+      map.addControl(nav, 'top-right');
+
+      map.addControl(new mapboxgl.GeolocateControl({
+         positionOptions: {
+            enableHighAccuracy: true
+         },
+         trackUserLocation: true
+      }));
+
       map.on('load', () => {
          console.log('Map was load!');
+         // map.setCenter([longitude, latitude]);
          // добавить в стейт поле loaded: false
          // сделать компоненту с прелоадером, позиционировать абсолютно по центру экрана
          // менять поле loaded на true 
-      })
+      //    var popup = new mapboxgl.Popup({closeOnClick: false})
+      //       .setLngLat([longitude, latitude])
+      //       .setHTML('<p>You are here</p>')
+      //       .addTo(map);
+      });
    };
 
    render () {
