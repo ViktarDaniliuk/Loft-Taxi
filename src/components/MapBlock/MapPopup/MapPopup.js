@@ -24,10 +24,10 @@ class MapPopup extends Component {
             <div className={ MapPopupMod.payment_data }>
                <div>
                   <select id="from" placeholder="Откуда">
-                     { addresses.map((address, i) => <option id={i}>{ address }</option> ) }
+                     { addresses.map((address, i) => <option key={i}>{ address }</option> ) }
                   </select>
                   <select id="to" placeholder="Куда">
-                     { addresses.map((address, i) => <option id={i}>{ address }</option> ) }
+                     { addresses.map((address, i) => <option key={i}>{ address }</option> ) }
                   </select>
                </div>
                <input 
