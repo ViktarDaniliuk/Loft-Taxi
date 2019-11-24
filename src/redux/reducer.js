@@ -1,5 +1,6 @@
 import {
    ON_LOGOUT,
+   ON_MAKE_NEW_ORDER,
    SEND_DATA_SIGNUP_SUCCESS,
    SEND_DATA_SIGNUP_FAILURE,
    SEND_DATA_LOGIN_SUCCESS,
@@ -9,7 +10,9 @@ import {
    GET_PAYMENT_DATA_SUCCESS,
    GET_PAYMENT_DATA_FAILURE,
    GET_ADDRESS_LIST_SUCCESS,
-   GET_ADDRESS_LIST_FAILURE
+   GET_ADDRESS_LIST_FAILURE,
+   GET_ROUTE_SUCCESS,
+   GET_ROUTE_FAILURE
 } from './actions';
 import { INITIAL_STATE } from './store';
 
@@ -24,6 +27,13 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          stateCopy.userData.isLoggedIn = false;
          stateCopy.userData.success = false;
          stateCopy.userData.token = null;
+
+         return stateCopy;
+      }
+      case ON_MAKE_NEW_ORDER: {
+         const stateCopy = {...state};
+
+         stateCopy.coordinates = [];
 
          return stateCopy;
       }
@@ -115,6 +125,20 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          return stateCopy;
       }
       case GET_ADDRESS_LIST_FAILURE: {
+         const stateCopy = {...state};
+
+         // придумать, что делать если адреса не пришли
+
+         return stateCopy;
+      }
+      case GET_ROUTE_SUCCESS: {
+         const stateCopy = {...state};
+
+         stateCopy.coordinates = action.payload;
+
+         return stateCopy;
+      }
+      case GET_ROUTE_FAILURE: {
          const stateCopy = {...state};
 
          // придумать, что делать если адреса не пришли

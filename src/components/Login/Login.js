@@ -24,10 +24,6 @@ class Login extends Component {
 
       if (email === userEmailFromLocalStorage && password === passwordFromLocalStorage) {
          sendDataLoginRequest(email, password);
-         // this.setState({ 
-         //    email: '', 
-         //    password: '' 
-         // });
       } 
       return;
    };
@@ -40,7 +36,7 @@ class Login extends Component {
    };
 
    render() {
-      
+
       return (
          <div className={ LoginMod.login }>
             <div className={ LoginMod.logo_block }>
@@ -84,7 +80,7 @@ class Login extends Component {
 
 const mapStateToProps = state => {
    return {
-      
+      isLoggedIn: state.userData.isLoggedIn
    };
 };
 

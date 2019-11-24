@@ -15,7 +15,10 @@ import {
    getPaymentDataFailure,
    GET_ADDRESS_LIST_REQUEST,
    getAddressListSuccess,
-   getAddressListFailure
+   getAddressListFailure,
+   GET_ROUTE_REQUEST,
+   getRouteSuccess,
+   getRouteFailure
 } from './actions';
 import { history } from '../history';
 
@@ -36,7 +39,7 @@ const getData = (path, args = {}) => {
    for ( let key in args ) { // доработать построение строки запроса ? key '=' value '&' .....
       searchLine += key + '=' + args[key] + '&';
    }
-
+console.log(`https://loft-taxi.glitch.me/${path}?${searchLine}`);
    return fetch(`https://loft-taxi.glitch.me/${path}?${searchLine}`, {
       method: 'GET',
       headers: {
@@ -168,6 +171,21 @@ export function* handleGetAddressList() {
       } catch (error) {
          console.log(error);
          yield put(getAddressListFailure(error));
+      }
+   });
+};
+
+export function* handleGetRoute() {
+   let path = 'route';
+
+   yield takeEvery(GET_ROUTE_REQUEST, function* (action) {
+      try {
+         const result = yield call(getData, path, action.payload);
+
+         yield put(getRouteSuccess(result));
+      } catch (error) {
+         console.log(error);
+         yield put(getRouteFailure(error));
       }
    });
 };

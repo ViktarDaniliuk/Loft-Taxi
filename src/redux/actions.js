@@ -15,11 +15,22 @@ export const GET_PAYMENT_DATA_FAILURE = 'GET_PAYMENT_DATA_FAILURE';
 export const GET_ADDRESS_LIST_REQUEST = 'GET_ADDRESS_LIST_REQUEST';
 export const GET_ADDRESS_LIST_SUCCESS = 'GET_ADDRESS_LIST_SUCCESS';
 export const GET_ADDRESS_LIST_FAILURE = 'GET_ADDRESS_LIST_FAILURE';
+export const GET_ROUTE_REQUEST = 'GET_ROUTE_REQUEST';
+export const GET_ROUTE_SUCCESS = 'GET_ROUTE_SUCCESS';
+export const GET_ROUTE_FAILURE = 'GET_ROUTE_FAILURE';
+export const ON_MAKE_NEW_ORDER = 'ON_MAKE_NEW_ORDER';
 
 export const onLogout = () => {
    
    return {
       type: ON_LOGOUT
+   };
+};
+
+export const onMakeNewOrder = () => {
+   
+   return {
+      type: ON_MAKE_NEW_ORDER
    };
 };
 
@@ -154,5 +165,31 @@ export const getAddressListRequest = () => {
    
       return {
          type: GET_ADDRESS_LIST_FAILURE
+      };
+   };
+
+   export const getRouteRequest = (from, to) => {
+
+      return {
+         type: GET_ROUTE_REQUEST,
+         payload: {
+            address1: from,
+            address2: to
+         }
+      };
+   };
+   
+   export const getRouteSuccess = (data) => {
+
+      return {
+         type: GET_ROUTE_SUCCESS,
+         payload: [ ...data ]
+      };
+   };
+   
+   export const getRouteFailure = () => {
+
+      return {
+         type: GET_ROUTE_FAILURE
       };
    };

@@ -5,13 +5,15 @@ import {
    sagaSendLoginDataMiddleware,
    sagaSendPaymentDataMiddleware,
    sagaGetPaymentDataMiddleware,
-   sagaGetAddressListMiddleware
+   sagaGetAddressListMiddleware,
+   sagaGetRouteMiddleware
 } from './sagaMiddlewares';
-import { handleSignUp, handleLogin, handleSendPaymentData, handleGetPaymentData, handleGetAddressList } from './sagas';
+import { handleSignUp, handleLogin, handleSendPaymentData, handleGetPaymentData, handleGetAddressList, handleGetRoute } from './sagas';
 
 export const INITIAL_STATE = {
    currentTab: "signup",
    isLoading: false,
+   isUserDataInLocalStorage: false,
    addresses: [],
    userData: {
       isLoggedIn: false,
@@ -32,7 +34,10 @@ export const INITIAL_STATE = {
       CVCcode: "",
       success: false,
       error: null
-   }
+   },
+   coordinates: [],
+   from: '',
+   to: ''
    // не нужно хранить в стейте данные пользователя, оствить только token, currentTab, error и состояния (true/false)
    // error - возможно нужно будет поделить на ошибки от разных запросов
    // при перезагрузке поле ошибок обнулять - error: null
@@ -42,6 +47,7 @@ const checkLocalStorage = () => {
    if (!localStorage.user) return;
 
    INITIAL_STATE.currentTab = 'login';
+   INITIAL_STATE.isUserDataInLocalStorage = 'true';
    // добавить инициализацию всех данных с localStorage
    
    return INITIAL_STATE;
@@ -59,6 +65,7 @@ const createAppStore = () => {
          applyMiddleware(sagaSendPaymentDataMiddleware),
          applyMiddleware(sagaGetPaymentDataMiddleware),
          applyMiddleware(sagaGetAddressListMiddleware),
+         applyMiddleware(sagaGetRouteMiddleware),
          window.__REDUX_DEVTOOLS_EXTENSION__
          ? window.__REDUX_DEVTOOLS_EXTENSION__()
          : noop => noop,
@@ -70,6 +77,7 @@ const createAppStore = () => {
    sagaSendPaymentDataMiddleware.run(handleSendPaymentData);
    sagaGetPaymentDataMiddleware.run(handleGetPaymentData);
    sagaGetAddressListMiddleware.run(handleGetAddressList);
+   sagaGetRouteMiddleware.run(handleGetRoute);
 
    return store;
 };

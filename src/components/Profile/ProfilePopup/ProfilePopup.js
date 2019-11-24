@@ -57,7 +57,7 @@ class ProfilePopup extends Component {
       if (this.props.cardNumber) {
          this.handleUpdateState();
       } 
-   }
+   };
 
    render () {
       

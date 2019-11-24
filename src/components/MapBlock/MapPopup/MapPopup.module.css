@@ -14,30 +14,84 @@
    margin-top: 0;
 }
 
-.payment_data input {
+.payment_data > input {
    width: 100%;
 }
 
-.payment_data > div {
+.payment_data > div > div {
    display: flex;
-   flex-direction: column;
+   /* flex-direction: column; */
    width: 100%;
+   align-items: center;
 }
 
-.payment_data select {
-   height: 50px;
+.payment_data > div > div input {
+   height: 40px;
    border: none;
    border-bottom: 1px solid #919191;
    transition: all .3s;
    font-size: 14px;
    padding-left: 15px;
+   width: 90%;
+   z-index: 0;
 }
 
-.payment_data select:nth-of-type(1) {
+.payment_data > div {
+   position: relative;
+}
+
+.payment_data > div:nth-of-type(1) > div {
    margin-bottom: 30px;
 }
 
-.payment_data select:focus {
-   border-bottom: 1px solid #1473e6;
+.payment_data > div > div input:focus,
+.payment_data > div > div input:hover {
+   border-bottom: 2px solid #1473e6;
+   transition: all .3s;
+}
+
+.payment_data > div > div span {
+   display: block;
+   width: 0;
+   height: 30px;
+   margin: 11px 17px 11px 9px;
+   border-left: 1px solid #919191;
+}
+
+.payment_data > div span.arrow {
+   width: 15px;
+   height: 15px;
+   margin: 0;
+   border-left: 1px solid #000;
+   border-bottom: 1px solid #000;
+   transform: rotateZ(-45deg) translateY(-7px);
+   cursor: pointer;
+}
+
+.addresses_from,
+.addresses_to {
+   width: 90%;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+   position: absolute;
+   top: 50px;
+   left: 0;
+}
+
+.addresses_from li,
+.addresses_to li {
+   height: 40px;
+   z-index: 10;
+   padding-left: 15px;
+   line-height: 40px;
+   background-color: #fff;
+   transition: all .3s;
+   cursor: pointer;
+}
+
+.addresses_from li:hover,
+.addresses_to li:hover {
+   background-color: #ccc;
    transition: all .3s;
 }

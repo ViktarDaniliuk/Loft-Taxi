@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { WrappedMapPopup } from './MapPopup/MapPopup';
 import MapBlockMod from './MapBlock.module.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { drawRoute } from './helper';
 
 class MapBlock extends Component {
    static propTypes = {
@@ -10,25 +12,25 @@ class MapBlock extends Component {
 
    componentDidMount() {
       let mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-      let options = {
-         enableHighAccuracy: true,
-         timeout: 5000,
-         maximumAge: 0
-      };
-      let latitude;
-      let longitude;
-      const success = (pos) => {
-         var crd = pos.coords;
+      // let options = {
+      //    enableHighAccuracy: true,
+      //    timeout: 5000,
+      //    maximumAge: 0
+      // };
+      // let latitude;
+      // let longitude;
+      // const success = (pos) => {
+      //    var crd = pos.coords;
 
-         latitude = crd.latitude;
-         longitude = crd.longitude;
-      }
+      //    latitude = crd.latitude;
+      //    longitude = crd.longitude;
+      // }
 
-      const error = (err) => {
-         console.warn(`ERROR(${err.code}): ${err.message}`);
-      }
+      // const error = (err) => {
+      //    console.warn(`ERROR(${err.code}): ${err.message}`);
+      // }
       
-      navigator.geolocation.getCurrentPosition(success, error, options);
+      // navigator.geolocation.getCurrentPosition(success, error, options);
 
       mapboxgl.accessToken = 'pk.eyJ1IjoidmlrYXRyIiwiYSI6ImNrMmZ3ajIxdzA0b3QzcG12ejRnM3I2MmIifQ.BTSCAyI0WPqr9LtTl5qpwQ';
       let map = new mapboxgl.Map({
@@ -42,12 +44,12 @@ class MapBlock extends Component {
 
       map.addControl(nav, 'top-right');
 
-      map.addControl(new mapboxgl.GeolocateControl({
-         positionOptions: {
-            enableHighAccuracy: true
-         },
-         trackUserLocation: true
-      }));
+      // map.addControl(new mapboxgl.GeolocateControl({
+      //    positionOptions: {
+      //       enableHighAccuracy: true
+      //    },
+      //    trackUserLocation: true
+      // }));
 
       map.on('load', () => {
          console.log('Map was load!');
@@ -60,9 +62,26 @@ class MapBlock extends Component {
       //       .setHTML('<p>You are here</p>')
       //       .addTo(map);
       });
+
+      // if (this.props.coordinates.length) {
+      //    console.log(this.props.coordinates);
+      //    console.log(this.props.coordinates.length);
+      //    drawRoute(map, this.propst.coordinates);
+      // }
    };
 
+   // static getDerivedStateFromProps(nextProps, prevState) {
+   //    if (nextProps.coordinates.length) {
+   //       console.log(nextProps.coordinates);
+   //       console.log(nextProps.coordinates.length);
+   //       // drawRoute(map, this.propst.coordinates);
+   //    }
+   // }; 
+
    render () {
+      // if (this.props.coordinates.length) {
+      //    drawRoute(map, this.propst.coordinates);
+      // }
       
       return (
          <div className={ MapBlockMod.map }>
@@ -75,4 +94,17 @@ class MapBlock extends Component {
    }
 }
 
-export default MapBlock;
+const mapStateToProps = state => {
+
+   return {
+      coordinates: state.coordinates
+   };
+};
+
+const mapDsipatchToProps = dispatch => {
+   return {
+      
+   };
+};
+
+export const WrappedMapBlock = connect(mapStateToProps, mapDsipatchToProps)(MapBlock);
