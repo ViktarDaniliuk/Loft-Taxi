@@ -28,7 +28,7 @@ class MapPopup extends Component {
       });
    };
 
-   handleShowListFrom = e => {
+   handleShowListFrom = () => {
       let name = 'from';
       this.handlePrepareAddressList();
       this.setState({
@@ -46,7 +46,7 @@ class MapPopup extends Component {
       }
    };
 
-   handleShowListTo = e => {
+   handleShowListTo = () => {
       let name = 'to';
       this.handlePrepareAddressList();
       this.setState({

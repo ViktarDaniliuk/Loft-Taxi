@@ -7,35 +7,14 @@ import { Form, Field } from 'react-final-form';
 import { sendDataLoginRequest } from '../../redux/actions';
 
 class Login extends Component {
-   state = {
-      email: '', 
-      password: ''
-   };
-
-   handleGetDateFromLocalStorage = () => {
-      if (!localStorage.user) return {}; 
-      return JSON.parse(localStorage.getItem('user'));
-   };
-
-   onHandleLogin = (e) => {
-      e.preventDefault();
-      console.log(e);
-
+   onHandleLogin = (values) => {
       const { sendDataLoginRequest } = this.props;
-      const { email, password } = this.state;
-      const { email: userEmailFromLocalStorage, password: passwordFromLocalStorage } = this.handleGetDateFromLocalStorage('user');
+      const { email, password } = values;
 
-      if (email === userEmailFromLocalStorage && password === passwordFromLocalStorage) {
+      if (email && password) {
          sendDataLoginRequest(email, password);
       } 
       return;
-   };
-
-   handleInputChange = e => {
-      const name = e.target.name;
-      const value = e.target.value;
-
-      this.setState({ [name]: value });
    };
 
    render() {
@@ -49,39 +28,35 @@ class Login extends Component {
                <div className={ LoginMod.log_in }>
                   <h2>Войти</h2>
                   <p>Новый пользователь? <span><Link to="/signup">Зарегистрироваться</Link></span></p>
-                  <Form onSubmit={ this.onHandleLogin } >
-                     {({ onHandleLogin }) => (
-                        <form onSubmit={ onHandleLogin }>
+                  <Form 
+                     onSubmit={ this.onHandleLogin } 
+                     validate={values => {
+                        const errors = {};
+                        if (!values.email) errors.email = "Required";
+                        if (!values.password) errors.password = "Required";
+                        return errors;
+                     }}
+                  >
+                     {({ handleSubmit }) => (
+                        <form onSubmit={ handleSubmit }>
                            <label>
                               Адрес электронной почты*
-                              {/* <Field name="email" component="input"/> */}
-                              <input 
-                                 type="email" 
+                              <Field 
                                  name="email" 
-                                 value={ this.state.userName } 
-                                 onChange={ this.handleInputChange }
+                                 component="input"
                               />
                            </label>
                            <label>
                               Пароль*
-                              {/* <Field name="password" component="input"/> */}
-                              <input 
-                                 type="password" 
+                              <Field 
                                  name="password" 
-                                 value={ this.state.password } 
-                                 onChange={ this.handleInputChange } 
+                                 component="input"
                               />
                            </label>
-                           <input 
-                              type="submit" 
-                              value="Войти" 
-                              onClick={ this.onHandleLogin } 
-                           />
-                           {/* <button type="submit">Войти</button> */}
+                           <button type="submit">Войти</button>
                         </form>
                      )}
                   </Form>
-                  
                </div>
             </div>
          </div>
