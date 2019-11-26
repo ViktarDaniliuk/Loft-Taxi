@@ -39,7 +39,7 @@ const getData = (path, args = {}) => {
    for ( let key in args ) { // доработать построение строки запроса ? key '=' value '&' .....
       searchLine += key + '=' + args[key] + '&';
    }
-console.log(`https://loft-taxi.glitch.me/${path}?${searchLine}`);
+
    return fetch(`https://loft-taxi.glitch.me/${path}?${searchLine}`, {
       method: 'GET',
       headers: {

@@ -15,6 +15,7 @@ export const INITIAL_STATE = {
    isLoading: false,
    isUserDataInLocalStorage: false,
    addresses: [],
+   coordinates: [],
    userData: {
       isLoggedIn: false,
       userName: '',
@@ -35,9 +36,7 @@ export const INITIAL_STATE = {
       success: false,
       error: null
    },
-   coordinates: [],
-   from: '',
-   to: ''
+   route: null
    // не нужно хранить в стейте данные пользователя, оствить только token, currentTab, error и состояния (true/false)
    // error - возможно нужно будет поделить на ошибки от разных запросов
    // при перезагрузке поле ошибок обнулять - error: null

@@ -12,13 +12,11 @@ import {
    GET_ADDRESS_LIST_SUCCESS,
    GET_ADDRESS_LIST_FAILURE,
    GET_ROUTE_SUCCESS,
-   GET_ROUTE_FAILURE
+   GET_ROUTE_FAILURE // создать API и как свойства этого объекта получать экшины и экшин-криэйторы для каждого из компонентов
 } from './actions';
 import { INITIAL_STATE } from './store';
 
 const rootReducer = (state = INITIAL_STATE, action) => {
-   // console.log('action type from store: ', action.type);
-   // console.log('action type from store: ', action);
    switch (action.type) {
       case ON_LOGOUT: {
          const stateCopy = {...state};
@@ -34,6 +32,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          const stateCopy = {...state};
 
          stateCopy.coordinates = [];
+         stateCopy.route = 'remove';
 
          return stateCopy;
       }
@@ -62,7 +61,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          stateCopy.userData.userName = action.payload.name;
          stateCopy.userData.userSurname = action.payload.surname;
          stateCopy.userData.password = action.payload.password;
-         stateCopy.currentTab = 'map';
+         stateCopy.currentTab = 'map'; // проверить, нужно ли поле currentTab
          stateCopy.userData.isLoggedIn = action.payload.success;
          stateCopy.userData.success = action.payload.success; // посмотреть, нужно ли это поле 
          stateCopy.userData.token = action.payload.token;
@@ -135,6 +134,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          const stateCopy = {...state};
 
          stateCopy.coordinates = action.payload;
+         stateCopy.route = null;
 
          return stateCopy;
       }

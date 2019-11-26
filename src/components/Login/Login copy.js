@@ -3,7 +3,6 @@ import LoginMod from './Login.module.css';
 import logo from './logo.svg';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form, Field } from 'react-final-form';
 import { sendDataLoginRequest } from '../../redux/actions';
 
 class Login extends Component {
@@ -19,7 +18,6 @@ class Login extends Component {
 
    onHandleLogin = (e) => {
       e.preventDefault();
-      console.log(e);
 
       const { sendDataLoginRequest } = this.props;
       const { email, password } = this.state;
@@ -49,39 +47,31 @@ class Login extends Component {
                <div className={ LoginMod.log_in }>
                   <h2>Войти</h2>
                   <p>Новый пользователь? <span><Link to="/signup">Зарегистрироваться</Link></span></p>
-                  <Form onSubmit={ this.onHandleLogin } >
-                     {({ onHandleLogin }) => (
-                        <form onSubmit={ onHandleLogin }>
-                           <label>
-                              Адрес электронной почты*
-                              {/* <Field name="email" component="input"/> */}
-                              <input 
-                                 type="email" 
-                                 name="email" 
-                                 value={ this.state.userName } 
-                                 onChange={ this.handleInputChange }
-                              />
-                           </label>
-                           <label>
-                              Пароль*
-                              {/* <Field name="password" component="input"/> */}
-                              <input 
-                                 type="password" 
-                                 name="password" 
-                                 value={ this.state.password } 
-                                 onChange={ this.handleInputChange } 
-                              />
-                           </label>
-                           <input 
-                              type="submit" 
-                              value="Войти" 
-                              onClick={ this.onHandleLogin } 
-                           />
-                           {/* <button type="submit">Войти</button> */}
-                        </form>
-                     )}
-                  </Form>
-                  
+                  <form>
+                     <label>
+                        Адрес электронной почты*
+                        <input 
+                           type="email" 
+                           name="email" 
+                           value={ this.state.userName } 
+                           onChange={ this.handleInputChange }
+                        />
+                     </label>
+                     <label>
+                        Пароль*
+                        <input 
+                           type="password" 
+                           name="password" 
+                           value={ this.state.password } 
+                           onChange={ this.handleInputChange } 
+                        />
+                     </label>
+                     <input 
+                        type="submit" 
+                        value="Войти" 
+                        onClick={ this.onHandleLogin } 
+                     />
+                  </form>
                </div>
             </div>
          </div>

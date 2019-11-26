@@ -80,7 +80,6 @@ class MapPopup extends Component {
    };
 
    handleLetterByLetterFilterAddressList = (value, list) => {
-      // let copyList = list.slice();
       let copyList = list;
       let newList = [];
 
@@ -239,7 +238,8 @@ const mapStateToProps = state => {
    return {
       paymentData: state.cardData.isPaymentData,
       addresses: state.addresses,
-      coordinates: state.coordinates
+      coordinates: state.coordinates,
+      route: state.route
    };
 };
 

@@ -3,12 +3,16 @@ import { WrappedMapPopup } from './MapPopup/MapPopup';
 import MapBlockMod from './MapBlock.module.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { drawRoute } from './helper';
+import { drawRoute, removeRoute } from './helper';
 
 class MapBlock extends Component {
    static propTypes = {
       paymentData: PropTypes.bool
    };
+
+   state = {
+      map: null
+   }
 
    componentDidMount() {
       let mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
@@ -33,7 +37,7 @@ class MapBlock extends Component {
       // navigator.geolocation.getCurrentPosition(success, error, options);
 
       mapboxgl.accessToken = 'pk.eyJ1IjoidmlrYXRyIiwiYSI6ImNrMmZ3ajIxdzA0b3QzcG12ejRnM3I2MmIifQ.BTSCAyI0WPqr9LtTl5qpwQ';
-      let map = new mapboxgl.Map({
+      this.map = new mapboxgl.Map({
          container: 'map',
          center: [21.033, 52.225],
          zoom: 12,
@@ -42,7 +46,7 @@ class MapBlock extends Component {
 
       let nav = new mapboxgl.NavigationControl();
 
-      map.addControl(nav, 'top-right');
+      this.map.addControl(nav, 'top-right');
 
       // map.addControl(new mapboxgl.GeolocateControl({
       //    positionOptions: {
@@ -51,7 +55,7 @@ class MapBlock extends Component {
       //    trackUserLocation: true
       // }));
 
-      map.on('load', () => {
+      this.map.on('load', () => {
          console.log('Map was load!');
          // map.setCenter([longitude, latitude]);
          // добавить в стейт поле loaded: false
@@ -79,9 +83,13 @@ class MapBlock extends Component {
    // }; 
 
    render () {
-      // if (this.props.coordinates.length) {
-      //    drawRoute(map, this.propst.coordinates);
-      // }
+      if (this.props.coordinates.length) {
+         drawRoute(this.map, this.props.coordinates);
+      }
+
+      if (this.props.route === 'remove') {
+         removeRoute(this.map);
+      }
       
       return (
          <div className={ MapBlockMod.map }>
@@ -97,7 +105,8 @@ class MapBlock extends Component {
 const mapStateToProps = state => {
 
    return {
-      coordinates: state.coordinates
+      coordinates: state.coordinates,
+      route: state.route
    };
 };
 
