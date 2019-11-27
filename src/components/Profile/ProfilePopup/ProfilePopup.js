@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ProfilePopupMod from './ProfilePopup.module.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendPaymentDataRequest } from '../../../redux/actions';
 import MaskedInput from 'react-text-mask';
+import { Form, Field } from 'react-final-form';
 
 class ProfilePopup extends Component {
    state = {
-      cardNumber: "",
-      validity: "",
-      userFullName: "",
-      CVCcode: "",
       disabled: "disabled"
    };
 
@@ -18,114 +15,131 @@ class ProfilePopup extends Component {
       sendPaymentDataRequest: PropTypes.func
    };
 
-   onChangePaymentData = (e) => {
+   onChangePaymentData = (values) => {
+
       const { sendPaymentDataRequest } = this.props;
-      const { cardNumber, validity, userFullName, CVCcode } = this.state;
+      const { cardNumber, validity, userFullName, CVCcode } = values;
 
-      e.preventDefault();
-
-      if (!this.state.cardNumber || !this.state.validity || !this.state.userFullName || !this.state.CVCcode) return; // вместо return сделать добавление класса disabled кнопке (чтобы нельзя было ее нажать)
+      if (!values.cardNumber || !values.validity || !values.userFullName || !values.CVCcode) return; // вместо return сделать добавление класса disabled кнопке (чтобы нельзя было ее нажать)
 
       sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode);
    };
 
-   handleInputChange = e => {
-      const name = e.target.name;
-      const value = e.target.value;
-
-      this.setState({ [name]: value });
-
-      this.handleCheckInputStatus();
-   };
-
-   handleCheckInputStatus = () => {
+   handleCheckInputStatus = () => { // переделать на работу с value
       if (this.state.cardNumber && this.state.validity && this.state.userFullName && this.state.CVCcode) this.setState({ disabled: "" });
    };
 
-   handleUpdateState = () => {
-      if (!this.state.cardNumber && !this.state.validity && !this.state.userFullName && !this.state.CVCcode) {
-         this.setState({ 
-            cardNumber: this.props.cardNumber,
-            validity: this.props.validity,
-            userFullName: this.props.userFullName,
-            CVCcode: this.props.CVCcode
-         })
-      }
-   };
-
-   componentDidMount() {
-      if (this.props.cardNumber) {
-         this.handleUpdateState();
-      } 
-   };
-
    render () {
-      
+
       return (
          <div className={ ProfilePopupMod.profile_popup }>
             <h1>Профиль</h1>
             <p>Способ оплаты</p>
-            <form onSubmit={ this.handleSubmit }>
-               <div>
-                  <div>
-                     <label>
-                        Номер карты:
-                        <MaskedInput 
-                           type="text" 
-                           name="cardNumber" 
-                           value={ this.state.cardNumber } 
-                           onChange={ this.handleInputChange } 
-                           placeholder="1234 5678 1234 5678"
-                           mask={[/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/]}
-                        />
-                     </label>
-                     <label>
-                        Срок действия:
-                        <MaskedInput 
-                           type="text" 
-                           name="validity" 
-                           value={ this.state.validity } 
-                           onChange={ this.handleInputChange } 
-                           placeholder="00/00" 
-                           mask={[/\d/, /\d/, '/', /\d/, /\d/]}
-                        />
-                     </label>
-                  </div>
-                  <div>
-                     <label>
-                        Имя владельца:
-                        <input 
-                           type="text" 
-                           name="userFullName" 
-                           value={ this.state.userFullName } 
-                           onChange={ this.handleInputChange } 
-                           placeholder="FULL USER NAME" 
-                        />
-                     </label>
-                     <label>
-                        CVC:
-                        <MaskedInput 
-                           type="password" 
-                           name="CVCcode" 
-                           value={ this.state.CVCcode } 
-                           onChange={ this.handleInputChange } 
-                           placeholder="***" 
-                           mask={[/\d/, /\d/, /\d/]}
-                        />
-                     </label>
-                  </div>
-               </div>
-               <input 
-                  type="submit" 
-                  value="Сохранить" 
-                  onClick={ this.onChangePaymentData } 
-                  className={ this.state.disabled }
-               />
-            </form>
+            <Form onSubmit= { this.onChangePaymentData }>
+               {({ handleSubmit }) => (
+                  <form onSubmit={ handleSubmit }>
+                     <div>
+                        <div>
+                           <label>
+                              Номер карты:
+                              <Field 
+                                 name="cardNumber" 
+                                 initialValue={ this.props.cardNumber }
+                                 component={ CardNumberInput } 
+                              />
+                           </label>
+                           <label>
+                              Срок действия:
+                              <Field 
+                                 name="validity" 
+                                 initialValue={ this.props.validity }
+                                 component={ ValidityInput } 
+                              />
+                           </label>
+                        </div>
+                        <div>
+                           <label>
+                              Имя владельца:
+                              <Field 
+                                 name="userFullName" 
+                                 initialValue={ this.props.userFullName }
+                                 component={ UserFullNameInput } 
+                              />
+                           </label>
+                           <label>
+                              CVC:
+                              <Field 
+                                 name="CVCcode"
+                                 type="password"
+                                 initialValue={ this.props.CVCcode }
+                                 component={ UserPasswordInput }
+                              />
+                           </label>
+                        </div>
+                     </div>
+                     <button 
+                        type="submit" 
+                        // className= { this.state.disabled }
+                     >
+                        Сохранить
+                     </button>
+                  </form>
+               )}
+            </Form>
          </div>
       );
    }
-}
+};
+
+class CardNumberInput extends PureComponent {
+   render() {
+      return (
+         <MaskedInput
+            { ...this.props.input }
+            placeholder="1234 5678 1234 5678"
+            guide={ false }
+            mask={[/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/]}
+         />
+      );
+   }
+};
+
+class ValidityInput extends PureComponent {
+   render() {
+      return (
+         <MaskedInput 
+            { ...this.props.input }
+            placeholder="00/00" 
+            guide={ false }
+            mask={[/\d/, /\d/, '/', /\d/, /\d/]}
+         />
+      );
+   }
+};
+
+class UserFullNameInput extends PureComponent {
+   render() {
+      return (
+         <input 
+            { ...this.props.input }
+            placeholder="FULL USER NAME" 
+         />
+      );
+   }
+};
+
+class UserPasswordInput extends PureComponent {
+   render() {
+      return (
+         <MaskedInput 
+            { ...this.props.input }
+            placeholder="***" 
+            guide={ false }
+            mask={[/\d/, /\d/, /\d/]}
+         />
+      );
+   }
+};
 
 const mapStateToProps = state => {
    return {

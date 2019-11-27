@@ -28,15 +28,7 @@ class Login extends Component {
                <div className={ LoginMod.log_in }>
                   <h2>Войти</h2>
                   <p>Новый пользователь? <span><Link to="/signup">Зарегистрироваться</Link></span></p>
-                  <Form 
-                     onSubmit={ this.onHandleLogin } 
-                     validate={values => {
-                        const errors = {};
-                        if (!values.email) errors.email = "Required";
-                        if (!values.password) errors.password = "Required";
-                        return errors;
-                     }}
-                  >
+                  <Form onSubmit={ this.onHandleLogin } >
                      {({ handleSubmit }) => (
                         <form onSubmit={ handleSubmit }>
                            <label>
