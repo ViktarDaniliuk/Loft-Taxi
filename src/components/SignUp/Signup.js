@@ -3,39 +3,19 @@ import SignupMod from './Signup.module.css';
 import logo from './logo.svg';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Form, Field } from 'react-final-form';
 import { sendDataSignupRequest } from '../../redux/actions';
 
 class Signup extends Component {
-   state = {
-      userName: '',
-      userSurname: '',
-      email: '',
-      password: ''
-   };
 
-   onHandleSignup = (e) => {
-      e.preventDefault();
-
+   onHandleSignup = (values) => {
       const { sendDataSignupRequest } = this.props;
-      const { email, userName, userSurname, password } = this.state;
+      const { email, userName, userSurname, password } = values;
 
       if (localStorage.user) return;
-      if (!this.state.email || !this.state.userName || !this.state.userSurname || !this.state.password) return;
+      if (!values.email || !values.userName || !values.userSurname || !values.password) return;
 
       sendDataSignupRequest(email, userName, userSurname, password);
-      this.setState({ 
-         email: '', 
-         userName: '', 
-         userSurname: '', 
-         password: '' 
-      });
-   };
-
-   handleInputChange = e => {
-      const name = e.target.name;
-      const value = e.target.value;
-
-      this.setState({ [name]: value });
    };
 
    render() {
@@ -60,51 +40,45 @@ class Signup extends Component {
                <div className={ SignupMod.sign_in }>
                   <h2>Регистрация</h2>
                   <p>Уже зарегистрирован? <span><Link to="/">Войти</Link></span></p>
-                  <form>
-                     <label>
-                        Адрес электронной почты
-                        <input 
-                           type="email" 
-                           name="email" 
-                           value={ this.state.email } 
-                           onChange={ this.handleInputChange } 
-                        />
-                     </label>
-                     <div>
-                        <label>
-                           Имя
-                           <input 
-                              type="text" 
-                              name="userName" 
-                              value={ this.state.userName } 
-                              onChange={ this.handleInputChange } 
-                           />
-                        </label>
-                        <label>
-                           Фамилия
-                           <input 
-                              type="text" 
-                              name="userSurname" 
-                              value={ this.state.userSurname } 
-                              onChange={ this.handleInputChange } 
-                           />
-                        </label>
-                     </div>
-                     <label>
-                        Пароль
-                        <input 
-                           type="password" 
-                           name="password" 
-                           value={ this.state.password } 
-                           onChange={ this.handleInputChange } 
-                        />
-                     </label>
-                     <input 
-                        type="submit" 
-                        value="Зарегистрироваться" 
-                        onClick={ this.onHandleSignup } 
-                     />
-                  </form>
+                  <Form onSubmit={ this.onHandleSignup } >
+                     {({ handleSubmit }) => (
+                        <form onSubmit={ handleSubmit }>
+                           <label>
+                              Адрес электронной почты
+                              <Field
+                                 name="email"
+                                 component="input"
+                              />
+                           </label>
+                           <div>
+                              <label>
+                                 Имя
+                                 <Field
+                                    name="userName"
+                                    component="input"
+                                 />
+                              </label>
+                              <label>
+                                 Фамилия
+                                 <Field
+                                    name="userSurname"
+                                    component="input"
+                                 />
+                              </label>
+                           </div>
+                           <label>
+                              Пароль
+                              <Field
+                                 name="password"
+                                 component="input"
+                              />
+                           </label>
+                           <button type="submit">
+                              Зарегистрироваться
+                           </button>
+                        </form>
+                     )}
+                  </Form>
                </div>
             </div>
          </div>
