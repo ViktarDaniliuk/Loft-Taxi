@@ -31,14 +31,14 @@
    margin-top: 0;
 }
 
-.sign_in span {
+.sign_in span a {
    text-decoration: none;
    color: #1473e6;
-   cursor: pointer;
+   /* cursor: pointer; */
    transition: all .3s;
 }
 
-.sign_in span:hover {
+.sign_in span a:hover {
    text-decoration: underline;
    transition: all .3s;
 }
