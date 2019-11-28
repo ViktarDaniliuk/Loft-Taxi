@@ -151,7 +151,7 @@ export class MapPopup extends Component {
          getAddressListRequest();
       }
 
-      if (this.props.addresses.length && !this.props.coordinates.length) {
+      if (this.props.addresses && this.props.addresses.length && !this.props.coordinates.length) {
 
          return (
             <div className={ MapPopupMod.payment_data }>
@@ -200,7 +200,7 @@ export class MapPopup extends Component {
          )
       };
 
-      if (this.props.coordinates.length) {
+      if (this.props.coordinates && this.props.coordinates.length) {
 
          return (
             <div className={ MapPopupMod.payment_data } >
