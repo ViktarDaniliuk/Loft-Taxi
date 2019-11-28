@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 // добавить подсветку кнопки соответствующей активной странице с помощью NavLink activeClassName
 
-class App extends Component {
+export class App extends Component {
 
   // при клике на Вход/Зарегистрироваться - соответствующим образом менть в стейте currentTab
 
@@ -46,10 +46,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    
-  };
-};
-
-export const WrappedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+export const WrappedApp = connect(mapStateToProps, null)(App);

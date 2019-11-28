@@ -1,8 +1,8 @@
-import React from "react";
-import { shallow, mount, render } from "enzyme";
-import App from "../../../App";
-import ProfilePopup from "./ProfilePopup";
-import renderer from "react-test-renderer";
+// import React from "react";
+// import { shallow, mount, render } from "enzyme";
+// import App from "../../../App";
+// import ProfilePopup from "./ProfilePopup";
+// import renderer from "react-test-renderer";
 
 // it("ProfilePopup Snapshot", () => {
 //   const tree = renderer.create(<ProfilePopup />).toJSON();

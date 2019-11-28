@@ -14,13 +14,13 @@
    margin-top: 0;
 }
 
-.payment_data > input {
+.payment_data > input,
+.payment_data > button {
    width: 100%;
 }
 
 .payment_data > div > div {
    display: flex;
-   /* flex-direction: column; */
    width: 100%;
    align-items: center;
 }

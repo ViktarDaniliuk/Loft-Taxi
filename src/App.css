@@ -48,6 +48,7 @@ input {
   border-bottom: 1px solid #919191;
   transition: all .3s;
   font-size: 14px;
+  padding-left: 15px;
 }
 
 input:focus {
@@ -55,13 +56,6 @@ input:focus {
   transition: all .3s;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-  padding-left: 15px;
-}
-
-input[type="submit"],
 button[type="submit"] {
   margin-top: 35px;
   width: 250px;

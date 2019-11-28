@@ -6,7 +6,7 @@ import { sendPaymentDataRequest } from '../../../redux/actions';
 import MaskedInput from 'react-text-mask';
 import { Form, Field } from 'react-final-form';
 
-class ProfilePopup extends Component {
+export class ProfilePopup extends Component {
    state = {
       disabled: "disabled"
    };

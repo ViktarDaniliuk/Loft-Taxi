@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import { sendDataLoginRequest } from '../../redux/actions';
 
-class Login extends Component {
+export class Login extends Component {
    onHandleLogin = (values) => {
       const { sendDataLoginRequest } = this.props;
       const { email, password } = values;
@@ -27,7 +27,14 @@ class Login extends Component {
             <div className={ LoginMod.popup }>
                <div className={ LoginMod.log_in }>
                   <h2>Войти</h2>
-                  <p>Новый пользователь? <span><Link to="/signup">Зарегистрироваться</Link></span></p>
+                  <p>
+                     Новый пользователь? 
+                     <span>
+                        <Link to="/signup">
+                           Зарегистрироваться
+                        </Link>
+                     </span>
+                  </p>
                   <Form onSubmit={ this.onHandleLogin } >
                      {({ handleSubmit }) => (
                         <form onSubmit={ handleSubmit }>

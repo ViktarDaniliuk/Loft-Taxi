@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { sendDataSignupRequest } from '../../redux/actions';
 
-class Signup extends Component {
+export class Signup extends Component {
 
    onHandleSignup = (values) => {
       const { sendDataSignupRequest } = this.props;
@@ -39,7 +39,14 @@ class Signup extends Component {
             <div className={ SignupMod.popup }>
                <div className={ SignupMod.sign_in }>
                   <h2>Регистрация</h2>
-                  <p>Уже зарегистрирован? <span><Link to="/">Войти</Link></span></p>
+                  <p>
+                     Уже зарегистрирован? 
+                     <span>
+                        <Link to="/">
+                           Войти
+                        </Link>
+                     </span>
+                  </p>
                   <Form onSubmit={ this.onHandleSignup } >
                      {({ handleSubmit }) => (
                         <form onSubmit={ handleSubmit }>

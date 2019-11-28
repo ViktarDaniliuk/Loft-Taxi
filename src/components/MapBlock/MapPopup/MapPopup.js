@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAddressListRequest, getRouteRequest, onMakeNewOrder } from '../../../redux/actions';
 
-class MapPopup extends Component {
+export class MapPopup extends Component {
    state = {
       from: '',
       to: '',
@@ -195,11 +195,7 @@ class MapPopup extends Component {
                      }) }
                   </ul>
                </div>
-               <input 
-                  type="submit" 
-                  value="Вызвать такси" 
-                  onClick={ this.handleSendData }
-               />
+               <button type="submit" onClick={ this.handleSendData }>Вызвать такси</button>
             </div>
          )
       };
@@ -207,14 +203,10 @@ class MapPopup extends Component {
       if (this.props.coordinates.length) {
 
          return (
-            <div className={ MapPopupMod.payment_data }>
+            <div className={ MapPopupMod.payment_data } >
                <h1>Заказ размещен</h1>
                <p>Ваше такси уже едет к Вам. Прибудет приблизительно через 10 минут.</p>
-               <input 
-                  type="submit" 
-                  value="Сделать новый заказ"
-                  onClick={ this.handleMakeNewOrder }
-               />
+               <button type="submit" onClick={ this.handleMakeNewOrder } >Сделать новый заказ</button>
             </div>
          );
       }
@@ -224,10 +216,7 @@ class MapPopup extends Component {
             <h1>Заполните платежные данные</h1>
             <p>Укажите информацию о банковской карте, чтобы сделать заказ.</p>
             <Link to="/profile">
-               <input 
-                  type="submit" 
-                  value="Перейти в профиль" 
-               />
+               <button type="submit">Перейти в профиль</button>
             </Link>
          </div>
       );

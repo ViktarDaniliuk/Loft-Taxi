@@ -74,14 +74,6 @@ class MapBlock extends Component {
       // }
    };
 
-   // static getDerivedStateFromProps(nextProps, prevState) {
-   //    if (nextProps.coordinates.length) {
-   //       console.log(nextProps.coordinates);
-   //       console.log(nextProps.coordinates.length);
-   //       // drawRoute(map, this.propst.coordinates);
-   //    }
-   // }; 
-
    render () {
       if (this.props.coordinates.length) {
          drawRoute(this.map, this.props.coordinates);

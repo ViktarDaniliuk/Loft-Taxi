@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { onLogout } from '../../redux/actions';
 
-class Header extends Component {
+export class Header extends Component {
    onHandleLogout = () => {
       const { onLogout } = this.props;
       
@@ -35,12 +35,6 @@ class Header extends Component {
    }
 }
 
-const mapStateToProps = state => {
-   return {
-      
-   };
-};
-
 const mapDispatchToProps = dispatch => {
    return {
       onLogout: () => {
@@ -49,4 +43,4 @@ const mapDispatchToProps = dispatch => {
    };
 };
 
-export const WrappedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);
+export const WrappedHeader = connect(null, mapDispatchToProps)(Header);
