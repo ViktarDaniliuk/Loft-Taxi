@@ -49,6 +49,7 @@ export class Login extends Component {
                               Пароль*
                               <Field 
                                  name="password" 
+                                 type="password"
                                  component="input"
                               />
                            </label>

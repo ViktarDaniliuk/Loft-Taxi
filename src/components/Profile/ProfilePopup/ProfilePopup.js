@@ -96,7 +96,7 @@ class CardNumberInput extends PureComponent {
       return (
          <MaskedInput
             { ...this.props.input }
-            placeholder="1234 5678 1234 5678"
+            placeholder="0000 0000 0000 0000"
             guide={ false }
             mask={[/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/]}
          />

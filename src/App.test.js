@@ -5,17 +5,23 @@ import { shallow, mount } from 'enzyme';
 import { WrappedHeader } from './components/Header/Header';
 import { WrappedLogin } from './components/Login/Login';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import createAppStore from './redux/store';
 
-// it('renders without crashing', () => {
-//   const div = document.createElement('div');
-//   ReactDOM.render(
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>, 
-//     div
-//   );
-//   ReactDOM.unmountComponentAtNode(div);
-// });
+const store = createAppStore();
+
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(
+    <Provider store={ store }>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>, 
+    div
+  );
+  ReactDOM.unmountComponentAtNode(div);
+});
 
 it('contains WrappedHeader', () => {
   const wrapper = shallow(<App />);

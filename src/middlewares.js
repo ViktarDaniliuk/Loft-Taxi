@@ -12,8 +12,6 @@ import {
 import { history } from './history';
 
 export const sendSignupDataMiddleware = store => next => action => {
-   console.log('middlewares action: ', action);
-   // console.log('middlewares actionType: ', action.type);
    if (action.type === SEND_DATA_SIGNUP_REQUEST) {
       let user = {
          email: action.payload.userEmail,
@@ -21,8 +19,6 @@ export const sendSignupDataMiddleware = store => next => action => {
          name: action.payload.userName,
          surname: action.payload.userSurname
       };
-
-      // console.log(user);
 
       fetch('https://loft-taxi.glitch.me/register', {
          method: 'POST',
@@ -47,17 +43,9 @@ export const sendSignupDataMiddleware = store => next => action => {
          .catch(error => {
             console.log(error);
             store.dispatch(sendDataSignupFailure(error));
-            //-------------------------------------------
-            // сделать обработку ошибки
-            //-------------------------------------------
          })
-   } 
-   
-   // console.log(store.getState());
-
+   }
    const result = next(action);
-
-   // console.log(store.getState());
 
    return result;
 };
