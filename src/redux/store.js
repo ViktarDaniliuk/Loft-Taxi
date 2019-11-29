@@ -37,9 +37,6 @@ export const INITIAL_STATE = {
       error: null
    },
    route: null
-   // не нужно хранить в стейте данные пользователя, оствить только token, currentTab, error и состояния (true/false)
-   // error - возможно нужно будет поделить на ошибки от разных запросов
-   // при перезагрузке поле ошибок обнулять - error: null
 };
 
 const checkLocalStorage = () => {
@@ -47,7 +44,6 @@ const checkLocalStorage = () => {
 
    INITIAL_STATE.currentTab = 'login';
    INITIAL_STATE.isUserDataInLocalStorage = 'true';
-   // добавить инициализацию всех данных с localStorage
    
    return INITIAL_STATE;
 };

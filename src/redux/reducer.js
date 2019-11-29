@@ -12,7 +12,7 @@ import {
    GET_ADDRESS_LIST_SUCCESS,
    GET_ADDRESS_LIST_FAILURE,
    GET_ROUTE_SUCCESS,
-   GET_ROUTE_FAILURE // создать API и как свойства этого объекта получать экшины и экшин-криэйторы для каждого из компонентов
+   GET_ROUTE_FAILURE
 } from './actions';
 import { INITIAL_STATE } from './store';
 
@@ -41,7 +41,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
 
          stateCopy.currentTab = 'map';
          stateCopy.userData.isLoggedIn = action.payload.success;
-         stateCopy.userData.success = action.payload.success; // посмотреть, нужно ли это поле 
+         stateCopy.userData.success = action.payload.success;
          stateCopy.userData.token = action.payload.token;
 
          return stateCopy;
@@ -61,9 +61,9 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          stateCopy.userData.userName = action.payload.name;
          stateCopy.userData.userSurname = action.payload.surname;
          stateCopy.userData.password = action.payload.password;
-         stateCopy.currentTab = 'map'; // проверить, нужно ли поле currentTab
+         stateCopy.currentTab = 'map';
          stateCopy.userData.isLoggedIn = action.payload.success;
-         stateCopy.userData.success = action.payload.success; // посмотреть, нужно ли это поле 
+         stateCopy.userData.success = action.payload.success;
          stateCopy.userData.token = action.payload.token;
 
          return stateCopy;
@@ -84,7 +84,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          stateCopy.cardData.validity = action.payload.expiryDate;
          stateCopy.cardData.userFullName = action.payload.cardName;
          stateCopy.cardData.CVCcode = action.payload.cvc;
-         stateCopy.cardData.success = action.payload.success; // посмотреть, нужно ли это поле
+         stateCopy.cardData.success = action.payload.success;
 
          return stateCopy;
       }
@@ -104,7 +104,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          stateCopy.cardData.validity = action.payload.expiryDate;
          stateCopy.cardData.userFullName = action.payload.cardName;
          stateCopy.cardData.CVCcode = action.payload.cvc;
-         stateCopy.cardData.id = action.payload.id; // посмотреть, нужно ли это поле
+         stateCopy.cardData.id = action.payload.id;
 
          return stateCopy;
       }
@@ -126,8 +126,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       case GET_ADDRESS_LIST_FAILURE: {
          const stateCopy = {...state};
 
-         // придумать, что делать если адреса не пришли
-
          return stateCopy;
       }
       case GET_ROUTE_SUCCESS: {
@@ -140,8 +138,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       }
       case GET_ROUTE_FAILURE: {
          const stateCopy = {...state};
-
-         // придумать, что делать если адреса не пришли
 
          return stateCopy;
       }

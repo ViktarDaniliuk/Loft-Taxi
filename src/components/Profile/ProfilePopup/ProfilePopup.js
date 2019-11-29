@@ -20,13 +20,9 @@ export class ProfilePopup extends Component {
       const { sendPaymentDataRequest } = this.props;
       const { cardNumber, validity, userFullName, CVCcode } = values;
 
-      if (!values.cardNumber || !values.validity || !values.userFullName || !values.CVCcode) return; // вместо return сделать добавление класса disabled кнопке (чтобы нельзя было ее нажать)
+      if (!values.cardNumber || !values.validity || !values.userFullName || !values.CVCcode) return;
 
       sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode);
-   };
-
-   handleCheckInputStatus = () => { // переделать на работу с value
-      if (this.state.cardNumber && this.state.validity && this.state.userFullName && this.state.CVCcode) this.setState({ disabled: "" });
    };
 
    render () {
@@ -77,10 +73,7 @@ export class ProfilePopup extends Component {
                            </label>
                         </div>
                      </div>
-                     <button 
-                        type="submit" 
-                        // className= { this.state.disabled }
-                     >
+                     <button type="submit">
                         Сохранить
                      </button>
                   </form>

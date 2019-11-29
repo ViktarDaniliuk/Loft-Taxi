@@ -20,7 +20,7 @@
 }
 
 .popup > div {
-   width: 70%; /* если размер окна меньше 1100px, то уменьшаем размер высплывающего окна или меняем направление главной оси родительского блока flex-direction: column; */
+   width: 70%;
    max-width: 350px;
    background-color: #fff;
    padding: 45px;

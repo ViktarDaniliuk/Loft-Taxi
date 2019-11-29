@@ -36,7 +36,7 @@ const sendData = (user, path) => {
 const getData = (path, args = {}) => {
    let searchLine = '';
 
-   for ( let key in args ) { // доработать построение строки запроса ? key '=' value '&' .....
+   for ( let key in args ) {
       searchLine += key + '=' + args[key] + '&';
    }
 

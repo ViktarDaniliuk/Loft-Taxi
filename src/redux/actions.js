@@ -64,7 +64,6 @@ export const sendDataSignupSuccess = (data) => {
 };
 
 export const sendDataSignupFailure = (error) => {
-   // если ответ succes: false, то показываем сообщенние пользователю об ошибке
 
    return {
       type: SEND_DATA_SIGNUP_FAILURE,
