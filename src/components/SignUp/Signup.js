@@ -1,47 +1,110 @@
-import React, { useContext } from 'react';
+import React, { Component } from 'react';
 import SignupMod from './Signup.module.css';
 import logo from './logo.svg';
-import { Context } from '../../context';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Form, Field } from 'react-final-form';
+import { sendDataSignupRequest } from '../../redux/actions';
 
-const Login = () => {
-   const {
-      userName, userSurname, email, password, handleChangeCurrentTab, handleSignUpSubmit, handleEmailChange, handleUserNameChange, handleUserSurnameChange, handlePasswordChange, handleSignUp
-   } = useContext(Context);
+export class Signup extends Component {
 
-   return (
-      <div className={ SignupMod.login }>
-         <div className={ SignupMod.logo_block }>
-            <img src={logo} className={ SignupMod.logo } alt="logo" />
-         </div>
-         <div className={ SignupMod.popup }>
-            <div className={ SignupMod.sign_in }>
-               <h2>Регистрация</h2>
-               <p>Уже зарегистрирован? <span onClick={ () => handleChangeCurrentTab("login") }>Войти</span></p>
-               <form onSubmit={ handleSignUpSubmit }>
-                  <label>
-                     Адрес электронной почты
-                     <input type="email" value={ email } onChange={ handleEmailChange } />
-                  </label>
-                  <div>
-                     <label>
-                        Имя
-                        <input type="text" value={ userName } onChange={ handleUserNameChange } />
-                     </label>
-                     <label>
-                        Фамилия
-                        <input type="text" value={ userSurname } onChange={ handleUserSurnameChange } />
-                     </label>
-                  </div>
-                  <label>
-                     Пароль
-                     <input type="password" value={ password } onChange={ handlePasswordChange } />
-                  </label>
-                  <input type="submit" value="Зарегистрироваться" onClick={ () => handleSignUp() } />
-               </form>
+   onHandleSignup = (values) => {
+      const { sendDataSignupRequest } = this.props;
+      const { email, userName, userSurname, password } = values;
+
+      if (localStorage.user) return;
+      if (!values.email || !values.userName || !values.userSurname || !values.password) return;
+
+      sendDataSignupRequest(email, userName, userSurname, password);
+   };
+
+   render() {
+      //-----------------------------------------------------
+      //-----------------------------------------------------
+      // в зависимость от ответа сервера менять врутренности компонента
+
+      const { isLoading, error } = this.props;
+
+      if (isLoading) return <p>Ожидание ответа сервера...</p>
+      if (error) return <p>Произошла сетевая ошибка</p>
+
+      //-----------------------------------------------------
+      //-----------------------------------------------------
+
+      return (
+         <div className={ SignupMod.login }>
+            <div className={ SignupMod.logo_block }>
+               <img src={logo} className={ SignupMod.logo } alt="logo" />
+            </div>
+            <div className={ SignupMod.popup }>
+               <div className={ SignupMod.sign_up }>
+                  <h2>Регистрация</h2>
+                  <p>
+                     Уже зарегистрирован? 
+                     <span>
+                        <Link to="/">
+                           Войти
+                        </Link>
+                     </span>
+                  </p>
+                  <Form onSubmit={ this.onHandleSignup } >
+                     {({ handleSubmit }) => (
+                        <form onSubmit={ handleSubmit }>
+                           <label>
+                              Адрес электронной почты
+                              <Field
+                                 name="email"
+                                 component="input"
+                              />
+                           </label>
+                           <div>
+                              <label>
+                                 Имя
+                                 <Field
+                                    name="userName"
+                                    component="input"
+                                 />
+                              </label>
+                              <label>
+                                 Фамилия
+                                 <Field
+                                    name="userSurname"
+                                    component="input"
+                                 />
+                              </label>
+                           </div>
+                           <label>
+                              Пароль
+                              <Field
+                                 name="password"
+                                 component="input"
+                              />
+                           </label>
+                           <button type="submit">
+                              Зарегистрироваться
+                           </button>
+                        </form>
+                     )}
+                  </Form>
+               </div>
             </div>
          </div>
-      </div>
-   );
+      );
+   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+   return {
+      state
+   };
+};
+
+const mapDispatchToProps = dispatch => {
+   return {
+      sendDataSignupRequest: (email, userName, userSurname, password) => {
+         dispatch(sendDataSignupRequest(email, userName, userSurname, password));
+      }
+   };
+};
+
+export const WrappedSignup = connect(mapStateToProps, mapDispatchToProps)(Signup);

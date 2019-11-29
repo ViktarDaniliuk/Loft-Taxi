@@ -1,79 +1,161 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ProfilePopupMod from './ProfilePopup.module.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { sendPaymentDataRequest } from '../../../redux/actions';
+import MaskedInput from 'react-text-mask';
+import { Form, Field } from 'react-final-form';
 
-class ProfilePopup extends Component {
+export class ProfilePopup extends Component {
    state = {
-      cardNumber: "",
-      validity: "",
-      userName: "",
-      CVCcode: ""
+      disabled: "disabled"
    };
 
    static propTypes = {
-      handleChangeCurrentTab: PropTypes.func,
-      handleChangePaymentData: PropTypes.func
+      sendPaymentDataRequest: PropTypes.func
    };
 
-   handleSubmit = e => {
-      e.preventDefault();
+   onChangePaymentData = (values) => {
 
+      const { sendPaymentDataRequest } = this.props;
+      const { cardNumber, validity, userFullName, CVCcode } = values;
 
+      if (!values.cardNumber || !values.validity || !values.userFullName || !values.CVCcode) return; // вместо return сделать добавление класса disabled кнопке (чтобы нельзя было ее нажать)
+
+      sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode);
    };
 
-   handleCardNumberChange = e => {
-      this.setState({ cardNumber: e.target.value });
-   };
-
-   handleValidityChange = e => {
-      this.setState({ validity: e.target.value });
-   };
-
-   handleUserNameChange = e => {
-      this.setState({ userName: e.target.value });
-   };
-
-   handleCVCcodeChange = e => {
-      this.setState({ CVCcode: e.target.value });
+   handleCheckInputStatus = () => { // переделать на работу с value
+      if (this.state.cardNumber && this.state.validity && this.state.userFullName && this.state.CVCcode) this.setState({ disabled: "" });
    };
 
    render () {
-      // console.log('ProfilePopup props: ', this.props);
+
       return (
          <div className={ ProfilePopupMod.profile_popup }>
             <h1>Профиль</h1>
             <p>Способ оплаты</p>
-            <form onSubmit={this.handleSubmit}>
-               <div>
-                  <div>
-                     <label>
-                        Номер карты:
-                        <input type="text" value={this.state.cardNumber} onChange={this.handleCardNumberChange} placeholder="1234 5678 1234 5678" />
-                     </label>
-                     <label>
-                        Срок действия:
-                        <input type="text" value={this.state.validity} onChange={this.handleValidityChange} placeholder="00/00" />
-                     </label>
-                  </div>
-                  <div>
-                     <label>
-                        Имя владельца:
-                        <input type="text" value={this.state.userName} onChange={this.handleUserNameChange} placeholder="USER NAME" />
-                     </label>
-                     <label>
-                        CVC:
-                        <input type="password" value={this.state.CVCcode} onChange={this.handleCVCcodeChange} placeholder="***" />
-                     </label>
-                  </div>
-               </div>
-               <input type="submit" value="Сохранить" onClick={ () => { 
-                  this.props.handleChangeCurrentTab("mapblock");
-                  this.props.handleChangePaymentData();
-               }} />
-            </form>
+            <Form onSubmit= { this.onChangePaymentData }>
+               {({ handleSubmit }) => (
+                  <form onSubmit={ handleSubmit }>
+                     <div>
+                        <div>
+                           <label>
+                              Номер карты:
+                              <Field 
+                                 name="cardNumber" 
+                                 initialValue={ this.props.cardNumber }
+                                 component={ CardNumberInput } 
+                              />
+                           </label>
+                           <label>
+                              Срок действия:
+                              <Field 
+                                 name="validity" 
+                                 initialValue={ this.props.validity }
+                                 component={ ValidityInput } 
+                              />
+                           </label>
+                        </div>
+                        <div>
+                           <label>
+                              Имя владельца:
+                              <Field 
+                                 name="userFullName" 
+                                 initialValue={ this.props.userFullName }
+                                 component={ UserFullNameInput } 
+                              />
+                           </label>
+                           <label>
+                              CVC:
+                              <Field 
+                                 name="CVCcode"
+                                 type="password"
+                                 initialValue={ this.props.CVCcode }
+                                 component={ UserPasswordInput }
+                              />
+                           </label>
+                        </div>
+                     </div>
+                     <button 
+                        type="submit" 
+                        // className= { this.state.disabled }
+                     >
+                        Сохранить
+                     </button>
+                  </form>
+               )}
+            </Form>
          </div>
       );
    }
-}
+};
 
-export default ProfilePopup;
+class CardNumberInput extends PureComponent {
+   render() {
+      return (
+         <MaskedInput
+            { ...this.props.input }
+            placeholder="1234 5678 1234 5678"
+            guide={ false }
+            mask={[/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/]}
+         />
+      );
+   }
+};
+
+class ValidityInput extends PureComponent {
+   render() {
+      return (
+         <MaskedInput 
+            { ...this.props.input }
+            placeholder="00/00" 
+            guide={ false }
+            mask={[/\d/, /\d/, '/', /\d/, /\d/]}
+         />
+      );
+   }
+};
+
+class UserFullNameInput extends PureComponent {
+   render() {
+      return (
+         <input 
+            { ...this.props.input }
+            placeholder="FULL USER NAME" 
+         />
+      );
+   }
+};
+
+class UserPasswordInput extends PureComponent {
+   render() {
+      return (
+         <MaskedInput 
+            { ...this.props.input }
+            placeholder="***" 
+            guide={ false }
+            mask={[/\d/, /\d/, /\d/]}
+         />
+      );
+   }
+};
+
+const mapStateToProps = state => {
+   return {
+      cardNumber: state.cardData.cardNumber,
+      validity: state.cardData.validity,
+      userFullName: state.cardData.userFullName,
+      CVCcode: state.cardData.CVCcode
+   };
+};
+
+const mapDispatchToProps = dispatch => {
+   return {
+      sendPaymentDataRequest: (cardNumber, validity, userFullName, CVCcode) => {
+         dispatch(sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode));
+      }
+   };
+};
+
+export const WrappedProfilePopup = connect(mapStateToProps, mapDispatchToProps)(ProfilePopup);

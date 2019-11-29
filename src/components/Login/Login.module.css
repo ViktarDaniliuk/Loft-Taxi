@@ -31,14 +31,15 @@
    margin-top: 0;
 }
 
-.log_in span {
+.log_in span a {
    text-decoration: none;
    color: #1473e6;
    cursor: pointer;
    transition: all .3s;
+   padding-left: 10px;
 }
 
-.log_in span:hover {
+.log_in span a:hover {
    text-decoration: underline;
    transition: all .3s;
 }
