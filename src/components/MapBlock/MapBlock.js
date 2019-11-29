@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { drawRoute, removeRoute } from './helper';
 
-class MapBlock extends Component {
+export class MapBlock extends Component {
    static propTypes = {
       paymentData: PropTypes.bool
    };
@@ -75,7 +75,7 @@ class MapBlock extends Component {
    };
 
    render () {
-      if (this.props.coordinates.length) {
+      if (this.props.coordinates && this.props.coordinates.length) {
          drawRoute(this.map, this.props.coordinates);
       }
 

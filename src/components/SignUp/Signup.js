@@ -37,7 +37,7 @@ export class Signup extends Component {
                <img src={logo} className={ SignupMod.logo } alt="logo" />
             </div>
             <div className={ SignupMod.popup }>
-               <div className={ SignupMod.sign_in }>
+               <div className={ SignupMod.sign_up }>
                   <h2>Регистрация</h2>
                   <p>
                      Уже зарегистрирован? 

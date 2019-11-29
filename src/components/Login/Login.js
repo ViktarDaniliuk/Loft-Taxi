@@ -30,7 +30,7 @@ export class Login extends Component {
                   <p>
                      Новый пользователь? 
                      <span>
-                        <Link to="/signup">
+                        <Link to="/signup"> 
                            Зарегистрироваться
                         </Link>
                      </span>

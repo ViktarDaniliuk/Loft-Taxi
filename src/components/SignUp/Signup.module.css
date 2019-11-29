@@ -27,18 +27,19 @@
    border-radius: 5px;
 }
 
-.sign_in h2 {
+.sign_up h2 {
    margin-top: 0;
 }
 
-.sign_in span a {
+.sign_up span a {
    text-decoration: none;
    color: #1473e6;
    /* cursor: pointer; */
    transition: all .3s;
+   padding-left: 10px;
 }
 
-.sign_in span a:hover {
+.sign_up span a:hover {
    text-decoration: underline;
    transition: all .3s;
 }
