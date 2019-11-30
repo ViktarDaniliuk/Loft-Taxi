@@ -1,4 +1,4 @@
-import { takeEvery, call, put, select } from 'redux-saga/effects';
+import { takeEvery, call, put, select, fork } from 'redux-saga/effects';
 import {
    SEND_DATA_SIGNUP_REQUEST,
    sendDataSignupSuccess,
@@ -51,12 +51,21 @@ const getData = (path, args = {}) => {
 
 const getStateToken = state => state.userData.token;
 
+export function* rootHandle() {
+   yield fork(handleSignUp);
+   yield fork(handleLogin);
+   yield fork(handleSendPaymentData);
+   yield fork(handleGetPaymentData);
+   yield fork(handleGetAddressList);
+   yield fork(handleGetRoute);
+};
+
 export function* handleSignUp() {
-   let path = 'register'
+   const path = 'register'
 
    yield takeEvery(SEND_DATA_SIGNUP_REQUEST, function* (action) {
       try {
-         let user = {
+         const user = {
             email: action.payload.userEmail,
             password: action.payload.password,
             name: action.payload.userName,
@@ -81,11 +90,11 @@ export function* handleSignUp() {
 };
 
 export function* handleLogin() {
-   let path = 'auth'
+   const path = 'auth'
 
    yield takeEvery(SEND_DATA_LOGIN_REQUEST, function* (action) {
       try {
-         let user = {
+         const user = {
             email: action.payload.userEmail,
             password: action.payload.password
          };
@@ -111,12 +120,12 @@ export function* handleLogin() {
 };
 
 export function* handleSendPaymentData() {
-   let path = 'card'
+   const path = 'card'
 
    yield takeEvery(SEND_DATA_PROFILE_REQUEST, function* (action) {
       try {
-         let token = yield select(getStateToken);
-         let user = {
+         const token = yield select(getStateToken);
+         const user = {
             cardNumber: action.payload.cardNumber,
             expiryDate: action.payload.validity,
             cardName: action.payload.userFullName,
@@ -141,11 +150,11 @@ export function* handleSendPaymentData() {
 };
 
 export function* handleGetPaymentData() {
-   let path = 'card'
+   const path = 'card'
 
    yield takeEvery(GET_PAYMENT_DATA_REQUEST, function* (action) {
       try {
-         let args = {
+         const args = {
             token: action.payload.token
          };
          const result = yield call(getData, path, args);
@@ -161,7 +170,7 @@ export function* handleGetPaymentData() {
 };
 
 export function* handleGetAddressList() {
-   let path = 'addressList';
+   const path = 'addressList';
 
    yield takeEvery(GET_ADDRESS_LIST_REQUEST, function* (action) {
       try {
@@ -176,7 +185,7 @@ export function* handleGetAddressList() {
 };
 
 export function* handleGetRoute() {
-   let path = 'route';
+   const path = 'route';
 
    yield takeEvery(GET_ROUTE_REQUEST, function* (action) {
       try {

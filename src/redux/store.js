@@ -1,14 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './reducer';
-import {
-   sagaSendSignupDataMiddleware,
-   sagaSendLoginDataMiddleware,
-   sagaSendPaymentDataMiddleware,
-   sagaGetPaymentDataMiddleware,
-   sagaGetAddressListMiddleware,
-   sagaGetRouteMiddleware
-} from './sagaMiddlewares';
-import { handleSignUp, handleLogin, handleSendPaymentData, handleGetPaymentData, handleGetAddressList, handleGetRoute } from './sagas';
+import { rootSaga } from './sagaMiddlewares';
+import { rootHandle } from './sagas';
 
 export const INITIAL_STATE = {
    currentTab: "signup",
@@ -55,24 +48,14 @@ const createAppStore = () => {
       rootReducer,
       INITIAL_STATE,
       compose(
-         applyMiddleware(sagaSendSignupDataMiddleware),
-         applyMiddleware(sagaSendLoginDataMiddleware),
-         applyMiddleware(sagaSendPaymentDataMiddleware),
-         applyMiddleware(sagaGetPaymentDataMiddleware),
-         applyMiddleware(sagaGetAddressListMiddleware),
-         applyMiddleware(sagaGetRouteMiddleware),
+         applyMiddleware(rootSaga),
          window.__REDUX_DEVTOOLS_EXTENSION__
          ? window.__REDUX_DEVTOOLS_EXTENSION__()
          : noop => noop,
       )
    );
 
-   sagaSendSignupDataMiddleware.run(handleSignUp);
-   sagaSendLoginDataMiddleware.run(handleLogin);
-   sagaSendPaymentDataMiddleware.run(handleSendPaymentData);
-   sagaGetPaymentDataMiddleware.run(handleGetPaymentData);
-   sagaGetAddressListMiddleware.run(handleGetAddressList);
-   sagaGetRouteMiddleware.run(handleGetRoute);
+   rootSaga.run(rootHandle);
 
    return store;
 };
