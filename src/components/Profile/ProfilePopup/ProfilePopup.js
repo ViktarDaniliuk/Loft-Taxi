@@ -12,7 +12,11 @@ export class ProfilePopup extends Component {
    };
 
    static propTypes = {
-      sendPaymentDataRequest: PropTypes.func
+      sendPaymentDataRequest: PropTypes.func.isRequired,
+      cardNumber: PropTypes.string,
+      validity: PropTypes.string,
+      userFullName: PropTypes.string,
+      CVCcode: PropTypes.string
    };
 
    onChangePaymentData = (values) => {

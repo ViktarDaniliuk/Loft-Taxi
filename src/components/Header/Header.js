@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import HeaderMod from './Header.module.css';
 import logo from './logo.svg';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { onLogout } from '../../redux/actions';
 
 export class Header extends Component {
+   static propTypes = {
+      onLogout: PropTypes.func.isRequired
+   };
+
    onHandleLogout = () => {
       const { onLogout } = this.props;
       

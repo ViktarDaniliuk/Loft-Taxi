@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { WrappedMapPopup } from './MapPopup/MapPopup';
-import MapBlockMod from './MapBlock.module.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { WrappedMapPopup } from './MapPopup/MapPopup';
+import MapBlockMod from './MapBlock.module.css';
 import { drawRoute, removeRoute } from './helper';
 
 export class MapBlock extends Component {
    static propTypes = {
-      paymentData: PropTypes.bool
+      coordinates: PropTypes.array.isRequired,
+      route: PropTypes.oneOf([null, 'remove'])
    };
+
+   static defaultProps = {
+      coordinates: [],
+      route: null
+   }
 
    state = {
       map: null

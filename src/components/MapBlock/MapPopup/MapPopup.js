@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import MapPopupMod from './MapPopup.module.css';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import MapPopupMod from './MapPopup.module.css';
 import { getAddressListRequest, getRouteRequest, onMakeNewOrder } from '../../../redux/actions';
 
 export class MapPopup extends Component {
@@ -14,7 +14,20 @@ export class MapPopup extends Component {
    };
 
    static propTypes = {
-      paymentData: PropTypes.bool
+      getAddressListRequest: PropTypes.func.isRequired,
+      getRouteRequest: PropTypes.func.isRequired,
+      onMakeNewOrder: PropTypes.func.isRequired,
+      paymentData: PropTypes.bool.isRequired,
+      addresses: PropTypes.array.isRequired,
+      coordinates: PropTypes.array.isRequired,
+      route: PropTypes.oneOf([null, 'remove'])
+   };
+
+   static defaultProps = {
+      paymentData: false,
+      addresses: [],
+      coordinates: [],
+      route: null
    };
 
    handleInputChange = e => {

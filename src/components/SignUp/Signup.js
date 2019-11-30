@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import SignupMod from './Signup.module.css';
-import logo from './logo.svg';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
+import SignupMod from './Signup.module.css';
+import logo from './logo.svg';
 import { sendDataSignupRequest } from '../../redux/actions';
 
 export class Signup extends Component {
+   static propTypes = {
+      sendDataSignupRequest: PropTypes.func.isRequired
+   }
 
    onHandleSignup = (values) => {
       const { sendDataSignupRequest } = this.props;
@@ -87,12 +91,6 @@ export class Signup extends Component {
    }
 }
 
-const mapStateToProps = state => {
-   return {
-      state
-   };
-};
-
 const mapDispatchToProps = dispatch => {
    return {
       sendDataSignupRequest: (email, userName, userSurname, password) => {
@@ -101,4 +99,4 @@ const mapDispatchToProps = dispatch => {
    };
 };
 
-export const WrappedSignup = connect(mapStateToProps, mapDispatchToProps)(Signup);
+export const WrappedSignup = connect(null, mapDispatchToProps)(Signup);

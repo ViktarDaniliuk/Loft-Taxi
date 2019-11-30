@@ -43,7 +43,7 @@ const checkLocalStorage = () => {
    if (!localStorage.user) return;
 
    INITIAL_STATE.currentTab = 'login';
-   INITIAL_STATE.isUserDataInLocalStorage = 'true';
+   INITIAL_STATE.isUserDataInLocalStorage = true;
    
    return INITIAL_STATE;
 };

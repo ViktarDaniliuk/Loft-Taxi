@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Form, Field } from 'react-final-form';
 import LoginMod from './Login.module.css';
 import logo from './logo.svg';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Form, Field } from 'react-final-form';
 import { sendDataLoginRequest } from '../../redux/actions';
 
 export class Login extends Component {
+   static propTypes = {
+      sendDataLoginRequest: PropTypes.func.isRequired,
+      isLoggedIn: PropTypes.bool.isRequired
+   };
+
+   static defaultProps = {
+      isLoggedIn: false
+   };
+
    onHandleLogin = (values) => {
       const { sendDataLoginRequest } = this.props;
       const { email, password } = values;
