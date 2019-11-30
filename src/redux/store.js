@@ -1,7 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './reducer';
-import { rootSaga } from './sagaMiddlewares';
-import { rootHandle } from './sagas';
+import { rootSaga } from './sagas/saga-middleware';
+import { rootHandle } from './sagas/sagas';
 
 export const INITIAL_STATE = {
    currentTab: "signup",
