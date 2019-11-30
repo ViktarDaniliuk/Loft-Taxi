@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import SignupMod from './Signup.module.css';
 import logo from './logo.svg';
-import { sendDataSignupRequest } from '../../redux/actions';
+import { sendDataSignupRequest } from '../../../redux/actions';
 
 export class Signup extends Component {
    static propTypes = {
@@ -23,7 +23,7 @@ export class Signup extends Component {
    };
 
    render() {
-
+      console.log('Signup rendered: ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
       const { isLoading, error } = this.props;
 
       if (isLoading) return <p>Ожидание ответа сервера...</p>

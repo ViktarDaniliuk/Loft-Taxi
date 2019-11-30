@@ -2,7 +2,7 @@ import React, { Component, PureComponent } from 'react';
 import ProfilePopupMod from './ProfilePopup.module.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendPaymentDataRequest } from '../../../redux/actions';
+import { sendPaymentDataRequest } from '../../../../redux/actions';
 import MaskedInput from 'react-text-mask';
 import { Form, Field } from 'react-final-form';
 
@@ -30,7 +30,7 @@ export class ProfilePopup extends Component {
    };
 
    render () {
-
+      console.log('ProfilePopup rendered: ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
       return (
          <div className={ ProfilePopupMod.profile_popup }>
             <h1>Профиль</h1>

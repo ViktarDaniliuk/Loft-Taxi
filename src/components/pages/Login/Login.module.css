@@ -3,7 +3,7 @@
    align-items: center;
    padding-top: 68px;
    height: calc(100vh - 68px);
-   background: url(../../main-bg.png) center 50% no-repeat;
+   background: url(../../../main-bg.png) center 50% no-repeat;
 }
 
 .login > div {
@@ -27,18 +27,23 @@
    border-radius: 5px;
 }
 
-.sign_up h2 {
+.log_in h2 {
    margin-top: 0;
 }
 
-.sign_up span a {
+.log_in span a {
    text-decoration: none;
    color: #1473e6;
+   cursor: pointer;
    transition: all .3s;
    padding-left: 10px;
 }
 
-.sign_up span a:hover {
+.log_in span a:hover {
    text-decoration: underline;
    transition: all .3s;
+}
+
+.log_in input[type="submit"] {
+   width: 160px;
 }

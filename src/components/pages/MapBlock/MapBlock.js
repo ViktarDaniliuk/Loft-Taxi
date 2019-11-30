@@ -37,6 +37,7 @@ export class MapBlock extends Component {
    };
 
    render () {
+      console.log('MapBlock rendered: ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
       if (this.props.coordinates && this.props.coordinates.length) {
          drawRoute(this.map, this.props.coordinates);
       }

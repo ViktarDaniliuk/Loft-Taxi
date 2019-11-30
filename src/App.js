@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { WrappedHeader } from './components/Header/Header';
-import { WrappedLogin } from './components/Login/Login';
-import { WrappedMapBlock } from './components/MapBlock/MapBlock';
-import Profile from './components/Profile/Profile';
-import { WrappedSignup } from './components/SignUp/Signup';
+import { WrappedLogin } from './components/pages/Login/Login';
+import { WrappedMapBlock } from './components/pages/MapBlock/MapBlock';
+import Profile from './components/pages/Profile/Profile';
+import { WrappedSignup } from './components/pages/SignUp/Signup';
 
 export class App extends Component {
   static propTypes = {
@@ -23,7 +23,7 @@ export class App extends Component {
   }
 
   render () {
-
+    console.log('App rendered: ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
     return (
       <div className="app">
         { this.props["currentTab"] !== "login" && this.props["currentTab"] !== "signup" && <WrappedHeader /> }

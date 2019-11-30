@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MapPopupMod from './MapPopup.module.css';
-import { getAddressListRequest, getRouteRequest, onMakeNewOrder } from '../../../redux/actions';
+import { getAddressListRequest, getRouteRequest, onMakeNewOrder } from '../../../../redux/actions';
 
 export class MapPopup extends Component {
    state = {
@@ -158,6 +158,7 @@ export class MapPopup extends Component {
    };
 
    render () {
+      
       if (this.props.paymentData === true && !this.props.addresses.length) {
          const { getAddressListRequest } = this.props;
 
@@ -165,7 +166,7 @@ export class MapPopup extends Component {
       }
 
       if (this.props.addresses && this.props.addresses.length && !this.props.coordinates.length) {
-
+         console.log('MapPopup rendered (выбор маршрута): ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
          return (
             <div className={ MapPopupMod.payment_data }>
                <div>
@@ -214,7 +215,7 @@ export class MapPopup extends Component {
       };
 
       if (this.props.coordinates && this.props.coordinates.length) {
-
+         console.log('MapPopup rendered (ожидание такси): ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
          return (
             <div className={ MapPopupMod.payment_data } >
                <h1>Заказ размещен</h1>
@@ -223,7 +224,7 @@ export class MapPopup extends Component {
             </div>
          );
       }
-
+      console.log('MapPopup rendered (инф. об отсутствии платежных данных): ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
       return (
          <div className={ MapPopupMod.payment_data }>
             <h1>Заполните платежные данные</h1>

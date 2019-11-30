@@ -1,6 +1,6 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { ProfilePopup } from "./ProfilePopup";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ProfilePopup } from './ProfilePopup';
 
 it('render  without crashing', () => {
    const div = document.createElement('div');

@@ -18,7 +18,7 @@ export class Header extends Component {
    };
 
    render() {
-
+      console.log('Header rendered: ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
       return (
          <header className={ HeaderMod.app_header }>
             <img src={logo} className={ HeaderMod.logo } alt="logo" />

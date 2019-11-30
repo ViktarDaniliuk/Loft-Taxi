@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import LoginMod from './Login.module.css';
 import logo from './logo.svg';
-import { sendDataLoginRequest } from '../../redux/actions';
+import { sendDataLoginRequest } from '../../../redux/actions';
 
 export class Login extends Component {
    static propTypes = {
@@ -28,7 +28,7 @@ export class Login extends Component {
    };
 
    render() {
-
+      console.log('Login rendered: ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
       return (
          <div className={ LoginMod.login }>
             <div className={ LoginMod.logo_block }>
