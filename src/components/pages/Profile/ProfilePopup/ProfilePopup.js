@@ -1,10 +1,12 @@
-import React, { Component, PureComponent } from 'react';
-import ProfilePopupMod from './ProfilePopup.module.css';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendPaymentDataRequest } from '../../../../redux/actions';
-import MaskedInput from 'react-text-mask';
 import { Form, Field } from 'react-final-form';
+import ProfilePopupMod from './ProfilePopup.module.css';
+import { sendPaymentDataRequest } from '../../../../redux/actions';
+import CardNumberInput from './fields/CardNumberInput';
+import ValidityInput from './fields/ValidityInput';
+import UserCVCcodeInput from './fields/UserCVCcode';
 
 export class ProfilePopup extends Component {
    state = {
@@ -63,7 +65,8 @@ export class ProfilePopup extends Component {
                               <Field 
                                  name="userFullName" 
                                  initialValue={ this.props.userFullName }
-                                 component={ UserFullNameInput } 
+                                 component="input"
+                                 placeholder="FULL USER NAME" 
                               />
                            </label>
                            <label>
@@ -72,7 +75,7 @@ export class ProfilePopup extends Component {
                                  name="CVCcode"
                                  type="password"
                                  initialValue={ this.props.CVCcode }
-                                 component={ UserPasswordInput }
+                                 component={ UserCVCcodeInput }
                               />
                            </label>
                         </div>
@@ -84,56 +87,6 @@ export class ProfilePopup extends Component {
                )}
             </Form>
          </div>
-      );
-   }
-};
-
-class CardNumberInput extends PureComponent {
-   render() {
-      return (
-         <MaskedInput
-            { ...this.props.input }
-            placeholder="0000 0000 0000 0000"
-            guide={ false }
-            mask={[/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/]}
-         />
-      );
-   }
-};
-
-class ValidityInput extends PureComponent {
-   render() {
-      return (
-         <MaskedInput 
-            { ...this.props.input }
-            placeholder="00/00" 
-            guide={ false }
-            mask={[/\d/, /\d/, '/', /\d/, /\d/]}
-         />
-      );
-   }
-};
-
-class UserFullNameInput extends PureComponent {
-   render() {
-      return (
-         <input 
-            { ...this.props.input }
-            placeholder="FULL USER NAME" 
-         />
-      );
-   }
-};
-
-class UserPasswordInput extends PureComponent {
-   render() {
-      return (
-         <MaskedInput 
-            { ...this.props.input }
-            placeholder="***" 
-            guide={ false }
-            mask={[/\d/, /\d/, /\d/]}
-         />
       );
    }
 };
