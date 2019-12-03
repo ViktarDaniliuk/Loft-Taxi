@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MapPopupMod from './MapPopup.module.css';
-import { getAddressListRequest, getRouteRequest, onMakeNewOrder } from '../../../../redux/actions';
+import { getAddressListRequest, getRouteRequest, onMakeNewOrder, onChangeStoreAddresses } from '../../../../redux/actions';
 
 export class MapPopup extends Component {
    state = {
@@ -136,7 +136,7 @@ export class MapPopup extends Component {
       return copyList;
    };
 
-   handleSendData = (e) => {
+   handleMakeOrder = (e) => {
       const { getRouteRequest } = this.props;
       const { from, to } = this.state;
 
@@ -155,6 +155,19 @@ export class MapPopup extends Component {
          from: '',
          to: ''
       })
+   };
+
+   componentDidMount() {
+      this.setState({
+         from: this.props.from,
+         to: this.props.to
+      });
+   };
+
+   componentWillUnmount() {
+      const { onChangeStoreAddresses } = this.props;
+
+      onChangeStoreAddresses(this.state.from, this.state.to);
    };
 
    render () {
@@ -209,7 +222,7 @@ export class MapPopup extends Component {
                      }) }
                   </ul>
                </div>
-               <button type="submit" onClick={ this.handleSendData }>Вызвать такси</button>
+               <button type="submit" onClick={ this.handleMakeOrder }>Вызвать такси</button>
             </div>
          )
       };
@@ -242,7 +255,9 @@ const mapStateToProps = state => {
       paymentData: state.cardData.isPaymentData,
       addresses: state.addresses,
       coordinates: state.coordinates,
-      route: state.route
+      route: state.route,
+      from: state.from,
+      to: state.to
    };
 };
 
@@ -256,6 +271,9 @@ const mapDsipatchToProps = dispatch => {
       },
       onMakeNewOrder: () => {
          dispatch(onMakeNewOrder());
+      },
+      onChangeStoreAddresses: (from, to) => {
+         dispatch(onChangeStoreAddresses(from, to));
       }
    };
 };

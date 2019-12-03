@@ -27,6 +27,8 @@ export const GET_ROUTE_SUCCESS = 'GET_ROUTE_SUCCESS';
 export const GET_ROUTE_FAILURE = 'GET_ROUTE_FAILURE';
 //
 export const ON_MAKE_NEW_ORDER = 'ON_MAKE_NEW_ORDER';
+// 
+export const ON_CHANGE_STORE_ADDRESSES = 'ON_CHANGE_STORE_ADDRESSES';
 
 export const onLogout = () => {
    
@@ -41,6 +43,17 @@ export const onMakeNewOrder = () => {
       type: ON_MAKE_NEW_ORDER
    };
 };
+
+export const onChangeStoreAddresses = (from, to) => {
+
+   return {
+      type: ON_CHANGE_STORE_ADDRESSES,
+      payload: {
+         from: from,
+         to: to
+      }
+   }
+}
 
 export const sendDataSignupRequest = (newEmail, newUserName, newUserSurName, newPassword) => {
 
@@ -190,7 +203,7 @@ export const getAddressListRequest = () => {
 
       return {
          type: GET_ROUTE_SUCCESS,
-         payload: [ ...data ]
+         payload:  [ ...data ]
       };
    };
    

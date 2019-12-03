@@ -4,7 +4,7 @@ import { rootSaga } from './sagas/saga-middleware';
 import { rootHandle } from './sagas/sagas';
 
 export const INITIAL_STATE = {
-   currentTab: "signup",
+   currentTab: 'signup',
    isLoading: false,
    isUserDataInLocalStorage: false,
    addresses: [],
@@ -21,14 +21,16 @@ export const INITIAL_STATE = {
    },
    cardData: {
       isPaymentData: false,
-      id: "",
-      cardNumber: "",
-      validity: "",
-      userFullName: "",
-      CVCcode: "",
+      id: '',
+      cardNumber: '',
+      validity: '',
+      userFullName: '',
+      CVCcode: '',
       success: false,
       error: null
    },
+   from: '',
+   to: '',
    route: null
 };
 

@@ -1,6 +1,7 @@
 import {
    ON_LOGOUT,
    ON_MAKE_NEW_ORDER,
+   ON_CHANGE_STORE_ADDRESSES,
    SEND_DATA_SIGNUP_SUCCESS,
    SEND_DATA_SIGNUP_FAILURE,
    SEND_DATA_LOGIN_SUCCESS,
@@ -17,6 +18,7 @@ import {
 import { INITIAL_STATE } from './store';
 
 const rootReducer = (state = INITIAL_STATE, action) => {
+
    switch (action.type) {
       case ON_LOGOUT: {
          const stateCopy = {...state};
@@ -33,6 +35,14 @@ const rootReducer = (state = INITIAL_STATE, action) => {
 
          stateCopy.coordinates = [];
          stateCopy.route = 'remove';
+
+         return stateCopy;
+      }
+      case ON_CHANGE_STORE_ADDRESSES: {
+         const stateCopy = {...state};
+
+         stateCopy.from = action.payload.from;
+         stateCopy.to = action.payload.to;
 
          return stateCopy;
       }
@@ -130,7 +140,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       }
       case GET_ROUTE_SUCCESS: {
          const stateCopy = {...state};
-
+         
          stateCopy.coordinates = action.payload;
          stateCopy.route = null;
 
