@@ -24,7 +24,7 @@ export class App extends Component {
 
   render () {
     console.log('App rendered: ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
-    console.log(this.props.isUserDataInLocalStorage);
+
     return (
       <div className="app">
         { this.props["currentTab"] !== "login" && this.props["currentTab"] !== "signup" && <WrappedHeader /> }
