@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import MapPopupMod from './MapPopup.module.css';
 import { getAddressListRequest, getRouteRequest, onMakeNewOrder, onChangeStoreAddresses } from '../../../../redux/actions';
+import { history } from '../../../../history';
 
 export class MapPopup extends Component {
    state = {
@@ -157,6 +157,10 @@ export class MapPopup extends Component {
       })
    };
 
+   onChangePage = () => {
+      history.push('/profile');
+   };
+
    componentDidMount() {
       this.setState({
          from: this.props.from,
@@ -242,9 +246,7 @@ export class MapPopup extends Component {
          <div className={ MapPopupMod.payment_data }>
             <h1>Заполните платежные данные</h1>
             <p>Укажите информацию о банковской карте, чтобы сделать заказ.</p>
-            <Link to="/profile">
-               <button type="submit">Перейти в профиль</button>
-            </Link>
+            <button type="submit" onClick={ this.onChangePage }>Перейти в профиль</button>
          </div>
       );
    }
