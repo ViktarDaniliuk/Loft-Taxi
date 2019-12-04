@@ -8,7 +8,6 @@ import {
    getPaymentDataSuccess,
    getPaymentDataFailure
 } from '../actions';
-import { history } from '../../history';
 
 export function* handleSendPaymentData() {
    const path = 'card'
@@ -29,10 +28,6 @@ export function* handleSendPaymentData() {
          if (data.error) throw data;
 
          yield put(sendPaymentDataSuccess(data));
-
-         if (data && data.success && data.success === true) {
-            history.push('/map');
-         }
       } catch (error) {
          console.log(error);
          yield put(sendPaymentDataFailure(error));

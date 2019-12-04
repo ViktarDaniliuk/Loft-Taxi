@@ -10,7 +10,7 @@
    margin-top: 0;
 }
 
-.profile_popup input[type="submit"] {
+.profile_popup button[type="submit"] {
    margin: 35px auto 0;
 }
 

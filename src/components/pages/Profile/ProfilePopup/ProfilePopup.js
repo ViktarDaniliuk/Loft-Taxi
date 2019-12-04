@@ -7,9 +7,11 @@ import { sendPaymentDataRequest } from '../../../../redux/actions';
 import CardNumberInput from './fields/CardNumberInput';
 import ValidityInput from './fields/ValidityInput';
 import UserCVCcodeInput from './fields/UserCVCcode';
+import { history } from '../../../../history';
 
 export class ProfilePopup extends Component {
    state = {
+      sendedData: false,
       disabled: "disabled"
    };
 
@@ -29,6 +31,13 @@ export class ProfilePopup extends Component {
       if (!values.cardNumber || !values.validity || !values.userFullName || !values.CVCcode) return;
 
       sendPaymentDataRequest(cardNumber, validity, userFullName, CVCcode);
+      this.setState({
+         sendedData: true
+      });
+   };
+
+   onChangePage = () => {
+      history.push('/map');
    };
 
    render () {
@@ -36,56 +45,67 @@ export class ProfilePopup extends Component {
       return (
          <div className={ ProfilePopupMod.profile_popup }>
             <h1>Профиль</h1>
-            <p>Способ оплаты</p>
-            <Form onSubmit= { this.onChangePaymentData }>
-               {({ handleSubmit }) => (
-                  <form onSubmit={ handleSubmit }>
-                     <div>
+            { this.props.isPaymentData === true && 
+            this.state.sendedData === true && 
+            <>
+               <p>Платежные данные обновлены. Теперь вы можете заказывать такси</p>
+               <button type="submit" onClick={ this.onChangePage }>
+                  Перейти на карту
+               </button>
+            </> }
+            { this.state.sendedData === false &&
+            <>
+               <p>Способ оплаты</p>
+               <Form onSubmit= { this.onChangePaymentData }>
+                  {({ handleSubmit }) => (
+                     <form onSubmit={ handleSubmit }>
                         <div>
-                           <label>
-                              Номер карты:
-                              <Field 
-                                 name="cardNumber" 
-                                 initialValue={ this.props.cardNumber }
-                                 component={ CardNumberInput } 
-                              />
-                           </label>
-                           <label>
-                              Срок действия:
-                              <Field 
-                                 name="validity" 
-                                 initialValue={ this.props.validity }
-                                 component={ ValidityInput } 
-                              />
-                           </label>
+                           <div>
+                              <label>
+                                 Номер карты:
+                                 <Field 
+                                    name="cardNumber" 
+                                    initialValue={ this.props.cardNumber }
+                                    component={ CardNumberInput } 
+                                 />
+                              </label>
+                              <label>
+                                 Срок действия:
+                                 <Field 
+                                    name="validity" 
+                                    initialValue={ this.props.validity }
+                                    component={ ValidityInput } 
+                                 />
+                              </label>
+                           </div>
+                           <div>
+                              <label>
+                                 Имя владельца:
+                                 <Field 
+                                    name="userFullName" 
+                                    initialValue={ this.props.userFullName }
+                                    component="input"
+                                    placeholder="FULL USER NAME" 
+                                 />
+                              </label>
+                              <label>
+                                 CVC:
+                                 <Field 
+                                    name="CVCcode"
+                                    type="password"
+                                    initialValue={ this.props.CVCcode }
+                                    component={ UserCVCcodeInput }
+                                 />
+                              </label>
+                           </div>
                         </div>
-                        <div>
-                           <label>
-                              Имя владельца:
-                              <Field 
-                                 name="userFullName" 
-                                 initialValue={ this.props.userFullName }
-                                 component="input"
-                                 placeholder="FULL USER NAME" 
-                              />
-                           </label>
-                           <label>
-                              CVC:
-                              <Field 
-                                 name="CVCcode"
-                                 type="password"
-                                 initialValue={ this.props.CVCcode }
-                                 component={ UserCVCcodeInput }
-                              />
-                           </label>
-                        </div>
-                     </div>
-                     <button type="submit">
-                        Сохранить
-                     </button>
-                  </form>
-               )}
-            </Form>
+                        <button type="submit">
+                           Сохранить
+                        </button>
+                     </form>
+                  )}
+               </Form>
+            </>}
          </div>
       );
    }
@@ -96,7 +116,8 @@ const mapStateToProps = state => {
       cardNumber: state.cardData.cardNumber,
       validity: state.cardData.validity,
       userFullName: state.cardData.userFullName,
-      CVCcode: state.cardData.CVCcode
+      CVCcode: state.cardData.CVCcode,
+      isPaymentData: state.cardData.isPaymentData
    };
 };
 
