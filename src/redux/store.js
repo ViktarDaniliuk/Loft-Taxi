@@ -15,7 +15,6 @@ export const INITIAL_STATE = {
       userSurname: '',
       email: '',
       password: '',
-      success: false,
       token: null,
       error: null
    },
@@ -26,7 +25,6 @@ export const INITIAL_STATE = {
       validity: '',
       userFullName: '',
       CVCcode: '',
-      success: false,
       error: null
    },
    from: '',

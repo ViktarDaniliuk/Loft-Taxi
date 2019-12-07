@@ -32,7 +32,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          stateCopy.userData.userSurname = '';
          stateCopy.userData.email = '';
          stateCopy.userData.password = '';
-         stateCopy.userData.success = false;
          stateCopy.userData.token = null;
          stateCopy.userData.error = null;
          stateCopy.cardData.isPaymentData = false;
@@ -41,7 +40,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          stateCopy.cardData.validity = '';
          stateCopy.cardData.userFullName = '';
          stateCopy.cardData.CVCcode = '';
-         stateCopy.cardData.success = false;
          stateCopy.cardData.error = null;
          stateCopy.from = '';
          stateCopy.to = '';
@@ -70,7 +68,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
 
          stateCopy.currentTab = 'map';
          stateCopy.userData.isLoggedIn = action.payload.success;
-         stateCopy.userData.success = action.payload.success;
          stateCopy.userData.token = action.payload.token;
 
          return stateCopy;
@@ -79,7 +76,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          const stateCopy = {...state};
 
          stateCopy.userData.error = action.payload.error;
-         stateCopy.userData.success = action.payload.success;
+         stateCopy.userData.isLoggedIn = action.payload.success;
 
          return stateCopy;
       }
@@ -92,7 +89,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          stateCopy.userData.password = action.payload.password;
          stateCopy.currentTab = 'map';
          stateCopy.userData.isLoggedIn = action.payload.success;
-         stateCopy.userData.success = action.payload.success;
          stateCopy.userData.token = action.payload.token;
 
          return stateCopy;
@@ -100,8 +96,8 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       case SEND_DATA_SIGNUP_FAILURE: {
          const stateCopy = {...state};
 
-         stateCopy.error = action.payload.error;
-         stateCopy.success = action.payload.success;
+         stateCopy.userData.error = action.payload.error;
+         stateCopy.userDaata.isLoggedIn = action.payload.success;
 
          return stateCopy;
       }
@@ -113,14 +109,13 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          stateCopy.cardData.validity = action.payload.expiryDate;
          stateCopy.cardData.userFullName = action.payload.cardName;
          stateCopy.cardData.CVCcode = action.payload.cvc;
-         stateCopy.cardData.success = action.payload.success;
 
          return stateCopy;
       }
       case SEND_DATA_PROFILE_FAILURE: {
          const stateCopy = {...state};
 
-         stateCopy.cardData.success = action.payload.success;
+         stateCopy.cardData.isPaymentData = action.payload.success;
          stateCopy.cardData.error = action.payload.error;
 
          return stateCopy;
@@ -140,7 +135,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       case GET_PAYMENT_DATA_FAILURE: {
          const stateCopy = {...state};
 
-         stateCopy.cardData.success = action.payload.success;
+         stateCopy.cardData.isPaymentData = action.payload.success;
          stateCopy.cardData.error = action.payload.error;
 
          return stateCopy;

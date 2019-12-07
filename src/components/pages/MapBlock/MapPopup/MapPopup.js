@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MapPopupMod from './MapPopup.module.css';
 import { getAddressListRequest, getRouteRequest, onMakeNewOrder, onChangeStoreAddresses } from '../../../../redux/actions';
 import { history } from '../../../../history';
 
-export class MapPopup extends Component {
+export class MapPopup extends PureComponent {
    state = {
       from: '',
       to: '',
