@@ -42,3 +42,7 @@
    text-decoration: underline;
    transition: all .3s;
 }
+
+input[type="password"] {
+   letter-spacing: 4px;
+}

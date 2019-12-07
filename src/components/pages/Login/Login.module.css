@@ -47,3 +47,7 @@
 .log_in input[type="submit"] {
    width: 160px;
 }
+
+.log_in input[type="password"] {
+   letter-spacing: 4px;
+}
