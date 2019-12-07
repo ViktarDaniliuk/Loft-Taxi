@@ -5,7 +5,7 @@ import { rootHandle } from './sagas/sagas';
 
 export const INITIAL_STATE = {
    currentTab: 'signup',
-   isLoading: false,
+   isLoading: false, // резервное поле для обработки загрузки карты
    isUserDataInLocalStorage: false,
    addresses: [],
    coordinates: [],

@@ -24,9 +24,28 @@ const rootReducer = (state = INITIAL_STATE, action) => {
          const stateCopy = {...state};
 
          stateCopy.currentTab = 'login';
+         stateCopy.isUserDataInLocalStorage = false;
+         stateCopy.addresses = [];
+         stateCopy.coordinates = [];
          stateCopy.userData.isLoggedIn = false;
+         stateCopy.userData.userName = '';
+         stateCopy.userData.userSurname = '';
+         stateCopy.userData.email = '';
+         stateCopy.userData.password = '';
          stateCopy.userData.success = false;
          stateCopy.userData.token = null;
+         stateCopy.userData.error = null;
+         stateCopy.cardData.isPaymentData = false;
+         stateCopy.cardData.id = '';
+         stateCopy.cardData.cardNumber = '';
+         stateCopy.cardData.validity = '';
+         stateCopy.cardData.userFullName = '';
+         stateCopy.cardData.CVCcode = '';
+         stateCopy.cardData.success = false;
+         stateCopy.cardData.error = null;
+         stateCopy.from = '';
+         stateCopy.to = '';
+         stateCopy.route = null;
 
          return stateCopy;
       }
