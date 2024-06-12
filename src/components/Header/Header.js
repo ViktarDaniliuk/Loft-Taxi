@@ -1,28 +1,51 @@
-import React, { useContext } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import HeaderMod from './Header.module.css';
 import logo from './logo.svg';
-import PropTypes from 'prop-types';
-import { Context } from '../../context';
+import { onLogout } from '../../redux/actions';
 
-const Header = ({ handleChangeCurrentTab }) => {
-   const { handleLogout } = useContext(Context);
+export class Header extends Component {
+   static propTypes = {
+      onLogout: PropTypes.func.isRequired
+   };
 
-   return (
-      <header className={ HeaderMod.app_header }>
-         <img src={logo} className={ HeaderMod.logo } alt="logo" />
-         <div className={ HeaderMod.menu }>
-            <ul>
-               <li onClick={ () => handleChangeCurrentTab("mapblock") }>Карта</li>
-               <li onClick={ () => handleChangeCurrentTab("profile") }>Профиль</li>
-               <li onClick={ () => handleLogout() }>Выйти</li>
-            </ul>
-         </div>
-      </header>
-   )
+   onHandleLogout = () => {
+      const { onLogout } = this.props;
+      
+      onLogout();
+   };
+
+   render() {
+      console.log('Header rendered: ', new Date().getHours(), ':', new Date().getMinutes(), ':', new Date().getSeconds(), ':', new Date().getMilliseconds());
+      return (
+         <header className={ HeaderMod.app_header }>
+            <img src={logo} className={ HeaderMod.logo } alt="logo" />
+            <div className={ HeaderMod.menu }>
+               <ul>
+                  <li>
+                     <Link to="/map">Карта</Link>
+                  </li>
+                  <li>
+                     <Link to="/profile">Профиль</Link>
+                  </li>
+                  <li onClick={ this.onHandleLogout }>
+                     <Link to="/">Выйти</Link>
+                  </li>
+               </ul>
+            </div>
+         </header>
+      )
+   }
 }
 
-Header.propTypes = {
-   handleChangeCurrentTab: PropTypes.func
-}
+const mapDispatchToProps = dispatch => {
+   return {
+      onLogout: () => {
+         dispatch(onLogout());
+      }
+   };
+};
 
-export default Header;
+export const WrappedHeader = connect(null, mapDispatchToProps)(Header);

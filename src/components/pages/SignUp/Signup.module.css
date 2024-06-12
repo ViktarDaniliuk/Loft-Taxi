@@ -1,0 +1,48 @@
+.login {
+   display: flex;
+   align-items: center;
+   padding-top: 68px;
+   height: calc(100vh - 68px);
+   background: url(../../../main-bg.png) center 50% no-repeat;
+}
+
+.login > div {
+   width: 50%;
+}
+
+.logo_block {
+   text-align: right;
+}
+
+.logo {
+   margin-right: 160px;
+   width: 156px;
+}
+
+.popup > div {
+   width: 70%;
+   max-width: 350px;
+   background-color: #fff;
+   padding: 45px;
+   border-radius: 5px;
+}
+
+.sign_up h2 {
+   margin-top: 0;
+}
+
+.sign_up span a {
+   text-decoration: none;
+   color: #1473e6;
+   transition: all .3s;
+   padding-left: 10px;
+}
+
+.sign_up span a:hover {
+   text-decoration: underline;
+   transition: all .3s;
+}
+
+input[type="password"] {
+   letter-spacing: 4px;
+}
